@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package co.edu.univalle.miniproyecto4;
-
 /**
  *
- * @author julia
+ * @author Julian Puyo
+ * @author Sebastian Orrego
+ * @author Juan David Rodriguez
+ * @author Manuel Cardoso
+ * @author Luis Carlos Lucero
  */
+
+package co.edu.univalle.miniproyecto4;
+
 public class Main {
 
     /**
