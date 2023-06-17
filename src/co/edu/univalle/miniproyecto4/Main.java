@@ -9,13 +9,17 @@
 
 package co.edu.univalle.miniproyecto4;
 
+import javax.swing.text.View;
+import co.edu.univalle.miniproyecto4.views.ViewIncio;
+
 public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ViewIncio viewIncio = new ViewIncio();
+        
     }
     
 }
