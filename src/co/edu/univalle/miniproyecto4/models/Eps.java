@@ -3,4 +3,28 @@ package co.edu.univalle.miniproyecto4.models;
 public class Eps {
   private int codigo;
   private String nombre;
+  private int consecutivo = 0;
+
+  public Eps(String nombre) {
+    this.codigo = consecutivo++;
+    this.nombre = nombre;
+  }
+
+  public Eps() {
+    this.codigo = consecutivo++;
+    this.nombre = "";
+  }
+
+  public int getCodigo() {
+    return codigo;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
 }

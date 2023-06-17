@@ -1,11 +1,84 @@
 package co.edu.univalle.miniproyecto4.models;
 
 public class Empleado {
-  private String identificación;
+  private int identificación;
   private int codigo;
   private String apellidos;
   private String nombres;
   private String direccion;
-  private String codoigoEps;
-  private String codigoFpp;
+  private int codigoEps;
+  private int codigoFpp;
+  private int consecutivo = 0;
+
+  public Empleado(int id, String apellidos, String nombres, String direccion, int codigoEps, int codigoFpp) {
+    this.identificación = id;
+    this.codigo = consecutivo++;
+    this.apellidos = apellidos;
+    this.nombres = nombres;
+    this.direccion = direccion;
+    this.codigoEps = codigoEps;
+    this.codigoFpp = codigoFpp;
+  }
+
+  public Empleado() {
+    this.identificación = 0;
+    this.codigo = consecutivo++;
+    this.apellidos = "";
+    this.nombres = "";
+    this.direccion = "";
+    this.codigoEps = 0;
+    this.codigoFpp = 0;
+  }
+
+  public void setIdentificacion(int id) {
+    this.identificación = id;
+  }
+
+  public int getIdentificacion() {
+    return identificación;
+  }
+
+  public int getCodigo() {
+    return codigo;
+  }
+
+  public void setApellidos(String apellidos) {
+    this.apellidos = apellidos;
+  }
+  
+  public String getApellidos() {
+    return apellidos;
+  }
+
+  public void setNombres(String nombres) {
+    this.nombres = nombres;
+  }
+  
+  public String getNombres() {
+    return nombres;
+  }
+
+  public void setDireccion(String direccion) {
+    this.direccion = direccion;
+  }
+  
+  public String getDireccion() {
+    return direccion;
+  }
+
+  public void setCodigoFpp(int codigoFpp) {
+    this.codigoFpp = codigoFpp;
+  }
+
+  public int getCodigoFpp() {
+    return codigoFpp;
+  }
+
+  public void setCodigoEps(int codigoEps) {
+    this.codigoEps = codigoEps;
+  }
+
+  public int getCodigoEps() {
+    return codigoEps;
+  }
 }

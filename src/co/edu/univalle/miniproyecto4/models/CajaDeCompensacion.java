@@ -3,4 +3,27 @@ package co.edu.univalle.miniproyecto4.models;
 public class CajaDeCompensacion {
   private int codigo;
   private String nombre;
+  private int consecutivo = 0;
+
+  public CajaDeCompensacion(String nombre) {
+    this.codigo = consecutivo++;
+    this.nombre = nombre;
+  }
+
+  public CajaDeCompensacion() {
+    this.codigo = consecutivo++;
+    this.nombre = "";
+  }
+
+  public int getCodigo() {
+    return codigo;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
 }
