@@ -81,4 +81,9 @@ public class Empleado {
   public int getCodigoEps() {
     return codigoEps;
   }
+
+  @Override
+  public String toString() {
+    return identificación + ", " + codigo + ", " + apellidos + ", " + nombres + ", " + direccion + ", " + codigoEps + ", " + codigoFpp;
+  }
 }

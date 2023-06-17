@@ -35,4 +35,9 @@ public class ConceptoDeDevengo {
   public boolean isHaceBase() {
     return haceBase;
   }
+
+  @Override
+  public String toString() {
+    return codigo + ", " + nombre + ", " + haceBase;
+  }
 }

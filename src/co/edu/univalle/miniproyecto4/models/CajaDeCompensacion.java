@@ -26,4 +26,9 @@ public class CajaDeCompensacion {
   public String getNombre() {
     return nombre;
   }
+
+  @Override
+  public String toString() {
+    return codigo + ", " + nombre;
+  }
 }

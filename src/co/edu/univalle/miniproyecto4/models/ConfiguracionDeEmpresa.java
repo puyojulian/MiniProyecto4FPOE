@@ -128,4 +128,9 @@ public class ConfiguracionDeEmpresa {
   public int getAuxilioDeTransporte() {
     return auxilioDeTransporte;
   }
+
+  @Override
+  public String toString() {
+    return nit + ", " + razonSocial + ", " + nombre + ", " + telefono + ", " + direccion + ", " + representanteLegal + ", " + correoDeContacto + ", " + codigoArl + ", " + codigoCajaDeCompensación + ", " + salarioMínimoLegalVigente + ", " + auxilioDeTransporte;
+  }
 }

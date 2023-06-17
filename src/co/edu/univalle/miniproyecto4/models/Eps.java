@@ -27,4 +27,8 @@ public class Eps {
     return nombre;
   }
 
+  @Override
+  public String toString() {
+    return codigo + ", " + nombre;
+  }
 }
