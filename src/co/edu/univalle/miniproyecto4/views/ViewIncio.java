@@ -10,6 +10,9 @@
   @author Manuel Cardoso
   @author Luis Carlos Lucero
  
+ Intencion:
+ Crear una ventana para el incio del programa, da la bienvenida y despliega la ventana de los formularios
+ 
  */
 
 package co.edu.univalle.miniproyecto4.views;
@@ -18,7 +21,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ViewIncio extends JFrame {
+public class ViewIncio extends JFrame implements ActionListener {
     private JPanel jpnaleIcono, jpanelTexto;
     private Decolib imFondo, imIcon, imTexto;
     private JButton btnInciar;
@@ -44,9 +47,18 @@ public class ViewIncio extends JFrame {
         //Panel para el icono
         jpnaleIcono = new JPanel();
         jpnaleIcono.setBounds((int)341.5, (int)9.5 ,593, 501);
-        jpnaleIcono.setBackground(new Color(0,50,0));
+        jpnaleIcono.setBackground(new Color(0,0,0,0));
         jpnaleIcono.setLayout(null);
         add(jpnaleIcono);
+
+        btnInciar = new JButton();
+        btnInciar.setBounds((int)341.5, (int)9.5 ,593, 501);
+        btnInciar.setOpaque(true);
+        btnInciar.setContentAreaFilled(false);
+        btnInciar.setBorderPainted(false);
+        add(btnInciar);
+
+        btnInciar.addActionListener(this);
 
         imIcon = new Decolib("/co/edu/univalle/miniproyecto4/img/vistainicio/icono.png");
         imIcon.setBounds(0,0,593,501);
@@ -61,6 +73,16 @@ public class ViewIncio extends JFrame {
         imTexto = new Decolib("/co/edu/univalle/miniproyecto4/img/vistainicio/texto.png");
         imTexto.setBounds(0,0,550,186);
         jpanelTexto.add(imTexto);
+
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnInciar){
+            dispose();
+            ViewFormulario viewFormulario = new ViewFormulario();
+        }
     }
 
 
