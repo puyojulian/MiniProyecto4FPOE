@@ -36,10 +36,11 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     //Paneles para las categorias y titulos (Remplazar)
     private JPanel jpTittleR, jpTittleEmpleado, jpTittleEPS, jpTittleFondoP, jpTittleARL, jpTittleCaja, jpTittleEmpresa, jpTittleDevengo, jpTittleDeduccion;
-    private Decolib im1, im2, im3, im4, im5, im6, im7, im8, im9, im10;
-    private JPanel jpfondoF, jpReplace, jpEmpleado, jpEps, jpFondoP, jpARL, jpCaja, jpempresa, jpDev, jpDed;
+    private Decolib im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11;
+    private JPanel jpfondoF, jpReplace, jpEmpleado, jpEps, jpFondoP, jpARL, jpCajaComp, jpempresa, jpDev, jpDed;
 
     // -------------- PARA EL  OBJETO EMPLEADO ---------------- //
+
     private JLabel lblIdE, lblCodE, lblApellidos, lblNombres, lblDireccionE, lblEPS, lblFPP, lblDateborn, lblDateIngreso, lblDateRetiro, lblTipo, lblNumeroC;
     private  JTextField fildEmpleadoId, fildEmpleadoCod, fildEmpleadoApellido, fildEmpleadoNombre, fildEmpleadoDr, fildEmpleadoDateN, fildEmpleadoDateIngr, fildEmpleadoDateRet, fildEmpleadoNCuenta;
     private String[] epsEmpleado = {"Seleccionar","Codigo EPS"};
@@ -50,12 +51,45 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private JComboBox<String> dropTipoEmpleado = new JComboBox<>(tipoEmpleado);
     
     // -------------- PARA EL OBJETO EPS ---------------- //
+
+    private JLabel lblCodigoEps, lblNombresEps;
+    private JTextField fildEPSCod, fildEPSNombre;
+    private Decolib fondoEPS;
+    
     // -------------- PARA EL OBJETO FONDOPENSION ---------------- //
+
+    private JLabel lblcodigoFPP, lblnombreFpp;
+    private JTextField fildFPPcod, fildFPPnombre;
+    private Decolib fondoFPP;
+
     // -------------- PARA EL OBJETO ARL ---------------- //
+
+    private JLabel lblcodigoARL, lblnombreARL;
+    private JTextField fildARLcod, fildARLnombre;
+    private Decolib fondoARL;
+
     // -------------- PARA EL OBJETO CAJA COMPENSACION ---------------- //
+
+    private JLabel lblcodigoCajaC, lblnombreCajaC;
+    private JTextField fildCajaComCodigo, fildCajaComNombre;
+    private Decolib fondoCajaComp;
+
     // -------------- PARA EL OBJETO EMPRESA ---------------- //
     // -------------- PARA EL OBJETO DEVENOG ---------------- //
+
+    private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev;
+    private JTextField fildDevengoCodigo, fildDevengonombre;
+    private String[] hacenbase = {"Seleccionar", "Si hace base","No hace base"};
+    private JComboBox<String> dropbaseDevengo = new JComboBox<>(hacenbase);
+    private Decolib fondoDevengo;
+
     // -------------- PARA EL OBJETO DEDUCCION ---------------- //
+
+    private JLabel lblcodigoDed, lblnombreDed;
+    private JTextField fildDeduccionCodigo, fildDeduccionNombre;
+    
+
+    private Decolib fondoDed;
 
     public ViewFormulario(){
         iniciarComponentes();
@@ -258,6 +292,10 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpReplace.setBackground(colorFondoWhite);
         jpfondoF.add(jpReplace);
 
+        im10 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        im10.setBounds(0,0,758,246);
+        jpReplace.add(im10);
+
         /* ----------- AÑADIR CORRESPONDIENTE A EMPLEADO ------------ */
 
         jpEmpleado = new JPanel();
@@ -371,16 +409,19 @@ public class ViewFormulario extends JFrame implements ActionListener{
         fildEmpleadoDateN.setBounds(541,52,203,30);
         fildEmpleadoDateN.setFont(nuevaTipografia2);
         fildEmpleadoDateN.setForeground(colorFuente);
+        fildEmpleadoDateN.setBackground(colorFondoWhite);
 
         fildEmpleadoDateIngr = new JTextField();
         fildEmpleadoDateIngr.setBounds(541,87,203,30);
         fildEmpleadoDateIngr.setFont(nuevaTipografia2);
         fildEmpleadoDateIngr.setForeground(colorFuente);
+        fildEmpleadoDateIngr.setBackground(colorFondoWhite);
 
         fildEmpleadoDateRet = new JTextField();
         fildEmpleadoDateRet.setBounds(541, 124,203,30);
         fildEmpleadoDateRet.setFont(nuevaTipografia2);
         fildEmpleadoDateRet.setForeground(colorFuente);
+        fildEmpleadoDateRet.setBackground(colorFondoWhite);
 
         dropTipoEmpleado.setBounds(541, 161,203,30);
         dropTipoEmpleado.setOpaque(true);
@@ -388,8 +429,13 @@ public class ViewFormulario extends JFrame implements ActionListener{
         dropTipoEmpleado.setForeground(colorFuente);
         dropTipoEmpleado.setBackground(colorFondoWhite);
 
+        fildEmpleadoNCuenta = new JTextField();
+        fildEmpleadoNCuenta.setBounds(541,198,203,30);
+        fildEmpleadoNCuenta.setFont(nuevaTipografia2);
+        fildEmpleadoNCuenta.setForeground(colorFuente);
+        fildEmpleadoNCuenta.setBackground(colorFondoWhite);
 
-        //, fildEmpleadoNCuenta;
+
         jpEmpleado.add(lblIdE);
         jpEmpleado.add(lblCodE);
         jpEmpleado.add(lblApellidos);
@@ -413,7 +459,258 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpEmpleado.add(fildEmpleadoDateIngr);
         jpEmpleado.add(fildEmpleadoDateRet);
         jpEmpleado.add(dropTipoEmpleado);
+        jpEmpleado.add(fildEmpleadoNCuenta);
 
+        /* ----------- AÑADIR CORRESPONDIENTE A EPS ------------ */
+
+        jpEps = new JPanel();
+        jpEps.setBounds(0,0,758,246);
+        jpEps.setLayout(null);
+        jpEps.setBackground(colorFondoWhite);
+
+        lblCodigoEps = new JLabel("Codigo|Eps");
+        lblCodigoEps.setBounds(14,15,139,30);
+        lblCodigoEps.setFont(nuevaTipografia2);
+        lblCodigoEps.setForeground(colorFuente);
+
+        lblNombresEps = new JLabel("Nombre|Eps");
+        lblNombresEps.setBounds(14,52,139,30);
+        lblNombresEps.setFont(nuevaTipografia2);
+        lblNombresEps.setForeground(colorFuente);
+
+        fildEPSCod = new JTextField();
+        fildEPSCod.setBounds(167,15,203,30);
+        fildEPSCod.setFont(nuevaTipografia2);
+        fildEPSCod.setForeground(colorFuente);
+        fildEPSCod.setBackground(colorFondoWhite);
+
+        fildEPSNombre = new JTextField();
+        fildEPSNombre.setBounds(167,52,203,30);
+        fildEPSNombre.setFont(nuevaTipografia2);
+        fildEPSNombre.setForeground(colorFuente);
+        fildEPSNombre.setBackground(colorFondoWhite);
+
+        jpEps.add(lblCodigoEps);
+        jpEps.add(lblNombresEps);
+        jpEps.add(fildEPSCod);
+        jpEps.add(fildEPSNombre);
+
+        fondoEPS = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoEPS.setBounds(0,0,758,246);
+        jpEps.add(fondoEPS);
+        
+
+        /* ----------- AÑADIR CORRESPONDIENTE A FPP ------------ */
+
+        jpFondoP = new JPanel();
+        jpFondoP.setBounds(0,0,758,246);
+        jpFondoP.setLayout(null);
+        jpFondoP.setBackground(colorFondoWhite);
+
+        lblcodigoFPP = new JLabel("Codigo|FPP");
+        lblcodigoFPP.setBounds(14,15,139,30);
+        lblcodigoFPP.setFont(nuevaTipografia2);
+        lblcodigoFPP.setForeground(colorFuente);
+
+        lblnombreFpp = new JLabel("Nmbre|FPP");
+        lblnombreFpp.setBounds(14,52,139,30);
+        lblnombreFpp.setFont(nuevaTipografia2);
+        lblnombreFpp.setForeground(colorFuente);
+
+        fildFPPcod = new JTextField();
+        fildFPPcod.setBounds(167,15,203,30);
+        fildFPPcod.setFont(nuevaTipografia2);
+        fildFPPcod.setForeground(colorFuente);
+        fildFPPcod.setBackground(colorFondoWhite);
+
+        fildFPPnombre = new JTextField();
+        fildFPPnombre.setBounds(167,52,203,30);
+        fildFPPnombre.setFont(nuevaTipografia2);
+        fildFPPnombre.setForeground(colorFuente);
+        fildFPPnombre.setBackground(colorFondoWhite);
+
+        jpFondoP.add(lblcodigoFPP);
+        jpFondoP.add(lblnombreFpp);
+        jpFondoP.add(fildFPPcod);
+        jpFondoP.add(fildFPPnombre);
+
+        fondoFPP = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoFPP.setBounds(0,0,758,246);
+        jpFondoP.add(fondoFPP);
+       
+        /* ----------- AÑADIR CORRESPONDIENTE A ARL ------------ */
+
+        jpARL = new JPanel();
+        jpARL.setBounds(0,0,758,246);
+        jpARL.setLayout(null);
+        jpARL.setBackground(colorFondoWhite);
+
+        lblcodigoARL = new JLabel("Codigo|ARL");
+        lblcodigoARL.setBounds(14,15,139,30);
+        lblcodigoARL.setFont(nuevaTipografia2);
+        lblcodigoARL.setForeground(colorFuente);
+
+        lblnombreARL = new JLabel("Nmbre|ARL");
+        lblnombreARL.setBounds(14,52,139,30);
+        lblnombreARL.setFont(nuevaTipografia2);
+        lblnombreARL.setForeground(colorFuente);
+
+        fildARLcod = new JTextField();
+        fildARLcod.setBounds(167,15,203,30);
+        fildARLcod.setFont(nuevaTipografia2);
+        fildARLcod.setForeground(colorFuente);
+        fildARLcod.setBackground(colorFondoWhite);
+
+        fildARLnombre = new JTextField();
+        fildARLnombre.setBounds(167,52,203,30);
+        fildARLnombre.setFont(nuevaTipografia2);
+        fildARLnombre.setForeground(colorFuente);
+        fildARLnombre.setBackground(colorFondoWhite);
+
+        jpARL.add(lblcodigoARL);
+        jpARL.add(lblnombreARL);
+        jpARL.add(fildARLcod);
+        jpARL.add(fildARLnombre);
+
+        fondoARL = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoARL.setBounds(0,0,758,246);
+        jpARL.add(fondoARL);
+
+        /* ----------- AÑADIR CORRESPONDIENTE A CAJA COMPENSACION ------------ */
+
+        jpCajaComp = new JPanel();
+        jpCajaComp.setBounds(0,0,758,246);
+        jpCajaComp.setLayout(null);
+        jpCajaComp.setBackground(colorFondoWhite);
+
+        lblcodigoCajaC = new JLabel("Codigo|CC");
+        lblcodigoCajaC.setBounds(14,15,139,30);
+        lblcodigoCajaC.setFont(nuevaTipografia2);
+        lblcodigoCajaC.setForeground(colorFuente);
+
+        lblnombreCajaC = new JLabel("Nmbre|CC");
+        lblnombreCajaC.setBounds(14,52,139,30);
+        lblnombreCajaC.setFont(nuevaTipografia2);
+        lblnombreCajaC.setForeground(colorFuente);
+
+        fildCajaComCodigo = new JTextField();
+        fildCajaComCodigo.setBounds(167,15,203,30);
+        fildCajaComCodigo.setFont(nuevaTipografia2);
+        fildCajaComCodigo.setForeground(colorFuente);
+        fildCajaComCodigo.setBackground(colorFondoWhite);
+
+        fildCajaComNombre = new JTextField();
+        fildCajaComNombre.setBounds(167,52,203,30);
+        fildCajaComNombre.setFont(nuevaTipografia2);
+        fildCajaComNombre.setForeground(colorFuente);
+        fildCajaComNombre.setBackground(colorFondoWhite);
+
+        jpCajaComp.add(lblcodigoCajaC);
+        jpCajaComp.add(lblnombreCajaC);
+        jpCajaComp.add(fildCajaComCodigo);
+        jpCajaComp.add(fildCajaComNombre);
+
+        fondoCajaComp = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoCajaComp.setBounds(0,0,758,246);
+        jpCajaComp.add(fondoCajaComp);
+
+        /* ----------- AÑADIR CORRESPONDIENTE A EMPRESA ------------ */
+
+        jpempresa = new JPanel();
+        jpempresa.setBounds(0,0,758,246);
+        jpempresa.setLayout(null);
+        jpempresa.setBackground(colorFondoWhite);
+
+        /* ----------- AÑADIR CORRESPONDIENTE A DEVENGO ------------ */
+        
+        jpDev = new JPanel();
+        jpDev.setBounds(0,0,758,246);
+        jpDev.setLayout(null);
+        jpDev.setBackground(colorFondoWhite);
+
+        lblcodigoDev = new JLabel("Codigo|Dev");
+        lblcodigoDev.setBounds(14,15,139,30);
+        lblcodigoDev.setFont(nuevaTipografia2);
+        lblcodigoDev.setForeground(colorFuente);
+
+        lblnombreDeven = new JLabel("Nmbre|Dev");
+        lblnombreDeven .setBounds(14,52,139,30);
+        lblnombreDeven .setFont(nuevaTipografia2);
+        lblnombreDeven .setForeground(colorFuente);
+
+        lblhacebaseDev = new JLabel("Hace base");
+        lblhacebaseDev.setBounds(14,87,139,30);
+        lblhacebaseDev.setFont(nuevaTipografia2);
+        lblhacebaseDev.setForeground(colorFuente);
+
+        fildDevengoCodigo = new JTextField();
+        fildDevengoCodigo.setBounds(167,15,203,30);
+        fildDevengoCodigo.setFont(nuevaTipografia2);
+        fildDevengoCodigo.setForeground(colorFuente);
+        fildDevengoCodigo.setBackground(colorFondoWhite);
+
+        fildDevengonombre = new JTextField();
+        fildDevengonombre.setBounds(167,52,203,30);
+        fildDevengonombre.setFont(nuevaTipografia2);
+        fildDevengonombre.setForeground(colorFuente);
+        fildDevengonombre.setBackground(colorFondoWhite);
+
+        dropbaseDevengo.setBounds(167,87,203,30);
+        dropbaseDevengo.setOpaque(true);
+        dropbaseDevengo.setFont(nuevaTipografia2);
+        dropbaseDevengo.setForeground(colorFuente);
+        dropbaseDevengo.setBackground(colorFondoWhite);
+
+        jpDev.add(lblcodigoDev);
+        jpDev.add(lblnombreDeven);
+        jpDev.add(lblhacebaseDev);
+        jpDev.add(fildDevengoCodigo);
+        jpDev.add(fildDevengonombre);
+        jpDev.add(dropbaseDevengo);
+
+        fondoDevengo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoDevengo.setBounds(0,0,758,246);
+        jpDev.add(fondoDevengo);
+        
+        /* ----------- AÑADIR CORRESPONDIENTE A DEDUCCION ------------ */
+
+        jpDed = new JPanel();
+        jpDed.setBounds(0,0,758,246);
+        jpDed.setLayout(null);
+        jpDed.setBackground(colorFondoWhite);
+
+        lblcodigoDed = new JLabel("Codigo|Ded");
+        lblcodigoDed.setBounds(14,15,139,30);
+        lblcodigoDed.setFont(nuevaTipografia2);
+        lblcodigoDed.setForeground(colorFuente);
+
+        lblnombreDed = new JLabel("Nmbre|Ded");
+        lblnombreDed.setBounds(14,52,139,30);
+        lblnombreDed.setFont(nuevaTipografia2);
+        lblnombreDed.setForeground(colorFuente);
+
+        fildDeduccionCodigo = new JTextField();
+        fildDeduccionCodigo.setBounds(167,15,203,30);
+        fildDeduccionCodigo.setFont(nuevaTipografia2);
+        fildDeduccionCodigo.setForeground(colorFuente);
+        fildDeduccionCodigo.setBackground(colorFondoWhite);
+
+        fildDeduccionNombre = new JTextField();
+        fildDeduccionNombre.setBounds(167,52,203,30);
+        fildDeduccionNombre.setFont(nuevaTipografia2);
+        fildDeduccionNombre.setForeground(colorFuente);
+        fildDeduccionNombre.setBackground(colorFondoWhite);
+
+        jpDed.add(lblnombreDed);
+        jpDed.add(lblcodigoDed);
+        jpDed.add(fildDeduccionCodigo);
+        jpDed.add(fildDeduccionNombre);
+
+        fondoDed = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
+        fondoDed.setBounds(0,0,758,246);
+        jpDed.add(fondoDed);
+
+        /*-------------- Imagen de fondo --------------- */
         
         im10 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondo.png");
         im10.setBounds(0,0,784,272);
@@ -430,24 +727,31 @@ public class ViewFormulario extends JFrame implements ActionListener{
         } else if(event.getSource() == btnEps){
             System.out.println("Apartado eps");
             mostrartitle(jpTittleEPS);
+            mostrarPanel(jpEps);
         } else if(event.getSource() == btnFondoP){
             System.out.println("Apartado fondo de presion");
             mostrartitle(jpTittleFondoP);
+            mostrarPanel(jpFondoP);
         } else if(event.getSource() == btnARL){
             System.out.println("Apartado ARL");
             mostrartitle(jpTittleARL);
+            mostrarPanel(jpARL);
         } else if(event.getSource() == btnCajaCompen){
             System.out.println("Apartado caja de compresacion");
             mostrartitle(jpTittleCaja);
+            mostrarPanel(jpCajaComp);
         } else if(event.getSource() == btnEmpresa){
             System.out.println("Apartado empresa");
             mostrartitle(jpTittleEmpresa);
+            mostrarPanel(jpempresa);
         } else if(event.getSource() == btnDevegno){
             System.out.println("Apartado devengo");
             mostrartitle(jpTittleDevengo);
+            mostrarPanel(jpDev);
         } else if(event.getSource() == btnDeduccion){
             System.out.println("Apartado deduccion");
             mostrartitle(jpTittleDeduccion);
+            mostrarPanel(jpDed);
         }
     }
 
@@ -528,4 +832,72 @@ public class ViewFormulario extends JFrame implements ActionListener{
     }
 
     /* --------------- PARA EPS (Getters and Setters) ------------------- */
+
+    public JTextField getFildEPSCod() {
+        return fildEPSCod;
+    }
+
+    public JTextField getFildEPSNombre() {
+        return fildEPSNombre;
+    }
+
+    /* --------------- PARA FPP (Getters and Setters) ------------------- */
+
+    public JTextField getFildFPPcod() {
+        return fildFPPcod;
+    }
+
+    public JTextField getFildFPPnombre() {
+        return fildFPPnombre;
+    }
+
+    /* --------------- PARA ARL (Getters and Setters) ------------------- */
+
+    public JTextField getFildARLcod() {
+        return fildARLcod;
+    }
+
+    public JTextField getFildARLnombre() {
+        return fildARLnombre;
+    }
+
+    /* --------------- PARA CAJA COMPENSACION (Getters and Setters) ------------------- */
+
+    public JTextField getFildCajaComCodigo() {
+        return fildCajaComCodigo;
+    }
+
+    public JTextField getFildCajaComNombre() {
+        return fildCajaComNombre;
+    }
+
+    /* --------------- PARA LA CONFIGURACION DE EMPRESA (Getters and Setters) ------------------- */
+
+    /* --------------- PARA CONCEPTO DE DEVENGO (Getters and Setters) ------------------- */
+
+    public JTextField getFildDevengoCodigo() {
+        return fildDevengoCodigo;
+    }
+
+    public JTextField getFildDevengonombre() {
+        return fildDevengonombre;
+    }
+
+    public JComboBox<String> getDropbaseDevengo() {
+        return dropbaseDevengo;
+    }
+
+    public void setDropbaseDevengo(JComboBox<String> dropbaseDevengo) {
+        this.dropbaseDevengo = dropbaseDevengo;
+    }
+
+    /* --------------- PARA CONCEPTO DE DEDUCCION (Getters and Setters) ------------------- */
+
+    public JTextField getFildDeduccionCodigo() {
+        return fildDeduccionCodigo;
+    }
+
+    public JTextField getFildDeduccionNombre() {
+        return fildDeduccionNombre;
+    }
 }
