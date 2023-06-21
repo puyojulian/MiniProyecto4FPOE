@@ -6,7 +6,7 @@ Autores:
 - Manuel Felipe Cardoso Forero.
 - Sebastian Orrego.
 - Julian Puyo.
-- Luic 
+- Luis Carlos Lucero.
 
 ## Necesidades o requerimientos de usario
 La Cooperativa de corteros de caña Serviagricola “Los Suareños” S.A.S ha contactado la 
