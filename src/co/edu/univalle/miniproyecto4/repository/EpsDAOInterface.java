@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.Eps;
 
 public interface EpsDAOInterface {
-    public Map<Integer, Eps> getEpss();
+    public Map<Integer, Eps> getMapEps();
     
     public Eps getEps(Integer llave);
     

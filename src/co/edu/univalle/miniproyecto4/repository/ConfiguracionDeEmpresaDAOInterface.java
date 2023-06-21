@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.ConfiguracionDeEmpresa;
 
 public interface ConfiguracionDeEmpresaDAOInterface {
-    public Map<Integer, ConfiguracionDeEmpresa> getConfiguracionDeEmpresas();
+    public Map<Integer, ConfiguracionDeEmpresa> getMapConfiguracionDeEmpresa();
     
     public ConfiguracionDeEmpresa getConfiguracionDeEmpresa(Integer llave);
     

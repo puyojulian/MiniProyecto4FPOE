@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
 
 public interface CajaDeCompensacionDAOInterface {
-    public Map<Integer, CajaDeCompensacion> getCajaDeCompensacions();
+    public Map<Integer, CajaDeCompensacion> getMapCajaDeCompensacion();
     
     public CajaDeCompensacion getCajaDeCompensacion(Integer llave);
     

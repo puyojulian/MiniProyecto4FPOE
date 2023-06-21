@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.Empleado;
 
 public interface EmpleadoDAOInterface {
-    public Map<Integer, Empleado> getEmpleados();
+    public Map<Integer, Empleado> getMapEmpleado();
     
     public Empleado getEmpleado(Integer llave);
     

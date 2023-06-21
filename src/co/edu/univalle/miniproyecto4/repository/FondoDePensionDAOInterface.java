@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 
 public interface FondoDePensionDAOInterface {
-    public Map<Integer, FondoDePension> getFondoDePensions();
+    public Map<Integer, FondoDePension> getMapFondoDePension();
     
     public FondoDePension getFondoDePension(Integer llave);
     

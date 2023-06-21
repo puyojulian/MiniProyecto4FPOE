@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.ConceptoDeDevengo;
 
 public interface ConceptoDeDevengoDAOInterface {
-    public Map<Integer, ConceptoDeDevengo> getConceptoDeDevengos();
+    public Map<Integer, ConceptoDeDevengo> getMapConceptoDeDevengo();
     
     public ConceptoDeDevengo getConceptoDeDevengo(Integer llave);
     

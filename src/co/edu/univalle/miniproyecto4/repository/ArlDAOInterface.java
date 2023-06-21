@@ -5,7 +5,7 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.Arl;
 
 public interface ArlDAOInterface {
-    public Map<Integer, Arl> getArls();
+    public Map<Integer, Arl> getMapArl();
     
     public Arl getArl(Integer llave);
     
