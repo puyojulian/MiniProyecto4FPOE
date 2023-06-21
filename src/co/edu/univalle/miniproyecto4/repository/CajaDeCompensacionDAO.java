@@ -6,36 +6,33 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
 
 public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{
-  private Map <Integer, CajaDeCompensacion> mapCajaDeCompensacion = new HashMap<>();
+  private Map <Integer, CajaDeCompensacion> mapaCajaDeCompensacion = new HashMap<>();
 
   @Override
   public Map<Integer, CajaDeCompensacion> getMapCajaDeCompensacion() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getCajaDeCompensacions'");
+    return mapaCajaDeCompensacion;
   }
 
   @Override
   public CajaDeCompensacion getCajaDeCompensacion(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getCajaDeCompensacion'");
+    return mapaCajaDeCompensacion.get(llave);
   }
 
   @Override
   public boolean addCajaDeCompensacion(CajaDeCompensacion cajaDeCompensacion) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addCajaDeCompensacion'");
+    mapaCajaDeCompensacion.put(cajaDeCompensacion.getCodigo(), cajaDeCompensacion);
+    return true;
   }
 
   @Override
   public boolean updateCajaDeCompensacion(Integer llave, CajaDeCompensacion cajaDeCompensacion) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateCajaDeCompensacion'");
+    mapaCajaDeCompensacion.put(llave, cajaDeCompensacion);
+    return true;
   }
 
   @Override
   public boolean deleteCajaDeCompensacion(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteCajaDeCompensacion'");
+    mapaCajaDeCompensacion.remove(llave);
+    return true;
   }
-  
 }

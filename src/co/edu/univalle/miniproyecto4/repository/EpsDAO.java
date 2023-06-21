@@ -1,39 +1,39 @@
 package co.edu.univalle.miniproyecto4.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import co.edu.univalle.miniproyecto4.models.Eps;
 
 public class EpsDAO implements EpsDAOInterface{
+  private Map <Integer, Eps> mapaEps = new HashMap<>();
 
   @Override
   public Map<Integer, Eps> getMapEps() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getMapEps'");
+    return mapaEps;
   }
 
   @Override
   public Eps getEps(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getEps'");
+    return mapaEps.get(llave);
   }
 
   @Override
   public boolean addEps(Eps eps) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addEps'");
+    mapaEps.put(eps.getCodigo(), eps);
+    return true;
   }
 
   @Override
   public boolean updateEps(Integer llave, Eps eps) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateEps'");
+    mapaEps.put(llave, eps);
+    return true;
   }
 
   @Override
   public boolean deleteEps(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteEps'");
+    mapaEps.remove(llave);
+    return true;
   }
   
 }

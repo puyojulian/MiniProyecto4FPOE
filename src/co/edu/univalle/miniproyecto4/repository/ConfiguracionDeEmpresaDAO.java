@@ -1,39 +1,39 @@
 package co.edu.univalle.miniproyecto4.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import co.edu.univalle.miniproyecto4.models.ConfiguracionDeEmpresa;
 
 public class ConfiguracionDeEmpresaDAO implements ConfiguracionDeEmpresaDAOInterface{
+  private Map <Integer, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa = new HashMap<>();
 
   @Override
   public Map<Integer, ConfiguracionDeEmpresa> getMapConfiguracionDeEmpresa() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getMapConfiguracionDeEmpresa'");
+    return mapaConfiguracionDeEmpresa;
   }
 
   @Override
   public ConfiguracionDeEmpresa getConfiguracionDeEmpresa(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getConfiguracionDeEmpresa'");
+    return mapaConfiguracionDeEmpresa.get(llave);
   }
 
   @Override
   public boolean addConfiguracionDeEmpresa(ConfiguracionDeEmpresa configuracionDeEmpresa) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addConfiguracionDeEmpresa'");
+    mapaConfiguracionDeEmpresa.put(configuracionDeEmpresa.getNit(), configuracionDeEmpresa);
+    return true;
   }
 
   @Override
   public boolean updateConfiguracionDeEmpresa(Integer llave, ConfiguracionDeEmpresa configuracionDeEmpresa) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateConfiguracionDeEmpresa'");
+    mapaConfiguracionDeEmpresa.put(llave, configuracionDeEmpresa);
+    return true;
   }
 
   @Override
   public boolean deleteConfiguracionDeEmpresa(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteConfiguracionDeEmpresa'");
+    mapaConfiguracionDeEmpresa.remove(llave);
+    return true;
   }
   
 }

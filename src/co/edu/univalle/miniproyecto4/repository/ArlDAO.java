@@ -10,31 +10,29 @@ public class ArlDAO implements ArlDAOInterface {
 
   @Override
   public Map<Integer, Arl> getMapArl() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getArls'");
+    return mapaArl;
   }
 
   @Override
   public Arl getArl(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getArl'");
+    return mapaArl.get(llave);
   }
 
   @Override
   public boolean addArl(Arl arl) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addArl'");
+    mapaArl.put(arl.getCodigo(), arl);
+    return true;
   }
 
   @Override
   public boolean updateArl(Integer llave, Arl arl) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateArl'");
+    mapaArl.put(llave, arl);
+    return true;
   }
 
   @Override
   public boolean deleteArl(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteArl'");
+    mapaArl.remove(llave);
+    return true;
   }
 }

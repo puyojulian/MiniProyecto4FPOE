@@ -1,39 +1,39 @@
 package co.edu.univalle.miniproyecto4.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import co.edu.univalle.miniproyecto4.models.ConceptoDeDevengo;
 
 public class ConceptoDeDevengoDAO implements ConceptoDeDevengoDAOInterface{
+  private Map <Integer, ConceptoDeDevengo> mapaConceptoDeDevengo = new HashMap<>();
 
   @Override
   public Map<Integer, ConceptoDeDevengo> getMapConceptoDeDevengo() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getMapConceptoDeDevengo'");
+    return mapaConceptoDeDevengo;
   }
 
   @Override
   public ConceptoDeDevengo getConceptoDeDevengo(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getConceptoDeDevengo'");
+    return mapaConceptoDeDevengo.get(llave);
   }
 
   @Override
   public boolean addConceptoDeDevengo(ConceptoDeDevengo conceptoDeDevengo) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addConceptoDeDevengo'");
+    mapaConceptoDeDevengo.put(conceptoDeDevengo.getCodigo(), conceptoDeDevengo);
+    return true;
   }
 
   @Override
   public boolean updateConceptoDeDevengo(Integer llave, ConceptoDeDevengo conceptoDeDevengo) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateConceptoDeDevengo'");
+    mapaConceptoDeDevengo.put(llave, conceptoDeDevengo);
+    return true;
   }
 
   @Override
   public boolean deleteConceptoDeDevengo(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteConceptoDeDevengo'");
+    mapaConceptoDeDevengo.remove(llave);
+    return true;
   }
   
 }

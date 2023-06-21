@@ -1,39 +1,39 @@
 package co.edu.univalle.miniproyecto4.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import co.edu.univalle.miniproyecto4.models.Empleado;
 
 public class EmpleadoDAO implements EmpleadoDAOInterface{
+  private Map <Integer, Empleado> mapaEmpleado = new HashMap<>();
 
   @Override
   public Map<Integer, Empleado> getMapEmpleado() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getMapEmpleado'");
+    return mapaEmpleado;
   }
 
   @Override
   public Empleado getEmpleado(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getEmpleado'");
+    return mapaEmpleado.get(llave);
   }
 
   @Override
   public boolean addEmpleado(Empleado empleado) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addEmpleado'");
+    mapaEmpleado.put(empleado.getCodigo(), empleado);
+    return true;
   }
 
   @Override
   public boolean updateEmpleado(Integer llave, Empleado empleado) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateEmpleado'");
+    mapaEmpleado.put(llave, empleado);
+    return true;
   }
 
   @Override
   public boolean deleteEmpleado(Integer llave) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteEmpleado'");
+    mapaEmpleado.remove(llave);
+    return true;
   }
   
 }
