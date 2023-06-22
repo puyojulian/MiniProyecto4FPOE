@@ -75,6 +75,15 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private Decolib fondoCajaComp;
 
     // -------------- PARA EL OBJETO EMPRESA ---------------- //
+
+    private JLabel lblNit, lblNombre, lblTefelono, lblDireccion, lblRepresentante, lblCorreo, lblArl, lblCCP, lblsalariomin, lblAxTrasn;
+    private JTextField fildEmpresaNit, fildEmpresaNombre, fildEmpresaTelefono, fildEmpresaDireccion, fildEmpresaRepre, fildEmpresaCorreo, fildEmpresaSalariomin, fildEmpresaAuxTrans;
+    private String[] codARL = {"Seleccionar","codARL1","codARL2"};
+    private JComboBox<String> dropCodARLEMPRESA = new JComboBox<>(codARL);
+    private String[] codCPP = {"Seleccionar","codCajaCom1","codCajaCom2"};
+    private JComboBox<String> dropCodCajaCom = new JComboBox<>(codCPP);
+    private Decolib fondoEmpresa;
+
     // -------------- PARA EL OBJETO DEVENOG ---------------- //
 
     private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev;
@@ -110,6 +119,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
         //Fuentes y colores para los objetos del programa
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 36);
+        Font nuevaTipografia22 = new Font("Berlin Sans FB Demi", Font.BOLD, 22);
         Font nuevaTipografia2 = new Font("Berlin Sans FB Demi", Font.BOLD, 24);
         Color colorFuente = new Color(33,23,22);
         Color colorFondoWhite = new Color(253,241,219);
@@ -305,7 +315,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
         lblIdE = new JLabel("Identificacion");
         lblIdE.setBounds(14,15,139,30);
-        lblIdE.setFont(nuevaTipografia2);
+        lblIdE.setFont(nuevaTipografia22);
         lblIdE.setForeground(colorFuente);
 
         lblCodE = new JLabel("Codigo");
@@ -338,17 +348,17 @@ public class ViewFormulario extends JFrame implements ActionListener{
         lblFPP.setFont(nuevaTipografia2);
         lblFPP.setForeground(colorFuente);
 
-        lblDateborn = new JLabel("Fecha|Nacimiento");
+        lblDateborn = new JLabel("Nacimiento");
         lblDateborn.setBounds(392,52,139,30);
         lblDateborn.setFont(nuevaTipografia2);
         lblDateborn.setForeground(colorFuente);
 
-        lblDateIngreso = new JLabel("Fecha|Ingreso");
+        lblDateIngreso = new JLabel("Date|Ingreso");
         lblDateIngreso.setBounds(392,87,139,30);
         lblDateIngreso.setFont(nuevaTipografia2);
         lblDateIngreso.setForeground(colorFuente);
         
-        lblDateRetiro = new JLabel("Fecha|Retiro");
+        lblDateRetiro = new JLabel("Date|Retiro");
         lblDateRetiro.setBounds(392,124, 139,30);
         lblDateRetiro.setFont(nuevaTipografia2);
         lblDateRetiro.setForeground(colorFuente);
@@ -460,6 +470,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpEmpleado.add(fildEmpleadoDateRet);
         jpEmpleado.add(dropTipoEmpleado);
         jpEmpleado.add(fildEmpleadoNCuenta);
+
 
         /* ----------- AÑADIR CORRESPONDIENTE A EPS ------------ */
 
@@ -620,6 +631,144 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpempresa.setBounds(0,0,758,246);
         jpempresa.setLayout(null);
         jpempresa.setBackground(colorFondoWhite);
+
+        lblNit = new JLabel("NIT");
+        lblNit.setBounds(14,15,139,30);
+        lblNit.setFont(nuevaTipografia2);
+        lblNit.setForeground(colorFuente);
+
+        lblNombre = new JLabel("Nombre");
+        lblNombre.setBounds(14,52,139,30);
+        lblNombre.setFont(nuevaTipografia2);
+        lblNombre.setForeground(colorFuente);
+
+        lblTefelono = new JLabel("Telefono");
+        lblTefelono.setBounds(14,87,139,30);
+        lblTefelono.setFont(nuevaTipografia2);
+        lblTefelono.setForeground(colorFuente);
+
+        lblDireccion = new JLabel("Direccion");
+        lblDireccion.setBounds(14,124,139,30);
+        lblDireccion.setFont(nuevaTipografia2);
+        lblDireccion.setForeground(colorFuente);
+
+        lblRepresentante = new JLabel("Representa");
+        lblRepresentante.setBounds(14,161,139,30);
+        lblRepresentante.setFont(nuevaTipografia2);
+        lblRepresentante.setForeground(colorFuente);
+
+        lblCorreo = new JLabel("Correo Rpr");
+        lblCorreo.setBounds(392,15,139,30);
+        lblCorreo.setFont(nuevaTipografia2);
+        lblCorreo.setForeground(colorFuente);
+
+        lblArl = new JLabel("Cod|ARL");
+        lblArl.setBounds(392,52,139,30);
+        lblArl.setFont(nuevaTipografia2);
+        lblArl.setForeground(colorFuente);
+
+        lblcodigoCajaC = new JLabel("Cod|CCP");
+        lblcodigoCajaC.setBounds(392,87,139,30);
+        lblcodigoCajaC.setFont(nuevaTipografia2);
+        lblcodigoCajaC.setForeground(colorFuente);
+
+        lblsalariomin = new JLabel("SMMLV");
+        lblsalariomin.setBounds(392,124,139,30);
+        lblsalariomin.setFont(nuevaTipografia2);
+        lblsalariomin.setForeground(colorFuente);
+
+        lblAxTrasn = new JLabel("AxTrasnporte");
+        lblAxTrasn.setBounds(392,161,139,30);
+        lblAxTrasn.setFont(nuevaTipografia22);
+        lblAxTrasn.setForeground(colorFuente);
+
+        fildEmpresaNit = new JTextField();
+        fildEmpresaNit.setBounds(167,15,203,30);
+        fildEmpresaNit.setFont(nuevaTipografia2);
+        fildEmpresaNit.setForeground(colorFuente);
+        fildEmpresaNit.setBackground(colorFondoWhite);
+
+        fildEmpresaNombre = new JTextField();
+        fildEmpresaNombre.setBounds(167,52,203,30);
+        fildEmpresaNombre.setFont(nuevaTipografia2);
+        fildEmpresaNombre.setForeground(colorFuente);
+        fildEmpresaNombre.setBackground(colorFondoWhite);
+
+        fildEmpresaTelefono = new JTextField();
+        fildEmpresaTelefono.setBounds(167,87,203,30);
+        fildEmpresaTelefono.setFont(nuevaTipografia2);
+        fildEmpresaTelefono.setForeground(colorFuente);
+        fildEmpresaTelefono.setBackground(colorFondoWhite);
+
+        fildEmpresaDireccion = new JTextField();
+        fildEmpresaDireccion.setBounds(167,124,203,30);
+        fildEmpresaDireccion.setFont(nuevaTipografia2);
+        fildEmpresaDireccion.setForeground(colorFuente);
+        fildEmpresaDireccion.setBackground(colorFondoWhite);
+
+        fildEmpresaRepre = new JTextField();
+        fildEmpresaRepre.setBounds(167,161,203,30);
+        fildEmpresaRepre.setFont(nuevaTipografia2);
+        fildEmpresaRepre.setForeground(colorFuente);
+        fildEmpresaRepre.setBackground(colorFondoWhite);
+
+        fildEmpresaCorreo = new JTextField();
+        fildEmpresaCorreo.setBounds(541,15,203,30);
+        fildEmpresaCorreo.setFont(nuevaTipografia2);
+        fildEmpresaCorreo.setForeground(colorFuente);
+        fildEmpresaCorreo.setBackground(colorFondoWhite);
+    
+        dropCodARLEMPRESA.setBounds(541,52,203,30);
+        dropCodARLEMPRESA.setOpaque(true);
+        dropCodARLEMPRESA.setFont(nuevaTipografia2);
+        dropCodARLEMPRESA.setForeground(colorFuente);
+        dropCodARLEMPRESA.setBackground(colorFondoWhite);
+
+        dropCodCajaCom.setBounds(541,87,203,30);
+        dropCodCajaCom.setOpaque(true);
+        dropCodCajaCom.setFont(nuevaTipografia2);
+        dropCodCajaCom.setForeground(colorFuente);
+        dropCodCajaCom.setBackground(colorFondoWhite);
+
+        fildEmpresaSalariomin = new JTextField();
+        fildEmpresaSalariomin.setBounds(541,124,203,30);
+        fildEmpresaSalariomin.setFont(nuevaTipografia2);
+        fildEmpresaSalariomin.setForeground(colorFuente);
+        fildEmpresaSalariomin.setBackground(colorFondoWhite);
+
+        fildEmpresaAuxTrans = new JTextField();
+        fildEmpresaAuxTrans.setBounds(541,161,203,30);
+        fildEmpresaAuxTrans.setFont(nuevaTipografia2);
+        fildEmpresaAuxTrans.setForeground(colorFuente);
+        fildEmpresaAuxTrans.setBackground(colorFondoWhite);
+
+        
+        jpempresa.add(lblNit);
+        jpempresa.add(lblNombre);
+        jpempresa.add(lblTefelono);
+        jpempresa.add(lblDireccion);
+        jpempresa.add(lblRepresentante);
+        jpempresa.add(lblCorreo);
+        jpempresa.add(lblArl);
+        jpempresa.add(lblcodigoCajaC);
+        jpempresa.add(lblsalariomin);
+        jpempresa.add(lblAxTrasn);
+        jpempresa.add(fildEmpresaNit);
+        jpempresa.add(fildEmpresaNombre);
+        jpempresa.add(fildEmpresaTelefono);
+        jpempresa.add(fildEmpresaDireccion);
+        jpempresa.add(fildEmpresaRepre);
+        jpempresa.add(fildEmpresaCorreo);
+        jpempresa.add(dropCodARLEMPRESA);
+        jpempresa.add(dropCodCajaCom);
+        jpempresa.add(fildEmpresaSalariomin);
+        jpempresa.add(fildEmpresaAuxTrans);
+
+        fondoEmpresa = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple1.png");
+        fondoEmpresa.setBounds(0,0,758,246);
+        jpempresa.add(fondoEmpresa);
+        
+        
 
         /* ----------- AÑADIR CORRESPONDIENTE A DEVENGO ------------ */
         
@@ -872,6 +1021,54 @@ public class ViewFormulario extends JFrame implements ActionListener{
     }
 
     /* --------------- PARA LA CONFIGURACION DE EMPRESA (Getters and Setters) ------------------- */
+
+    public JTextField getFildEmpresaNit() {
+        return fildEmpresaNit;
+    }
+
+    public JTextField getFildEmpresaNombre() {
+        return fildEmpresaNombre;
+    }
+
+    public JTextField getFildEmpresaTelefono() {
+        return fildEmpresaTelefono;
+    }
+
+    public JTextField getFildEmpresaDireccion() {
+        return fildEmpresaDireccion;
+    }
+
+    public JTextField getFildEmpresaRepre() {
+        return fildEmpresaRepre;
+    }
+
+    public JTextField getFildEmpresaCorreo() {
+        return fildEmpresaCorreo;
+    }
+
+    public JTextField getFildEmpresaSalariomin() {
+        return fildEmpresaSalariomin;
+    }
+
+    public JTextField getFildEmpresaAuxTrans() {
+        return fildEmpresaAuxTrans;
+    }
+
+    public JComboBox<String> getDropCodARLEMPRESA() {
+        return dropCodARLEMPRESA;
+    }
+
+    public void setDropCodARLEMPRESA(JComboBox<String> dropCodARLEMPRESA) {
+        this.dropCodARLEMPRESA = dropCodARLEMPRESA;
+    }
+    
+    public JComboBox<String> getDropCodCajaCom() {
+        return dropCodCajaCom;
+    }
+
+    public void setDropCodCajaCom(JComboBox<String> dropCodCajaCom) {
+        this.dropCodCajaCom = dropCodCajaCom;
+    }
 
     /* --------------- PARA CONCEPTO DE DEVENGO (Getters and Setters) ------------------- */
 
