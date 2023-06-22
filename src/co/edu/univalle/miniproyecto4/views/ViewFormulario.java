@@ -23,6 +23,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.UIManager;
 
 
 public class ViewFormulario extends JFrame implements ActionListener{
@@ -30,7 +31,8 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private Decolib imFFondo;
 
     // Crear objetos de tipo boton para el CRUD
-    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar, btnListar;
+    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar;
+    private Decolib btnAdd, btnDelte, btnedit, btnclear;
     // Crear objetos de tipo boton para el cambio de los apartados
     private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion;
 
@@ -97,6 +99,12 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private JLabel lblcodigoDed, lblnombreDed;
     private JTextField fildDeduccionCodigo, fildDeduccionNombre;
     
+    // ------------- ELEMENTOS PARA LAS TABLAS ----------------//
+    private JPanel jpfondotabla;
+    private Decolib fondotabla;
+    private JPanel jpTablaDatos = new JPanel();
+    private JTable tablaDatos = new JTable();
+    private JScrollPane panelTabla = new JScrollPane();
 
     private Decolib fondoDed;
 
@@ -105,17 +113,19 @@ public class ViewFormulario extends JFrame implements ActionListener{
         imFFondo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/fondo.png");
         imFFondo.setBounds(0,0,1280,720);
         add(imFFondo);
+        
 
     }
 
     private void iniciarComponentes() {
         setTitle("Ingenio de caña (Ventana formulario)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1280, 720);
+        setSize(1280, 750);
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
         setLayout(null);
+        setAlwaysOnTop(true);
 
         //Fuentes y colores para los objetos del programa
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 36);
@@ -865,6 +875,72 @@ public class ViewFormulario extends JFrame implements ActionListener{
         im10.setBounds(0,0,784,272);
         jpfondoF.add(im10);
 
+        /* -------------- Botones del CURD ---------------  */
+
+        btnAñadir = new JButton("Añadir");
+        btnAñadir.setBounds(553,355,149,49);
+        btnAñadir.setOpaque(true);
+        btnAñadir.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnAñadir.setContentAreaFilled(false);
+        btnAñadir.setLayout(null);
+        add(btnAñadir);
+
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBounds(714,355,149,49);
+        btnEliminar.setOpaque(true);
+        btnEliminar.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.setLayout(null);
+        add(btnEliminar);
+
+        btnLimpiar = new JButton("Limpiar");
+        btnLimpiar.setBounds(875,355,149,49);
+        btnLimpiar.setOpaque(true);
+        btnLimpiar.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setLayout(null);
+        add(btnLimpiar);
+
+        btnEditar = new JButton("Editar");
+        btnEditar.setBounds(1035,355,149,49);
+        btnEditar.setOpaque(true);
+        btnEditar.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setLayout(null);
+        add(btnEditar);
+
+        btnAdd = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/add.png");
+        btnAdd.setBounds(0,0,149,49);
+        btnAñadir.add(btnAdd);
+
+        btnDelte = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/delt.png");
+        btnDelte.setBounds(0,0,149,49);
+        btnEliminar.add(btnDelte);
+
+        btnclear = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/clean.png");
+        btnclear.setBounds(0,0,149,49);
+        btnLimpiar.add(btnclear);
+
+        btnedit = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/edit.png");
+        btnedit.setBounds(0,0,149,49);
+        btnEditar.add(btnedit);
+
+        /* -------------- PANEL DE TABLAS ---------------  */
+        
+        jpfondotabla = new JPanel();
+        jpfondotabla.setBounds(505,432,727,275);
+        jpfondotabla.setLayout(null);
+        jpfondotabla.setBackground(colorFondoWhite);
+        add(jpfondotabla);
+        
+        jpTablaDatos.setBounds(12,13,703,249);
+        jpTablaDatos.setBackground(colorFuente);
+        jpfondotabla.add(jpTablaDatos);
+
+        fondotabla = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/tablas/fondo.png");
+        fondotabla.setBounds(0,0,727,275);
+        jpfondotabla.add(fondotabla);
+
     }
 
     @Override
@@ -903,6 +979,22 @@ public class ViewFormulario extends JFrame implements ActionListener{
             mostrarPanel(jpDed);
         }
     }
+
+    public void addListener(ActionListener listener){
+        btnAñadir.addActionListener(listener);
+        btnEliminar.addActionListener(listener);
+        btnEditar.addActionListener(listener);
+        btnLimpiar.addActionListener(listener);
+        btnEmpleado.addActionListener(listener);
+        btnEps.addActionListener(listener);
+        btnFondoP.addActionListener(listener);
+        btnARL.addActionListener(listener);
+        btnCajaCompen.addActionListener(listener);
+        btnEmpresa.addActionListener(listener);
+        btnDevegno.addActionListener(listener);
+        btnDeduccion.addActionListener(listener);
+        
+    } 
 
     private void mostrartitle(JPanel showPanel){
         jpTittleR.removeAll();
@@ -1097,4 +1189,32 @@ public class ViewFormulario extends JFrame implements ActionListener{
     public JTextField getFildDeduccionNombre() {
         return fildDeduccionNombre;
     }
+
+    /* --------------- PARA LAS TABLAS (Panel) (Getters and Setters) ------------------- */
+
+    public JTable getTablaDatos() {
+        return tablaDatos;
+    }
+
+    public void setTablaDatos(JTable tablaDatos) {
+        this.tablaDatos = tablaDatos;
+    }
+
+    public JScrollPane getPanelTabla() {
+        return panelTabla;
+    }
+
+    public void setPanelTabla(JScrollPane panelTabla) {
+        this.panelTabla = panelTabla;
+        jpTablaDatos.add(panelTabla);
+        
+    }
+
+    public JPanel getJpTablaDatos() {
+        return jpTablaDatos;
+    }
+
+    
+
+
 }
