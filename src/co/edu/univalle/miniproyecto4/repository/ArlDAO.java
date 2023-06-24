@@ -35,4 +35,9 @@ public class ArlDAO implements ArlDAOInterface {
     mapaArl.remove(llave);
     return true;
   }
+
+  @Override
+  public void setMapArl(Map<Integer, Arl> mapaArl) {
+    this.mapaArl = mapaArl;
+  }
 }

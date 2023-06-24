@@ -14,4 +14,6 @@ public interface ArlDAOInterface {
     public boolean updateArl(Integer llave, Arl arl);
     
     public boolean deleteArl(Integer llave);
+
+    public void setMapArl(Map<Integer, Arl> mapa);
 } 
