@@ -1214,7 +1214,69 @@ public class ViewFormulario extends JFrame implements ActionListener{
         return jpTablaDatos;
     }
 
-    
+    /* --------------- PARA LOS BOTONES (Getters) ------------------- */
 
+    public JButton getBtnAñadir() {
+        return btnAñadir;
+    }
 
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnLimpiar() {
+        return btnLimpiar;
+    }
+
+    public Decolib getBtnAdd() {
+        return btnAdd;
+    }
+
+    public Decolib getBtnDelte() {
+        return btnDelte;
+    }
+
+    public Decolib getBtnedit() {
+        return btnedit;
+    }
+
+    public Decolib getBtnclear() {
+        return btnclear;
+    }
+
+    public JButton getBtnEmpleado() {
+        return btnEmpleado;
+    }
+
+    public JButton getBtnEps() {
+        return btnEps;
+    }
+
+    public JButton getBtnFondoP() {
+        return btnFondoP;
+    }
+
+    public JButton getBtnARL() {
+        return btnARL;
+    }
+
+    public JButton getBtnCajaCompen() {
+        return btnCajaCompen;
+    }
+
+    public JButton getBtnEmpresa() {
+        return btnEmpresa;
+    }
+
+    public JButton getBtnDevegno() {
+        return btnDevegno;
+    }
+
+    public JButton getBtnDeduccion() {
+        return btnDeduccion;
+    }
 }
