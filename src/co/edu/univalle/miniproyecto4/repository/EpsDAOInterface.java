@@ -30,4 +30,6 @@ public interface EpsDAOInterface {
     public boolean updateEps(Integer llave, Eps eps);
     
     public boolean deleteEps(Integer llave);
+
+    public void setMapEps(Map<Integer, Eps> mapa);
 }

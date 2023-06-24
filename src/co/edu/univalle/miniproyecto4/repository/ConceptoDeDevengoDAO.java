@@ -51,5 +51,10 @@ public class ConceptoDeDevengoDAO implements ConceptoDeDevengoDAOInterface{
     mapaConceptoDeDevengo.remove(llave);
     return true;
   }
+
+  @Override
+  public void setMapConceptoDeDevengo(Map<Integer, ConceptoDeDevengo> mapaConceptoDeDevengo) {
+    this.mapaConceptoDeDevengo = mapaConceptoDeDevengo;
+  }
   
 }

@@ -51,5 +51,10 @@ public class ConceptoDeDeduccionDAO implements ConceptoDeDeduccionDAOInterface{
     mapaConceptoDeDeduccion.remove(llave);
     return true;
   }
+
+  @Override
+  public void setMapConceptoDeDeduccion(Map<Integer, ConceptoDeDeduccion> mapaConceptoDeDeduccion) {
+    this.mapaConceptoDeDeduccion = mapaConceptoDeDeduccion;
+  }
   
 }

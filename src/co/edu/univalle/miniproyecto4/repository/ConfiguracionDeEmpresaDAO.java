@@ -52,4 +52,9 @@ public class ConfiguracionDeEmpresaDAO implements ConfiguracionDeEmpresaDAOInter
     return true;
   }
   
+  @Override
+  public void setMapConfiguracionDeEmpresa(Map<Integer, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa) {
+    this.mapaConfiguracionDeEmpresa = mapaConfiguracionDeEmpresa;
+  }
+
 }

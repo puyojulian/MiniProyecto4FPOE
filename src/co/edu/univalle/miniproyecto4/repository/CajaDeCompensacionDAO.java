@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.models.Arl;
 import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
 
 public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{
@@ -50,5 +51,10 @@ public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{
   public boolean deleteCajaDeCompensacion(Integer llave) {
     mapaCajaDeCompensacion.remove(llave);
     return true;
+  }
+
+  @Override
+  public void setMapCajaDeCompensacion(Map<Integer, CajaDeCompensacion> mapaCajaDeCompensacion) {
+    this.mapaCajaDeCompensacion = mapaCajaDeCompensacion;
   }
 }

@@ -30,4 +30,6 @@ public interface CajaDeCompensacionDAOInterface {
     public boolean updateCajaDeCompensacion(Integer llave, CajaDeCompensacion cajaDeCompensacion);
     
     public boolean deleteCajaDeCompensacion(Integer llave);
+
+    public void setMapCajaDeCompensacion(Map<Integer, CajaDeCompensacion> mapa);
 } 
