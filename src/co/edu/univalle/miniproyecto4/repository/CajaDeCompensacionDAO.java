@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: CajaDeCompensacionDAO.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,7 +11,7 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Administrar funciones de acceso y modificación para el modelo CajaDeCompensacion.
 */
 
 package co.edu.univalle.miniproyecto4.repository;
@@ -19,7 +19,6 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.edu.univalle.miniproyecto4.models.Arl;
 import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
 
 public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{

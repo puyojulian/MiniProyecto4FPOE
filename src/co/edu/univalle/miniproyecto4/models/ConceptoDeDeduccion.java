@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: ConceptoDeDeduccion.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,12 +11,14 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Modelo de Concepto de Deduccion.
 */
 
 package co.edu.univalle.miniproyecto4.models;
 
-public class ConceptoDeDeduccion {
+import java.io.Serializable;
+
+public class ConceptoDeDeduccion implements Serializable {
   private int codigo;
   private String nombre;
   private int consecutivo = 0;

@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: Arl.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,12 +11,14 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Modelo de Arl.
 */
 
 package co.edu.univalle.miniproyecto4.models;
 
-public class Arl {
+import java.io.Serializable;
+
+public class Arl implements Serializable {
   private int codigo;
   private String nombre;
   private int consecutivo = 0;

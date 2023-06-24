@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: Ingenio.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,10 +11,12 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Modelo de Ingenio. Contener los DAOs de los demás modelos.
 */
 
 package co.edu.univalle.miniproyecto4.models;
+
+import java.io.Serializable;
 
 import co.edu.univalle.miniproyecto4.repository.ArlDAO;
 import co.edu.univalle.miniproyecto4.repository.CajaDeCompensacionDAO;
@@ -25,7 +27,7 @@ import co.edu.univalle.miniproyecto4.repository.EmpleadoDAO;
 import co.edu.univalle.miniproyecto4.repository.EpsDAO;
 import co.edu.univalle.miniproyecto4.repository.FondoDePensionDAO;
 
-public class Ingenio {
+public class Ingenio implements Serializable {
   private String nombre;
   private ArlDAO arlDAO;
   private CajaDeCompensacionDAO cajaDeCompensacionDAO;

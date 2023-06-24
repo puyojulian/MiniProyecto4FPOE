@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: ConfiguracionDeEmpresa.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,12 +11,14 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Modelo de Configuracion De Empresa.
 */
 
 package co.edu.univalle.miniproyecto4.models;
 
-public class ConfiguracionDeEmpresa {
+import java.io.Serializable;
+
+public class ConfiguracionDeEmpresa implements Serializable {
   private int nit;
   private String razonSocial;
   private String nombre;

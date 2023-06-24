@@ -1,5 +1,5 @@
 /**
- Archivo: ArlDAO.java
+ Archivo: Empleado.java
  Proyecto IV - Sistema de liquididacion de un Ingenio
  24 de junio de 2023
 
@@ -11,12 +11,14 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Modelo de Empleado.
 */
 
 package co.edu.univalle.miniproyecto4.models;
 
-public class Empleado {
+import java.io.Serializable;
+
+public class Empleado implements Serializable {
   private int identificación;
   private int codigo;
   private String apellidos;

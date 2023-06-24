@@ -11,7 +11,7 @@
   @author Luis Carlos Lucero
  
  Intencion:
- Administrar funciones de acceso y modificación para el modelo Arl.
+ Controlador de vista ViewFormulario.
 */
 
 package co.edu.univalle.miniproyecto4.controllers;
@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -30,30 +32,33 @@ import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 public class ViewFormularioController {
   private ViewFormulario vista;
   private Ingenio ingenio;
+  private List listaMap;
+  private DefaultTableModel modeloTabla;
   
 
   public ViewFormularioController(ViewFormulario vista) {
     this.vista = vista;
     ingenio = new Ingenio();
+    modeloTabla = new DefaultTableModel();
+
+    ActionsHandler manejadorDeActionEvents = new ActionsHandler();
+    vista.addListener(manejadorDeActionEvents);
 
   }
   
-  public DefaultTableModel actualizarJListaPrestamos(Map<Integer, Object> mapa) {
-    DefaultTableModel modeloTabla = new DefaultTableModel();
+  public <T> DefaultTableModel actualizarTableModel(Map<Integer, T> mapa) {
     List<Object> listaTemporal = new ArrayList<>();
-  // List<Object> listaMap = new ArrayList<>();
       
     if(mapa.size() > 0) {
-        Set<Map.Entry<Integer, Object>> entrySetMapa = mapa.entrySet();
+        Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
-        listaTemporal.clear();
         modeloTabla.setRowCount(0);
 
-        // listaMap = new ArrayList<>(mapa.entrySet());
+        listaMap = new ArrayList<>(mapa.entrySet());
         
         establecerIdentificadoresColumnas(modeloTabla);
 
-        for (Map.Entry<Integer, Object> entry : entrySetMapa){
+        for (Map.Entry<Integer, T> entry : entrySetMapa){
             Object value = entry.getValue();
             String item = "" + value;
             StringTokenizer tokenizer = new StringTokenizer(item,",");
@@ -63,7 +68,7 @@ public class ViewFormularioController {
             }
             
             modeloTabla.addRow(listaTemporal.toArray());
-            listaTemporal.clear();
+            // listaTemporal.clear();
         }
         return modeloTabla;
     }
@@ -78,33 +83,78 @@ public class ViewFormularioController {
             String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnEps().isSelected()){
+        else if(vista.getBtnEps().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnFondoP().isSelected()){
+        else if(vista.getBtnFondoP().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnARL().isSelected()){
+        else if(vista.getBtnARL().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnCajaCompen().isSelected()){
+        else if(vista.getBtnCajaCompen().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnEmpresa().isSelected()){
+        else if(vista.getBtnEmpresa().isSelected()) {
             String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnDevegno().isSelected()){
+        else if(vista.getBtnDevegno().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE", "HACE BASE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnDeduccion().isSelected()){
+        else if(vista.getBtnDeduccion().isSelected()) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
+        }
+    }
+
+
+
+    class ActionsHandler implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == vista.getBtnEmpleado()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado()));
+            }
+            else if(e.getSource() == vista.getBtnEps()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEpsDAO().getMapEps()));
+            }
+            else if(e.getSource() == vista.getBtnFondoP()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+            }
+            else if(e.getSource() == vista.getBtnARL()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getArlDAO().getMapArl()));
+            }
+            else if(e.getSource() == vista.getBtnCajaCompen()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+            }
+            else if(e.getSource() == vista.getBtnEmpresa()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+            }
+            else if(e.getSource() == vista.getBtnDevegno()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+            }
+            else if(e.getSource() == vista.getBtnDeduccion()) {
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+            }
+            else if(e.getSource() == vista.getBtnAñadir()) {
+                
+            }
+            else if(e.getSource() == vista.getBtnEliminar()) {
+                
+            }
+            else if(e.getSource() == vista.getBtnEditar()) {
+                
+            }
+            else if(e.getSource() == vista.getBtnLimpiar()) {
+                
+            }
         }
     }
 
@@ -121,5 +171,4 @@ public class ViewFormularioController {
     // btnEmpresa.addActionListener(listener);
     // btnDevegno.addActionListener(listener);
     // btnDeduccion.addActionListener(listener);
-
 }
