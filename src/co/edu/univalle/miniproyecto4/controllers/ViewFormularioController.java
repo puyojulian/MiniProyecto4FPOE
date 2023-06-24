@@ -144,16 +144,108 @@ public class ViewFormularioController {
                 vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
             }
             else if(e.getSource() == vista.getBtnAñadir()) {
-                
+                if(vista.getBtnEmpleado().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEps().isSelected()) {
+                    
+                }
+                else if(vista.getBtnFondoP().isSelected()) {
+                    
+                }
+                else if(vista.getBtnARL().isSelected()) {
+                    
+                }
+                else if(vista.getBtnCajaCompen().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEmpresa().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDevegno().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDeduccion().isSelected()) {
+                    
+                }
             }
             else if(e.getSource() == vista.getBtnEliminar()) {
-                
+                if(vista.getBtnEmpleado().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEps().isSelected()) {
+                    
+                }
+                else if(vista.getBtnFondoP().isSelected()) {
+                    
+                }
+                else if(vista.getBtnARL().isSelected()) {
+                    
+                }
+                else if(vista.getBtnCajaCompen().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEmpresa().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDevegno().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDeduccion().isSelected()) {
+                    
+                }
             }
             else if(e.getSource() == vista.getBtnEditar()) {
-                
+                if(vista.getBtnEmpleado().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEps().isSelected()) {
+                    
+                }
+                else if(vista.getBtnFondoP().isSelected()) {
+                    
+                }
+                else if(vista.getBtnARL().isSelected()) {
+                    
+                }
+                else if(vista.getBtnCajaCompen().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEmpresa().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDevegno().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDeduccion().isSelected()) {
+                    
+                }
             }
             else if(e.getSource() == vista.getBtnLimpiar()) {
-                
+                if(vista.getBtnEmpleado().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEps().isSelected()) {
+                    
+                }
+                else if(vista.getBtnFondoP().isSelected()) {
+                    
+                }
+                else if(vista.getBtnARL().isSelected()) {
+                    
+                }
+                else if(vista.getBtnCajaCompen().isSelected()) {
+                    
+                }
+                else if(vista.getBtnEmpresa().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDevegno().isSelected()) {
+                    
+                }
+                else if(vista.getBtnDeduccion().isSelected()) {
+                    
+                }
             }
         }
     }
