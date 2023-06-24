@@ -14,4 +14,6 @@ public interface ConceptoDeDeduccionDAOInterface {
     public boolean updateConceptoDeDeduccion(Integer llave, ConceptoDeDeduccion conceptoDeDeduccion);
     
     public boolean deleteConceptoDeDeduccion(Integer llave);
+
+    public void setMapConceptoDeDeduccion(Map<Integer, ConceptoDeDeduccion> mapa);
 } 

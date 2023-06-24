@@ -14,4 +14,6 @@ public interface EmpleadoDAOInterface {
     public boolean updateEmpleado(Integer llave, Empleado empleado);
     
     public boolean deleteEmpleado(Integer llave);
+
+    public void setMapEmpleado(Map<Integer, Empleado> mapa);
 }

@@ -35,4 +35,10 @@ public class FondoDePensionDAO implements FondoDePensionDAOInterface{
     mapaFondoDePension.remove(llave);
     return true;
   }  
+
+  @Override
+  public void setMapFondoDePension(Map<Integer, FondoDePension> mapaFondoDePension) {
+    this.mapaFondoDePension = mapaFondoDePension;
+  }
+
 }

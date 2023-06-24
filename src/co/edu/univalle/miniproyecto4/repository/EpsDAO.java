@@ -35,5 +35,10 @@ public class EpsDAO implements EpsDAOInterface{
     mapaEps.remove(llave);
     return true;
   }
+
+  @Override
+  public void setMapEps(Map<Integer, Eps> mapaEps) {
+    this.mapaEps = mapaEps;
+  }
   
 }

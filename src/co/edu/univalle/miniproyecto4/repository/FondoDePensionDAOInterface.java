@@ -14,4 +14,6 @@ public interface FondoDePensionDAOInterface {
     public boolean updateFondoDePension(Integer llave, FondoDePension fondoDePension);
     
     public boolean deleteFondoDePension(Integer llave);
+
+    public void setMapFondoDePension(Map<Integer, FondoDePension> mapa);
 }

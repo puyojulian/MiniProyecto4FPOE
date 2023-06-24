@@ -14,4 +14,6 @@ public interface ConceptoDeDevengoDAOInterface {
     public boolean updateConceptoDeDevengo(Integer llave, ConceptoDeDevengo conceptoDeDevengo);
     
     public boolean deleteConceptoDeDevengo(Integer llave);
+
+    public void setMapConceptoDeDevengo(Map<Integer, ConceptoDeDevengo> mapa);
 } 

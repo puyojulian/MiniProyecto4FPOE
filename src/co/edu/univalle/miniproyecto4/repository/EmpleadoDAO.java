@@ -35,5 +35,10 @@ public class EmpleadoDAO implements EmpleadoDAOInterface{
     mapaEmpleado.remove(llave);
     return true;
   }
+
+  @Override
+  public void setMapEmpleado(Map<Integer, Empleado> mapaEmpleado) {
+    this.mapaEmpleado = mapaEmpleado;
+  }
   
 }

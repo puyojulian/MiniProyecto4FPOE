@@ -14,4 +14,6 @@ public interface ConfiguracionDeEmpresaDAOInterface {
     public boolean updateConfiguracionDeEmpresa(Integer llave, ConfiguracionDeEmpresa configuracionDeEmpresa);
     
     public boolean deleteConfiguracionDeEmpresa(Integer llave);
+
+    public void setMapConfiguracionDeEmpresa(Map<Integer, ConfiguracionDeEmpresa> mapa);
 }
