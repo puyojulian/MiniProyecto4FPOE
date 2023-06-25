@@ -23,8 +23,8 @@ public class ConceptoDeDeduccion implements Serializable {
   private String nombre;
   private int consecutivo = 0;
 
-  public ConceptoDeDeduccion(int codigo, String nombre) {
-    this.codigo = codigo;
+  public ConceptoDeDeduccion(String nombre) {
+    this.codigo = consecutivo++;
     this.nombre = nombre;
     System.out.println("Deduccion instanciada.");
   }

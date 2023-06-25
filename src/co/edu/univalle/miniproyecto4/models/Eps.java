@@ -23,8 +23,8 @@ public class Eps implements Serializable, ModelInterface {
   private String nombre;
   private int consecutivo = 0;
 
-  public Eps(int codigo, String nombre) {
-    this.codigo = codigo;
+  public Eps(String nombre) {
+    this.codigo = consecutivo++;
     this.nombre = nombre;
     System.out.println("Eps instanciada.");
   }

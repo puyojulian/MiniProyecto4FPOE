@@ -329,20 +329,19 @@ public class ViewFormularioController {
                     }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
-                    ingenio.getEpsDAO().addEps(new Eps(Integer.parseInt(vista.getFildEPSCod().getText()), vista.getFildEPSNombre().getText()));
+                    ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
                     limpiarCampos("Eps");
                 }
                 else if(apartadoFormulario.equals("FPP")) {
-                    ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(Integer.parseInt(vista.getFildFPPcod().getText()), vista.getFildFPPnombre().getText()));
+                    ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
                     limpiarCampos("FPP");
                 }
                 else if(apartadoFormulario.equals("ARL")) {
-                    ingenio.getArlDAO().addArl(new Arl(Integer.parseInt(vista.getFildARLcod().getText()), vista.getFildARLnombre().getText()));
+                    ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
                     limpiarCampos("ARL");
                 }
                 else if(apartadoFormulario.equals("CCompensacion")) {
-                    ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(Integer.parseInt(vista.getFildCajaComCodigo().getText()), 
-                    vista.getFildCajaComNombre().getText()));
+                    ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
                     limpiarCampos("CCompensacion");
                 }
                 else if(apartadoFormulario.equals("Empresa")) {
@@ -364,13 +363,11 @@ public class ViewFormularioController {
                     }
                 }
                 else if(apartadoFormulario.equals("Devengo")) {
-                    ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(new ConceptoDeDevengo(Integer.parseInt(vista.getFildDevengoCodigo().getText()), 
-                    vista.getFildDevengonombre().getText()));
+                    ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(new ConceptoDeDevengo(vista.getFildDevengonombre().getText()));
                     limpiarCampos("Devengo");
                 }
                 else if(apartadoFormulario.equals("Deduccion")) {
-                    ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(new ConceptoDeDeduccion(Integer.parseInt(vista.getFildDeduccionCodigo().getText()), 
-                    vista.getFildDeduccionNombre().getText()));
+                    ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText()));
                     limpiarCampos("Deduccion");
                 }
             }

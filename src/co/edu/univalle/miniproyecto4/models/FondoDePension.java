@@ -23,8 +23,8 @@ public class FondoDePension implements Serializable, ModelInterface {
   private String nombre;
   private int consecutivo = 0;
 
-  public FondoDePension(int codigo, String nombre) {
-    this.codigo = codigo;
+  public FondoDePension(String nombre) {
+    this.codigo = consecutivo++;
     this.nombre = nombre;
     System.out.println("Fondo de Pension instanciado.");
   }
