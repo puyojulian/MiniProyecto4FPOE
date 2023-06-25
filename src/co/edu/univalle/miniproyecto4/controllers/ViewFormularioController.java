@@ -86,9 +86,11 @@ public class ViewFormularioController {
         }
     }
 
+    
+
     public void establecerIdentificadoresColumnas(DefaultTableModel modelo) {
         if(vista.getBtnEmpleado().isSelected()) {
-            String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP"};
+            String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP", "FECHA NAC.", "FECHA ING.", "FECHA RET.", "TIPO TRAB.", "NÚM. CUENTA"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
         else if(vista.getBtnEps().isSelected()) {
@@ -356,30 +358,8 @@ public class ViewFormularioController {
                 }
             }
             else if(e.getSource() == vista.getBtnLimpiar()) {
-                if(apartadoFormulario.equals("Empleado")) {
+                vista.getTablaDatos().clearSelection();
 
-                }
-                else if(apartadoFormulario.equals("Eps")) {
-                    
-                }
-                else if(apartadoFormulario.equals("FPP")) {
-                    
-                }
-                else if(apartadoFormulario.equals("ARL")) {
-                    
-                }
-                else if(apartadoFormulario.equals("CCompensacion")) {
-                    
-                }
-                else if(apartadoFormulario.equals("Empresa")) {
-                    
-                }
-                else if(apartadoFormulario.equals("Devengo")) {
-                    
-                }
-                else if(apartadoFormulario.equals("Deduccion")) {
-                    
-                }
             }
         }
     }

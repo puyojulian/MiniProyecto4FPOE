@@ -155,6 +155,6 @@ public class Empleado implements Serializable, ModelInterface {
 
   @Override
   public String toString() {
-    return identificación + ", " + codigo + ", " + apellidos + ", " + nombres + ", " + direccion + ", " + codigoEps + ", " + codigoFpp;
+    return identificación + ", " + codigo + ", " + apellidos + ", " + nombres + ", " + direccion + ", " + codigoEps + ", " + codigoFpp + ", " + fechaDeNacimiento + ", " + fechaDeIngreso + ", " + fechaDeRetiro + ", " + tipoDeTrabajador + ", " + numeroDeCuenta;
   }
 }
