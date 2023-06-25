@@ -21,6 +21,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import co.edu.univalle.miniproyecto4.controllers.ViewFormularioController;
+
 public class ViewIncio extends JFrame implements ActionListener {
     private JPanel jpnaleIcono, jpanelTexto;
     private Decolib imFondo, imIcon, imTexto;
@@ -82,6 +84,7 @@ public class ViewIncio extends JFrame implements ActionListener {
         if(e.getSource() == btnInciar){
             dispose();
             ViewFormulario viewFormulario = new ViewFormulario();
+            ViewFormularioController viewFormularioController = new ViewFormularioController(viewFormulario);
         }
     }
 

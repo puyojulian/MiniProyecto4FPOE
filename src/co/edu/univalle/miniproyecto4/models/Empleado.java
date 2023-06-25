@@ -17,8 +17,9 @@
 package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-public class Empleado implements Serializable {
+public class Empleado implements Serializable, ModelInterface {
   private int identificación;
   private int codigo;
   private String apellidos;
@@ -27,8 +28,14 @@ public class Empleado implements Serializable {
   private int codigoEps;
   private int codigoFpp;
   private int consecutivo = 0;
+  private LocalDate fechaDeNacimiento;
+  private LocalDate fechaDeIngreso;
+  private LocalDate fechaDeRetiro;
+  private int tipoDeTrabajador;
+  private String numeroDeCuenta;
 
-  public Empleado(int id, String apellidos, String nombres, String direccion, int codigoEps, int codigoFpp) {
+
+  public Empleado(int id, String apellidos, String nombres, String direccion, int codigoEps, int codigoFpp, LocalDate fechaDeNacimiento, LocalDate fechaDeIngreso, LocalDate fechaDeRetiro, int tipoDeTrabajador, String numeroDeCuenta) {
     this.identificación = id;
     this.codigo = consecutivo++;
     this.apellidos = apellidos;
@@ -36,6 +43,12 @@ public class Empleado implements Serializable {
     this.direccion = direccion;
     this.codigoEps = codigoEps;
     this.codigoFpp = codigoFpp;
+    System.out.println("Empleado instanciado.");
+    this.fechaDeNacimiento = fechaDeNacimiento;
+    this.fechaDeIngreso = fechaDeIngreso;
+    this.fechaDeRetiro = fechaDeRetiro;
+    this.tipoDeTrabajador = tipoDeTrabajador;
+    this.numeroDeCuenta = numeroDeCuenta;
   }
 
   public Empleado() {
@@ -55,7 +68,7 @@ public class Empleado implements Serializable {
   public int getIdentificacion() {
     return identificación;
   }
-
+  @Override
   public int getCodigo() {
     return codigo;
   }
@@ -64,15 +77,15 @@ public class Empleado implements Serializable {
     this.apellidos = apellidos;
   }
   
-  public String getApellidos() {
+  public String getApellido() {
     return apellidos;
   }
 
-  public void setNombres(String nombres) {
+  public void setNombre(String nombres) {
     this.nombres = nombres;
   }
-  
-  public String getNombres() {
+  @Override
+  public String getNombre() {
     return nombres;
   }
 
@@ -98,6 +111,46 @@ public class Empleado implements Serializable {
 
   public int getCodigoEps() {
     return codigoEps;
+  }
+
+  public LocalDate getFechaDeNacimiento() {
+    return fechaDeNacimiento;
+  }
+
+  public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
+    this.fechaDeNacimiento = fechaDeNacimiento;
+  }
+
+  public LocalDate getFechaDeIngreso() {
+    return fechaDeIngreso;
+  }
+
+  public void setFechaDeIngreso(LocalDate fechaDeIngreso) {
+    this.fechaDeIngreso = fechaDeIngreso;
+  }
+
+  public LocalDate getFechaDeRetiro() {
+    return fechaDeRetiro;
+  }
+
+  public void setFechaDeRetiro(LocalDate fechaDeRetiro) {
+    this.fechaDeRetiro = fechaDeRetiro;
+  }
+
+  public int getTipoDeTrabajador() {
+    return tipoDeTrabajador;
+  }
+
+  public void setTipoDeTrabajador(int tipoDeTrabajador) {
+    this.tipoDeTrabajador = tipoDeTrabajador;
+  }
+
+  public String getNumeroDeCuenta() {
+    return numeroDeCuenta;
+  }
+
+  public void setNumeroDeCuenta(String numeroDeCuenta) {
+    this.numeroDeCuenta = numeroDeCuenta;
   }
 
   @Override

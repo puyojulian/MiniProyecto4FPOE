@@ -31,9 +31,8 @@ public class ConfiguracionDeEmpresa implements Serializable {
   private int salarioMínimoLegalVigente;
   private int auxilioDeTransporte;
 
-  public ConfiguracionDeEmpresa(int nit, String razonSocial, String nombre, int telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, int salarioMínimoLegalVigente, int auxilioDeTransporte) {
+  public ConfiguracionDeEmpresa(int nit, String nombre, int telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, int salarioMínimoLegalVigente, int auxilioDeTransporte) {
     this.nit = nit;
-    this.razonSocial = razonSocial;
     this.nombre = nombre;
     this.telefono = telefono;
     this.direccion = direccion;

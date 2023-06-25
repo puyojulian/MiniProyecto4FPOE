@@ -18,7 +18,7 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
-public class FondoDePension implements Serializable {
+public class FondoDePension implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
   private int consecutivo = 0;
@@ -33,6 +33,7 @@ public class FondoDePension implements Serializable {
     this.nombre = "";
   }
 
+  @Override
   public int getCodigo() {
     return codigo;
   }
@@ -40,7 +41,8 @@ public class FondoDePension implements Serializable {
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
-
+  
+  @Override
   public String getNombre() {
     return nombre;
   }
