@@ -24,9 +24,10 @@ public class ConceptoDeDevengo implements Serializable {
   private boolean haceBase;
   private int consecutivo = 0;
 
-  public ConceptoDeDevengo(String nombre) {
-    this.codigo = consecutivo++;
+  public ConceptoDeDevengo(int codigo, String nombre) {
+    this.codigo = codigo;
     this.nombre = nombre;
+    System.out.println("Devengo instanciado.");
   }
 
   public ConceptoDeDevengo() {

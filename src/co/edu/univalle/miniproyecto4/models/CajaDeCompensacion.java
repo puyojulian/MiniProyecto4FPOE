@@ -23,9 +23,10 @@ public class CajaDeCompensacion implements Serializable, ModelInterface {
   private String nombre;
   private int consecutivo = 0;
 
-  public CajaDeCompensacion(String nombre) {
-    this.codigo = consecutivo++;
+  public CajaDeCompensacion(int codigo, String nombre) {
+    this.codigo = codigo;
     this.nombre = nombre;
+    System.out.println("Caja de Compensacion instanciada.");
   }
 
   public CajaDeCompensacion() {

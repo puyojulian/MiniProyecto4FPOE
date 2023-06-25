@@ -43,12 +43,12 @@ public class Empleado implements Serializable, ModelInterface {
     this.direccion = direccion;
     this.codigoEps = codigoEps;
     this.codigoFpp = codigoFpp;
-    System.out.println("Empleado instanciado.");
     this.fechaDeNacimiento = fechaDeNacimiento;
     this.fechaDeIngreso = fechaDeIngreso;
     this.fechaDeRetiro = fechaDeRetiro;
     this.tipoDeTrabajador = tipoDeTrabajador;
     this.numeroDeCuenta = numeroDeCuenta;
+    System.out.println("Empleado instanciado.");
   }
 
   public Empleado() {

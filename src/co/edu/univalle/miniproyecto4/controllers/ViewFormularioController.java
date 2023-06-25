@@ -29,6 +29,10 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import co.edu.univalle.miniproyecto4.models.Arl;
+import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
+import co.edu.univalle.miniproyecto4.models.ConceptoDeDeduccion;
+import co.edu.univalle.miniproyecto4.models.ConceptoDeDevengo;
 import co.edu.univalle.miniproyecto4.models.ConfiguracionDeEmpresa;
 import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.Eps;
@@ -42,6 +46,7 @@ public class ViewFormularioController {
     private Ingenio ingenio;
     private List listaMap;
     private DefaultTableModel modeloTabla;
+    private String apartadoFormulario = "";
   
 
     public ViewFormularioController(ViewFormulario vista) {
@@ -212,8 +217,61 @@ public class ViewFormularioController {
         dlg.setVisible(true);
     }
 
+    private void limpiarCampos(String vistaActual){
+        if(vistaActual.equals("Empleado")) {
+            vista.getFildEmpleadoApellido().setText("");
+            vista.getFildEmpleadoCod().setText("");
+            vista.getFildEmpleadoDateIngr().setText("");
+            vista.getFildEmpleadoDateN().setText("");
+            vista.getFildEmpleadoDateRet().setText("");
+            vista.getFildEmpleadoDr().setText("");
+            vista.getFildEmpleadoId().setText("");
+            vista.getFildEmpleadoNCuenta().setText("");
+            vista.getFildEmpleadoNombre().setText("");
+            vista.getDropEpsEmpleado().setSelectedIndex(0);
+            vista.getDropFppEmpleado().setSelectedIndex(0);
+            vista.getDropTipoEmpleado().setSelectedIndex(0);
+        }
+        else if(vistaActual.equals("Eps")) {
+            vista.getFildEPSCod().setText("");
+            vista.getFildEPSNombre().setText("");
+        }
+        else if(vistaActual.equals("FPP")) {
+            vista.getFildFPPcod().setText("");
+            vista.getFildFPPnombre().setText("");
+        }
+        else if(vistaActual.equals("ARL")) {
+            vista.getFildARLcod().setText("");
+            vista.getFildARLnombre().setText("");
+        }
+        else if(vistaActual.equals("CCompensacion")) {
+            vista.getFildCajaComCodigo().setText("");
+            vista.getFildCajaComNombre().setText("");
+        }
+        else if(vistaActual.equals("Empresa")) {
+            vista.getFildEmpresaAuxTrans().setText("");
+            vista.getFildEmpresaCorreo().setText("");
+            vista.getFildEmpresaDireccion().setText("");
+            vista.getFildEmpresaNit().setText("");
+            vista.getFildEmpresaNombre().setText("");
+            vista.getFildEmpresaRepre().setText("");
+            vista.getFildEmpresaSalariomin().setText("");
+            vista.getFildEmpresaTelefono().setText("");
+            vista.getDropCodARLEMPRESA().setSelectedIndex(0);
+            vista.getDropCodCajaCom().setSelectedIndex(0);
+        }
+        else if(vistaActual.equals("Devengo")) {
+            vista.getFildDevengoCodigo().setText("");
+            vista.getFildDevengonombre().setText("");
+            vista.getDropbaseDevengo().setSelectedIndex(0);
+        }
+        else if(vistaActual.equals("Deduccion")) {
+            vista.getFildDeduccionCodigo().setText("");
+            vista.getFildDeduccionNombre().setText("");
+        }
+    }
+
     class ActionsHandler implements ActionListener{
-        String apartadoFormulario = "";
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == vista.getBtnEmpleado()) {
@@ -264,22 +322,28 @@ public class ViewFormularioController {
                             crearFecha(vista.getFildEmpleadoDateRet().getText()), 
                             vista.getDropTipoEmpleado().getSelectedIndex(), 
                             vista.getFildEmpleadoNCuenta().getText()));
+                            limpiarCampos("Empleado");
                     }
                     else {
                         mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);
                     }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
-                    
+                    ingenio.getEpsDAO().addEps(new Eps(Integer.parseInt(vista.getFildEPSCod().getText()), vista.getFildEPSNombre().getText()));
+                    limpiarCampos("Eps");
                 }
                 else if(apartadoFormulario.equals("FPP")) {
-                    
+                    ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(Integer.parseInt(vista.getFildFPPcod().getText()), vista.getFildFPPnombre().getText()));
+                    limpiarCampos("FPP");
                 }
                 else if(apartadoFormulario.equals("ARL")) {
-                    
+                    ingenio.getArlDAO().addArl(new Arl(Integer.parseInt(vista.getFildARLcod().getText()), vista.getFildARLnombre().getText()));
+                    limpiarCampos("ARL");
                 }
                 else if(apartadoFormulario.equals("CCompensacion")) {
-                    
+                    ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(Integer.parseInt(vista.getFildCajaComCodigo().getText()), 
+                    vista.getFildCajaComNombre().getText()));
+                    limpiarCampos("CCompensacion");
                 }
                 else if(apartadoFormulario.equals("Empresa")) {
                     if(esNumerico(vista.getFildEmpresaNit().getText()) && esNumerico(vista.getFildEmpresaTelefono().getText()) && esNumerico(vista.getFildEmpresaSalariomin().getText()) && esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
@@ -293,16 +357,21 @@ public class ViewFormularioController {
                             getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
                             Integer.parseInt(vista.getFildEmpresaSalariomin().getText()), 
                             Integer.parseInt(vista.getFildEmpresaAuxTrans().getText())));
+                            limpiarCampos("Empresa");
                     }
                     else {
                         mensajeTemporal("NIT, Teléfono, Salario Mínimo y Auxilio de Transporte deben ser numéricos.", "Error de entrada", 1150);
                     }
                 }
                 else if(apartadoFormulario.equals("Devengo")) {
-                    
+                    ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(new ConceptoDeDevengo(Integer.parseInt(vista.getFildDevengoCodigo().getText()), 
+                    vista.getFildDevengonombre().getText()));
+                    limpiarCampos("Devengo");
                 }
                 else if(apartadoFormulario.equals("Deduccion")) {
-                    
+                    ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(new ConceptoDeDeduccion(Integer.parseInt(vista.getFildDeduccionCodigo().getText()), 
+                    vista.getFildDeduccionNombre().getText()));
+                    limpiarCampos("Deduccion");
                 }
             }
             else if(e.getSource() == vista.getBtnEliminar()) {
@@ -359,7 +428,30 @@ public class ViewFormularioController {
             }
             else if(e.getSource() == vista.getBtnLimpiar()) {
                 vista.getTablaDatos().clearSelection();
-
+                if(apartadoFormulario.equals("Empleado")) {
+                    limpiarCampos("Empleado");
+                }
+                else if(apartadoFormulario.equals("Eps")) {
+                    limpiarCampos("Eps");
+                }
+                else if(apartadoFormulario.equals("FPP")) {
+                    limpiarCampos("FPP");
+                }
+                else if(apartadoFormulario.equals("ARL")) {
+                    limpiarCampos("ARL");
+                }
+                else if(apartadoFormulario.equals("CCompensacion")) {
+                    limpiarCampos("CCompensacion");
+                }
+                else if(apartadoFormulario.equals("Empresa")) {
+                    limpiarCampos("Empresa");
+                }
+                else if(apartadoFormulario.equals("Devengo")) {
+                    limpiarCampos("Devengo");
+                }
+                else if(apartadoFormulario.equals("Deduccion")) {
+                    limpiarCampos("Deduccion");
+                }
             }
         }
     }

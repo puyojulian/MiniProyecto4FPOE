@@ -23,9 +23,10 @@ public class Arl implements Serializable, ModelInterface {
   private String nombre;
   private int consecutivo = 0;
 
-  public Arl(String nombre) {
-    this.codigo = consecutivo++;
+  public Arl(int codigo, String nombre) {
+    this.codigo = codigo;
     this.nombre = nombre;
+    System.out.println("Arl instanciada.");
   }
 
   public Arl() {

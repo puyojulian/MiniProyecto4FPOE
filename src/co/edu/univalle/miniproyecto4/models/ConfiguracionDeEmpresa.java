@@ -42,6 +42,7 @@ public class ConfiguracionDeEmpresa implements Serializable {
     this.codigoCajaDeCompensación = codigoCajaDeCompensación;
     this.salarioMínimoLegalVigente = salarioMínimoLegalVigente;
     this.auxilioDeTransporte = auxilioDeTransporte;
+    System.out.println("Empresa instanciado.");
   }
 
   public ConfiguracionDeEmpresa() {
