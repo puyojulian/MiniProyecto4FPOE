@@ -59,17 +59,16 @@ public class ViewFormularioController {
 
     }
   
-    public <T> DefaultTableModel actualizarTableModel(Map<Integer, T> mapa) {
+    public <T> DefaultTableModel actualizarTableModel(Map<Integer, T> mapa, String apartadoFormulario) {
         List<Object> listaTemporal = new ArrayList<>();
-            
+
+        modeloTabla.setRowCount(0);
+        establecerIdentificadoresColumnas(modeloTabla, apartadoFormulario);
+
         if(mapa.size() > 0) {
             Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
-            modeloTabla.setRowCount(0);
-
             listaMap = new ArrayList<>(mapa.entrySet());
-            
-            establecerIdentificadoresColumnas(modeloTabla);
 
             for (Map.Entry<Integer, T> entry : entrySetMapa){
                 Object value = entry.getValue();
@@ -81,48 +80,44 @@ public class ViewFormularioController {
                 }
                 
                 modeloTabla.addRow(listaTemporal.toArray());
-                // listaTemporal.clear();
             }
             return modeloTabla;
         }
         else {
-            modeloTabla.setRowCount(0);
             return modeloTabla;
         }
-    }
+    }  
 
-    
-
-    public void establecerIdentificadoresColumnas(DefaultTableModel modelo) {
-        if(vista.getBtnEmpleado().isSelected()) {
+    public void establecerIdentificadoresColumnas(DefaultTableModel modelo, String apartadoFormulario) {
+        if(apartadoFormulario.equals("Empleado")) {
             String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP", "FECHA NAC.", "FECHA ING.", "FECHA RET.", "TIPO TRAB.", "NÚM. CUENTA"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnEps().isSelected()) {
+        else if(apartadoFormulario.equals("Eps")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnFondoP().isSelected()) {
+        else if(apartadoFormulario.equals("FPP")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnARL().isSelected()) {
+        else if(apartadoFormulario.equals("ARL")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnCajaCompen().isSelected()) {
+        else if(apartadoFormulario.equals("CCompensacion")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnEmpresa().isSelected()) {
+        else if(apartadoFormulario.equals("Empresa")) {
             String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnDevegno().isSelected()) {
+        else if(apartadoFormulario.equals("Devengo")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE", "HACE BASE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
-        else if(vista.getBtnDeduccion().isSelected()) {
+        else if(apartadoFormulario.equals("Deduccion")) {
             String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
             modelo.setColumnIdentifiers(atributosTabla);
         }
@@ -275,35 +270,35 @@ public class ViewFormularioController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == vista.getBtnEmpleado()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
                 apartadoFormulario = "Empleado";
             }
             else if(e.getSource() == vista.getBtnEps()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEpsDAO().getMapEps()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEpsDAO().getMapEps(), "Eps"));
                 apartadoFormulario = "Eps";
             }
             else if(e.getSource() == vista.getBtnFondoP()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getFondoDePensionDAO().getMapFondoDePension(), "FPP"));
                 apartadoFormulario = "FPP";
             }
             else if(e.getSource() == vista.getBtnARL()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getArlDAO().getMapArl()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getArlDAO().getMapArl(), "ARL"));
                 apartadoFormulario = "ARL";
             }
             else if(e.getSource() == vista.getBtnCajaCompen()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion(), "CCompensacion"));
                 apartadoFormulario = "CCompensacion";
             }
             else if(e.getSource() == vista.getBtnEmpresa()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa(), "Empresa"));
                 apartadoFormulario = "Empresa";
             }
             else if(e.getSource() == vista.getBtnDevegno()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo(), "Devengo"));
                 apartadoFormulario = "Devengo";
             }
             else if(e.getSource() == vista.getBtnDeduccion()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "Deduccion"));
                 apartadoFormulario = "Deduccion";
             }
             else if(e.getSource() == vista.getBtnAñadir()) {
@@ -323,6 +318,7 @@ public class ViewFormularioController {
                             vista.getDropTipoEmpleado().getSelectedIndex(), 
                             vista.getFildEmpleadoNCuenta().getText()));
                             limpiarCampos("Empleado");
+                        vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
                     }
                     else {
                         mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);

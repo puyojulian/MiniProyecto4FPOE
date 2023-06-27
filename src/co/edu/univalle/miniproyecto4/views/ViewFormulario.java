@@ -23,7 +23,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 
 public class ViewFormulario extends JFrame implements ActionListener{
@@ -934,13 +934,38 @@ public class ViewFormulario extends JFrame implements ActionListener{
         add(jpfondotabla);
         
         jpTablaDatos.setBounds(12,13,703,249);
+        jpTablaDatos.setLayout(null);
         jpTablaDatos.setBackground(colorFuente);
         jpfondotabla.add(jpTablaDatos);
+        jpTablaDatos.add(panelTabla);
+
+        
 
         fondotabla = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/tablas/fondo.png");
         fondotabla.setBounds(0,0,727,275);
         jpfondotabla.add(fondotabla);
 
+        tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);     
+        panelTabla.setBounds(0,0,703,249);
+        panelTabla.setViewportView(tablaDatos);
+
+        // String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
+        // DefaultTableModel  tableModel = new DefaultTableModel();
+        // tableModel.setColumnIdentifiers(atributosTabla);
+        // tablaDatos.setModel(tableModel);
+
+        // setPanelTabla(panelTabla);
     }
 
     @Override
@@ -1205,9 +1230,9 @@ public class ViewFormulario extends JFrame implements ActionListener{
     }
 
     public void setPanelTabla(JScrollPane panelTabla) {
-        this.panelTabla = panelTabla;
-        jpTablaDatos.add(panelTabla);
-        
+        // this.panelTabla = panelTabla;
+        // panelTabla.add(tablaDatos);
+        // jpTablaDatos.add(panelTabla);
     }
 
     public JPanel getJpTablaDatos() {
