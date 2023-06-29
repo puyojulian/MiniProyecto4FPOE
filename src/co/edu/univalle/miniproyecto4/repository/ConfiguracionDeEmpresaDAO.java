@@ -22,15 +22,15 @@ import java.util.Map;
 import co.edu.univalle.miniproyecto4.models.ConfiguracionDeEmpresa;
 
 public class ConfiguracionDeEmpresaDAO implements ConfiguracionDeEmpresaDAOInterface{
-  private Map <Integer, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa = new HashMap<>();
+  private Map <String, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa = new HashMap<>();
 
   @Override
-  public Map<Integer, ConfiguracionDeEmpresa> getMapConfiguracionDeEmpresa() {
+  public Map<String, ConfiguracionDeEmpresa> getMapConfiguracionDeEmpresa() {
     return mapaConfiguracionDeEmpresa;
   }
 
   @Override
-  public ConfiguracionDeEmpresa getConfiguracionDeEmpresa(Integer llave) {
+  public ConfiguracionDeEmpresa getConfiguracionDeEmpresa(String llave) {
     return mapaConfiguracionDeEmpresa.get(llave);
   }
 
@@ -41,19 +41,19 @@ public class ConfiguracionDeEmpresaDAO implements ConfiguracionDeEmpresaDAOInter
   }
 
   @Override
-  public boolean updateConfiguracionDeEmpresa(Integer llave, ConfiguracionDeEmpresa configuracionDeEmpresa) {
+  public boolean updateConfiguracionDeEmpresa(String llave, ConfiguracionDeEmpresa configuracionDeEmpresa) {
     mapaConfiguracionDeEmpresa.put(llave, configuracionDeEmpresa);
     return true;
   }
 
   @Override
-  public boolean deleteConfiguracionDeEmpresa(Integer llave) {
+  public boolean deleteConfiguracionDeEmpresa(String llave) {
     mapaConfiguracionDeEmpresa.remove(llave);
     return true;
   }
   
   @Override
-  public void setMapConfiguracionDeEmpresa(Map<Integer, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa) {
+  public void setMapConfiguracionDeEmpresa(Map<String, ConfiguracionDeEmpresa> mapaConfiguracionDeEmpresa) {
     this.mapaConfiguracionDeEmpresa = mapaConfiguracionDeEmpresa;
   }
 

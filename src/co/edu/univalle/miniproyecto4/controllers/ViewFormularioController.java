@@ -24,9 +24,13 @@ import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import co.edu.univalle.miniproyecto4.models.Arl;
@@ -39,6 +43,7 @@ import co.edu.univalle.miniproyecto4.models.Eps;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.models.ModelInterface;
+import co.edu.univalle.miniproyecto4.util.SerializationUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 
 public class ViewFormularioController {
@@ -47,23 +52,33 @@ public class ViewFormularioController {
     private List listaMap;
     private DefaultTableModel modeloTabla;
     private String apartadoFormulario = "";
+    private int index;
   
+
 
     public ViewFormularioController(ViewFormulario vista) {
-    this.vista = vista;
-    ingenio = new Ingenio();
-    modeloTabla = new DefaultTableModel();
+        this.vista = vista;
+        ingenio = new Ingenio();
+        modeloTabla = new DefaultTableModel();
+        listaMap = new ArrayList<Map.Entry>();
 
-    ActionsHandler manejadorDeActionEvents = new ActionsHandler();
-    vista.addListener(manejadorDeActionEvents);
+        ActionsHandler manejadorDeActionEvents = new ActionsHandler();
+        ListSelectionHandler manejadorDeSelectionEvents = new ListSelectionHandler();
+        vista.addListener(manejadorDeActionEvents);
 
+        vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeSelectionEvents);
+
+        if(SerializationUtil.isSerializedObjectExists("mapaARL.bin")) {
+            ingenio.getArlDAO().setMapArl((Map) SerializationUtil.deserializeObject("mapaARL.bin"));
+        }
     }
   
-    public <T> DefaultTableModel actualizarTableModel(Map<Integer, T> mapa, String apartadoFormulario) {
+    public <T> DefaultTableModel actualizarTableModelInt(Map<Integer, T> mapa, String apartadoFormulario) {
         List<Object> listaTemporal = new ArrayList<>();
 
         modeloTabla.setRowCount(0);
         establecerIdentificadoresColumnas(modeloTabla, apartadoFormulario);
+        listaMap.clear();
 
         if(mapa.size() > 0) {
             Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
@@ -78,15 +93,136 @@ public class ViewFormularioController {
                     String token = tokenizer.nextToken();
                     listaTemporal.add(token);
                 }
-                
                 modeloTabla.addRow(listaTemporal.toArray());
+                listaTemporal.clear();
             }
+            System.out.println(modeloTabla);
             return modeloTabla;
         }
         else {
+            System.out.println(modeloTabla);
             return modeloTabla;
         }
-    }  
+    }
+    
+    public <T> DefaultTableModel actualizarTableModelString(Map<String, T> mapa, String apartadoFormulario) {
+        List<Object> listaTemporal = new ArrayList<>();
+
+        modeloTabla.setRowCount(0);
+        establecerIdentificadoresColumnas(modeloTabla, apartadoFormulario);
+        listaMap.clear();
+
+        if(mapa.size() > 0) {
+            Set<Map.Entry<String, T>> entrySetMapa = mapa.entrySet();
+
+            listaMap = new ArrayList<>(mapa.entrySet());
+
+            for (Map.Entry<String, T> entry : entrySetMapa){
+                Object value = entry.getValue();
+                String item = "" + value;
+                StringTokenizer tokenizer = new StringTokenizer(item,",");
+                while(tokenizer.hasMoreTokens()) {
+                    String token = tokenizer.nextToken();
+                    listaTemporal.add(token);
+                    
+                }
+                modeloTabla.addRow(listaTemporal.toArray());
+                listaTemporal.clear();
+            }
+            
+            return modeloTabla;
+        }
+        else {
+            System.out.println(modeloTabla);
+            return modeloTabla;
+        }
+    }
+
+    // public <T> void setListaMap(Map<Integer, T> mapa) {
+    //     listaMap = new ArrayList<>(mapa.entrySet());
+    // }
+
+    public <T extends ModelInterface> void popularNombreComboBox(JComboBox<String> comboBox, Map<Integer, T> mapa) {
+        comboBox.removeAllItems();
+        comboBox.addItem("Seleccionar");
+        if(mapa.size() > 0) {
+            Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
+            for (Map.Entry<Integer, T> entry : entrySetMapa) {
+                comboBox.addItem(entry.getValue().getNombre());
+            }
+        }
+    }
+
+    public void popularNombreComboBox(JComboBox<String> comboBox, String elemento) {
+        comboBox.addItem(elemento);
+    }
+
+    public String fechaToString(LocalDate fecha) {
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return fecha.format(formateador);
+    }
+
+    public void llenarCamposFormulario() {
+        index = vista.getTablaDatos().getSelectedRow();
+        if(apartadoFormulario.equals("Empleado")) {
+            Map.Entry<Integer, Empleado> entry = (Map.Entry<Integer, Empleado>) listaMap.get(index);
+            vista.getFildEmpleadoApellido().setText(entry.getValue().getApellido());
+            vista.getFildEmpleadoCod().setText(entry.getValue().getNombre());
+            vista.getFildEmpleadoDateIngr().setText(fechaToString(entry.getValue().getFechaDeIngreso()));
+            vista.getFildEmpleadoDateN().setText(fechaToString(entry.getValue().getFechaDeIngreso()));
+            vista.getFildEmpleadoDateRet().setText(fechaToString(entry.getValue().getFechaDeIngreso()));
+            vista.getFildEmpleadoDr().setText(entry.getValue().getDireccion());
+            vista.getFildEmpleadoId().setText(entry.getValue().getIdentificacion());
+            vista.getFildEmpleadoNCuenta().setText(entry.getValue().getNumeroDeCuenta());
+            vista.getFildEmpleadoNombre().setText(entry.getValue().getNombre());
+            popularNombreComboBox(vista.getDropEpsEmpleado(), ingenio.getEpsDAO().getMapEps().get(entry.getValue().getCodigoEps()).getNombre());
+            popularNombreComboBox(vista.getDropFppEmpleado(), ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getValue().getCodigoFpp()).getNombre());
+        }
+        else if(apartadoFormulario.equals("Eps")) {
+            Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
+            vista.getFildEPSCod().setText(entry.getValue().getCodigo() + "");
+            vista.getFildEPSNombre().setText(entry.getValue().getNombre());
+        }
+        else if(apartadoFormulario.equals("FPP")) {
+            Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
+            vista.getFildFPPcod().setText(entry.getValue().getCodigo() + "");
+            vista.getFildFPPnombre().setText(entry.getValue().getNombre());
+        }
+        else if(apartadoFormulario.equals("ARL")) {
+            Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
+            vista.getFildARLcod().setText(entry.getValue().getCodigo() + "");
+            vista.getFildARLnombre().setText(entry.getValue().getNombre());
+        }
+        else if(apartadoFormulario.equals("CCompensacion")) {
+            Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
+            vista.getFildCajaComCodigo().setText(entry.getValue().getCodigo() + "");
+            vista.getFildCajaComNombre().setText(entry.getValue().getNombre());
+        }
+        else if(apartadoFormulario.equals("Empresa")) {
+            Map.Entry<Integer, ConfiguracionDeEmpresa> entry = (Map.Entry<Integer, ConfiguracionDeEmpresa>) listaMap.get(index);
+            vista.getFildEmpresaAuxTrans().setText(entry.getValue().getAuxilioDeTransporte());
+            vista.getFildEmpresaCorreo().setText(entry.getValue().getCorreoDeContacto());
+            vista.getFildEmpresaDireccion().setText(entry.getValue().getdireccion());
+            vista.getFildEmpresaNit().setText(entry.getValue().getNit());
+            vista.getFildEmpresaNombre().setText(entry.getValue().getNombre());
+            vista.getFildEmpresaRepre().setText(entry.getValue().getrepresentanteLegal());
+            vista.getFildEmpresaSalariomin().setText(entry.getValue().getSalarioMínimoLegalVigente());
+            vista.getFildEmpresaTelefono().setText(entry.getValue().getTelefono());
+            popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl().get(entry.getValue().getCodigoArl()).getNombre());
+            vista.getDropCodCajaCom().setSelectedIndex(0);
+        }
+        else if(apartadoFormulario.equals("Devengo")) {
+            Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
+            vista.getFildDevengoCodigo().setText(entry.getValue().getCodigo() + "");
+            vista.getFildDevengonombre().setText(entry.getValue().getNombre());
+            // vista.getDropbaseDevengo().setSelectedIndex(0);
+        }
+        else if(apartadoFormulario.equals("Deduccion")) {
+            Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
+            vista.getFildDeduccionCodigo().setText(entry.getValue().getCodigo() + "");
+            vista.getFildDeduccionNombre().setText(entry.getValue().getNombre());
+        }
+    }
 
     public void establecerIdentificadoresColumnas(DefaultTableModel modelo, String apartadoFormulario) {
         if(apartadoFormulario.equals("Empleado")) {
@@ -264,47 +400,60 @@ public class ViewFormularioController {
             vista.getFildDeduccionCodigo().setText("");
             vista.getFildDeduccionNombre().setText("");
         }
+        vista.getTablaDatos().clearSelection();
+    }
+
+    class ListSelectionHandler implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            llenarCamposFormulario();
+        }
     }
 
     class ActionsHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == vista.getBtnEmpleado()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
+                popularNombreComboBox(vista.getDropEpsEmpleado(), ingenio.getEpsDAO().getMapEps());
+                popularNombreComboBox(vista.getDropFppEmpleado(), ingenio.getFondoDePensionDAO().getMapFondoDePension());
                 apartadoFormulario = "Empleado";
             }
             else if(e.getSource() == vista.getBtnEps()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEpsDAO().getMapEps(), "Eps"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps(), "Eps"));
                 apartadoFormulario = "Eps";
             }
             else if(e.getSource() == vista.getBtnFondoP()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getFondoDePensionDAO().getMapFondoDePension(), "FPP"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension(), "FPP"));
                 apartadoFormulario = "FPP";
             }
             else if(e.getSource() == vista.getBtnARL()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getArlDAO().getMapArl(), "ARL"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl(), "ARL"));
                 apartadoFormulario = "ARL";
             }
             else if(e.getSource() == vista.getBtnCajaCompen()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion(), "CCompensacion"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion(), "CCompensacion"));
                 apartadoFormulario = "CCompensacion";
             }
             else if(e.getSource() == vista.getBtnEmpresa()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa(), "Empresa"));
+                vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa(), "Empresa"));
+                popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl());
+                popularNombreComboBox(vista.getDropCodCajaCom(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());
                 apartadoFormulario = "Empresa";
             }
             else if(e.getSource() == vista.getBtnDevegno()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo(), "Devengo"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo(), "Devengo"));
                 apartadoFormulario = "Devengo";
             }
             else if(e.getSource() == vista.getBtnDeduccion()) {
-                vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "Deduccion"));
+                vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "Deduccion"));
                 apartadoFormulario = "Deduccion";
             }
             else if(e.getSource() == vista.getBtnAñadir()) {
                 if(apartadoFormulario.equals("Empleado")) {
                     if(esNumerico(vista.getFildEmpleadoId().getText())) {
-                        ingenio.getEmpleadoDAO().addEmpleado(new Empleado(Integer.parseInt(vista.getFildEmpleadoId().getText()), 
+                        ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
                             vista.getFildEmpleadoApellido().getText(), 
                             vista.getFildEmpleadoNombre().getText(), 
                             vista.getFildEmpleadoDr().getText(), 
@@ -318,7 +467,7 @@ public class ViewFormularioController {
                             vista.getDropTipoEmpleado().getSelectedIndex(), 
                             vista.getFildEmpleadoNCuenta().getText()));
                             limpiarCampos("Empleado");
-                        vista.getTablaDatos().setModel(actualizarTableModel(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado(), "Empleado"));
                     }
                     else {
                         mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);
@@ -326,6 +475,7 @@ public class ViewFormularioController {
                 }
                 else if(apartadoFormulario.equals("Eps")) {
                     ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps(), "Eps"));
                     limpiarCampos("Eps");
                 }
                 else if(apartadoFormulario.equals("FPP")) {
@@ -342,16 +492,16 @@ public class ViewFormularioController {
                 }
                 else if(apartadoFormulario.equals("Empresa")) {
                     if(esNumerico(vista.getFildEmpresaNit().getText()) && esNumerico(vista.getFildEmpresaTelefono().getText()) && esNumerico(vista.getFildEmpresaSalariomin().getText()) && esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
-                        ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(Integer.parseInt(vista.getFildEmpresaNit().getText()), 
+                        ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(vista.getFildEmpresaNit().getText(), 
                             vista.getFildEmpresaNombre().getText(), 
-                            Integer.parseInt(vista.getFildEmpresaTelefono().getText()), 
+                            vista.getFildEmpresaTelefono().getText(), 
                             vista.getFildEmpresaDireccion().getText(), 
                             vista.getFildEmpresaRepre().getText(), 
                             vista.getFildEmpresaCorreo().getText(), 
                             getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()), 
                             getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
-                            Integer.parseInt(vista.getFildEmpresaSalariomin().getText()), 
-                            Integer.parseInt(vista.getFildEmpresaAuxTrans().getText())));
+                            vista.getFildEmpresaSalariomin().getText(), 
+                            vista.getFildEmpresaAuxTrans().getText()));
                             limpiarCampos("Empresa");
                     }
                     else {
@@ -448,6 +598,8 @@ public class ViewFormularioController {
             }
         }
     }
+
+    
 
     // btnAñadir.addActionListener(listener);
     // btnEliminar.addActionListener(listener);

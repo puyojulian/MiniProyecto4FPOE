@@ -22,7 +22,7 @@ public class ConceptoDeDevengo implements Serializable {
   private int codigo;
   private String nombre;
   private boolean haceBase;
-  private int consecutivo = 0;
+  private static int consecutivo = 0;
 
   public ConceptoDeDevengo(String nombre) {
     this.codigo = consecutivo++;

@@ -21,11 +21,13 @@ import java.io.Serializable;
 public class Eps implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
-  private int consecutivo = 0;
+  private static int consecutivo = 0;
 
   public Eps(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
+    System.out.println(consecutivo);
+    System.out.println(codigo);
     System.out.println("Eps instanciada.");
   }
 

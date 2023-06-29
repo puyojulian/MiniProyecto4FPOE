@@ -32,7 +32,7 @@ public class SerializationUtil {
       objectOut.writeObject(obj);
       objectOut.close();
       fileOut.close();
-      System.out.println("Object serialized successfully.");
+      System.out.println("Objeto serializado exitosamente.");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -45,7 +45,7 @@ public class SerializationUtil {
       Object obj = objectIn.readObject();
       objectIn.close();
       fileIn.close();
-      System.out.println("Object deserialized successfully.");
+      System.out.println("Objeto de-serializado exitosamente.");
       return obj;
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();

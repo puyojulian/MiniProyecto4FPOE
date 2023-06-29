@@ -21,11 +21,12 @@ import java.io.Serializable;
 public class FondoDePension implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
-  private int consecutivo = 0;
+  private static int consecutivo = 0;
 
   public FondoDePension(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
+    System.out.println(consecutivo);
     System.out.println("Fondo de Pension instanciado.");
   }
 

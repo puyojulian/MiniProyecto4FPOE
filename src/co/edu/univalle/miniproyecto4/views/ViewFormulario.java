@@ -956,7 +956,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);     
+        tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         panelTabla.setBounds(0,0,703,249);
         panelTabla.setViewportView(tablaDatos);
 

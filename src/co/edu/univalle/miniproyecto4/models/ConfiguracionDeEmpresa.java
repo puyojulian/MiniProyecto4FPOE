@@ -19,19 +19,19 @@ package co.edu.univalle.miniproyecto4.models;
 import java.io.Serializable;
 
 public class ConfiguracionDeEmpresa implements Serializable {
-  private int nit;
+  private String nit;
   private String razonSocial;
   private String nombre;
-  private int telefono;
+  private String telefono;
   private String direccion;
   private String representanteLegal;
   private String correoDeContacto;
   private int codigoArl;
   private int codigoCajaDeCompensación;
-  private int salarioMínimoLegalVigente;
-  private int auxilioDeTransporte;
+  private String salarioMínimoLegalVigente;
+  private String auxilioDeTransporte;
 
-  public ConfiguracionDeEmpresa(int nit, String nombre, int telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, int salarioMínimoLegalVigente, int auxilioDeTransporte) {
+  public ConfiguracionDeEmpresa(String nit, String nombre, String telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, String salarioMínimoLegalVigente, String auxilioDeTransporte) {
     this.nit = nit;
     this.nombre = nombre;
     this.telefono = telefono;
@@ -46,24 +46,24 @@ public class ConfiguracionDeEmpresa implements Serializable {
   }
 
   public ConfiguracionDeEmpresa() {
-    this.nit = 0;
+    this.nit = "";
     this.razonSocial = "";
     this.nombre = "";
-    this.telefono = 0;
+    this.telefono = "";
     this.direccion = "";
     this.representanteLegal = "";
     this.correoDeContacto = "";
     this.codigoArl = 0;
     this.codigoCajaDeCompensación = 0;
-    this.salarioMínimoLegalVigente = 0;
-    this.auxilioDeTransporte = 0;
+    this.salarioMínimoLegalVigente = "";
+    this.auxilioDeTransporte = "";
   }
 
-  public void setNit(int nit) {
+  public void setNit(String nit) {
     this.nit = nit;
   }
 
-  public int getNit() {
+  public String getNit() {
     return nit;
   }
 
@@ -83,11 +83,11 @@ public class ConfiguracionDeEmpresa implements Serializable {
     return nombre;
   }
 
-  public void setTelefono(int telefono) {
+  public void setTelefono(String telefono) {
     this.telefono = telefono;
   }
 
-  public int getTelefono() {
+  public String getTelefono() {
     return telefono;
   }
 
@@ -131,19 +131,19 @@ public class ConfiguracionDeEmpresa implements Serializable {
     return codigoCajaDeCompensación;
   }
 
-  public void setSalarioMínimoLegalVigente(int salarioMínimoLegalVigente) {
+  public void setSalarioMínimoLegalVigente(String salarioMínimoLegalVigente) {
     this.salarioMínimoLegalVigente = salarioMínimoLegalVigente;
   }
 
-  public int getSalarioMínimoLegalVigente() {
+  public String getSalarioMínimoLegalVigente() {
     return salarioMínimoLegalVigente;
   }
 
-  public void setAuxilioDeTransporte(int auxilioDeTransporte) {
+  public void setAuxilioDeTransporte(String auxilioDeTransporte) {
     this.auxilioDeTransporte = auxilioDeTransporte;
   }
 
-  public int getAuxilioDeTransporte() {
+  public String getAuxilioDeTransporte() {
     return auxilioDeTransporte;
   }
 

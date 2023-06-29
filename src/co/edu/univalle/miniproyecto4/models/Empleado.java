@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Empleado implements Serializable, ModelInterface {
-  private int identificación;
+  private String identificación;
   private int codigo;
   private String apellidos;
   private String nombres;
@@ -35,7 +35,7 @@ public class Empleado implements Serializable, ModelInterface {
   private String numeroDeCuenta;
 
 
-  public Empleado(int id, String apellidos, String nombres, String direccion, int codigoEps, int codigoFpp, LocalDate fechaDeNacimiento, LocalDate fechaDeIngreso, LocalDate fechaDeRetiro, int tipoDeTrabajador, String numeroDeCuenta) {
+  public Empleado(String id, String apellidos, String nombres, String direccion, int codigoEps, int codigoFpp, LocalDate fechaDeNacimiento, LocalDate fechaDeIngreso, LocalDate fechaDeRetiro, int tipoDeTrabajador, String numeroDeCuenta) {
     this.identificación = id;
     this.codigo = consecutivo++;
     this.apellidos = apellidos;
@@ -52,7 +52,7 @@ public class Empleado implements Serializable, ModelInterface {
   }
 
   public Empleado() {
-    this.identificación = 0;
+    this.identificación = "";
     this.codigo = consecutivo++;
     this.apellidos = "";
     this.nombres = "";
@@ -61,11 +61,11 @@ public class Empleado implements Serializable, ModelInterface {
     this.codigoFpp = 0;
   }
 
-  public void setIdentificacion(int id) {
+  public void setIdentificacion(String id) {
     this.identificación = id;
   }
 
-  public int getIdentificacion() {
+  public String getIdentificacion() {
     return identificación;
   }
   @Override
