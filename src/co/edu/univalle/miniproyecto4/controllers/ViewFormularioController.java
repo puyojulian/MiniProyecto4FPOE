@@ -17,19 +17,12 @@
 package co.edu.univalle.miniproyecto4.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,9 +36,6 @@ import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.Eps;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
-import co.edu.univalle.miniproyecto4.models.ModelInterface;
-import co.edu.univalle.miniproyecto4.repository.EmpleadoDAO;
-import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 
 public class ViewFormularioController {
