@@ -5,12 +5,13 @@ import java.util.Map;
 import java.util.Set;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/* --------------- Retorna Matriz de resultados (trabajos realizados) por fichaEmpleado ------------------- */
+/* --------------- INSERTE COMENTARIO ------------------- */
 public class TextReaderUtil {
   public static List<ArrayList<String>> getListaCantidadTrabajada(String rutaArchivo, int fichaEmpleado) {
     List<ArrayList<String>> matrizRespuesta = new ArrayList<>();
@@ -97,6 +98,36 @@ public class TextReaderUtil {
       for(Map.Entry<String,T> entry : entrySet) {
         writer.write(entry.getValue().toString());
         writer.newLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /* --------------- INSERTE COMENTARIO ------------------- */
+  public static void borrarLinea(String rutaArchivo, String lineaABorrar) {
+    try {
+      File inputFile = new File(rutaArchivo);
+      File tempFile = new File("temp.txt");
+      BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo)); 
+      BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if(!line.equals(lineaABorrar)) {
+          writer.write(line);
+          writer.newLine();
+        }
+      }
+
+      reader.close();
+      writer.close();
+
+      if (inputFile.delete()) {
+        tempFile.renameTo(inputFile);
+        System.out.println("Linea borrada exitosamente");
+      } 
+      else {
+        System.out.println("Intento de borrar la linea fallido.");
       }
     } catch (IOException e) {
       e.printStackTrace();
