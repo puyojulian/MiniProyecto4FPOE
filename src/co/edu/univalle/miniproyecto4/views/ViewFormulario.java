@@ -34,7 +34,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar;
     private Decolib btnAdd, btnDelte, btnedit, btnclear;
     // Crear objetos de tipo boton para el cambio de los apartados
-    private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion;
+    private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion, btnLiquidacion;
 
     //Paneles para las categorias y titulos (Remplazar)
     private JPanel jpTittleR, jpTittleEmpleado, jpTittleEPS, jpTittleFondoP, jpTittleARL, jpTittleCaja, jpTittleEmpresa, jpTittleDevengo, jpTittleDeduccion;
@@ -200,6 +200,14 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnDeduccion.setBackground(colorFondoWhite);
         add( btnDeduccion);
 
+        btnLiquidacion = new JButton("Liquidar");
+        btnLiquidacion.setBounds(70, 621 ,285,41);
+        btnLiquidacion.setFont(nuevaTipografia);
+        btnLiquidacion.setForeground(colorFuente);
+        btnLiquidacion.setOpaque(true);
+        btnLiquidacion.setBackground(colorFondoWhite);
+        add(btnLiquidacion);
+
         btnEmpleado.addActionListener(this);
         btnEps.addActionListener(this);
         btnFondoP.addActionListener(this);
@@ -208,6 +216,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEmpresa.addActionListener(this);
         btnDevegno.addActionListener(this);
         btnDeduccion.addActionListener(this);
+        btnLiquidacion.addActionListener(this);
 
 
         /* ------------ PANELES DE LOS TITULOS DEL APARTADO ------------------  
@@ -939,8 +948,6 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpfondotabla.add(jpTablaDatos);
         jpTablaDatos.add(panelTabla);
 
-        
-
         fondotabla = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/tablas/fondo.png");
         fondotabla.setBounds(0,0,727,275);
         jpfondotabla.add(fondotabla);
@@ -1002,6 +1009,11 @@ public class ViewFormulario extends JFrame implements ActionListener{
             System.out.println("Apartado deduccion");
             mostrartitle(jpTittleDeduccion);
             mostrarPanel(jpDed);
+        } else if (event.getSource() == btnLiquidacion){
+            System.out.println("Liquidar");
+            ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
+            viewLiquidacion.setVisible(true);
+            
         }
     }
 
