@@ -125,7 +125,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         setVisible(true);
         setResizable(false);
         setLayout(null);
-        setAlwaysOnTop(true);
+        // setAlwaysOnTop(true);
 
         //Fuentes y colores para los objetos del programa
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 36);
