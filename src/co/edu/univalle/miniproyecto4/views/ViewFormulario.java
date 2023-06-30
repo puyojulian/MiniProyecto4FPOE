@@ -31,8 +31,8 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private Decolib imFFondo;
 
     // Crear objetos de tipo boton para el CRUD
-    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar;
-    private Decolib btnAdd, btnDelte, btnedit, btnclear;
+    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar, btnImprimir;
+    private Decolib btnAdd, btnDelte, btnedit, btnclear, ic2;
     // Crear objetos de tipo boton para el cambio de los apartados
     private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion, btnLiquidacion;
 
@@ -918,6 +918,18 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEditar.setLayout(null);
         add(btnEditar);
 
+        btnImprimir = new JButton();
+        btnImprimir.setBounds(1188,393,74,30);
+        btnImprimir.setOpaque(true);
+        btnImprimir.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnImprimir.setContentAreaFilled(false);
+        btnImprimir.setLayout(null);
+        add(btnImprimir);
+
+        ic2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnimp.png");
+        ic2.setBounds(0,0,74,30);
+        btnImprimir.add(ic2);
+
         btnAdd = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/add.png");
         btnAdd.setBounds(0,0,149,49);
         btnAñadir.add(btnAdd);
@@ -933,6 +945,8 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnedit = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/edit.png");
         btnedit.setBounds(0,0,149,49);
         btnEditar.add(btnedit);
+
+
 
         /* -------------- PANEL DE TABLAS ---------------  */
         
