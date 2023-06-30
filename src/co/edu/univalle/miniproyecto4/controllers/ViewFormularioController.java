@@ -190,26 +190,31 @@ public class ViewFormularioController {
             vista.getFildEmpleadoNombre().setText(entry.getValue().getNombre());
             popularNombreComboBox(vista.getDropEpsEmpleado(), ingenio.getEpsDAO().getMapEps().get(entry.getValue().getCodigoEps()).getNombre());
             popularNombreComboBox(vista.getDropFppEmpleado(), ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getValue().getCodigoFpp()).getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("Eps") && (index != -1)) {
             Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
             vista.getFildEPSCod().setText(entry.getValue().getCodigo() + "");
             vista.getFildEPSNombre().setText(entry.getValue().getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("FPP") && (index != -1)) {
             Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
             vista.getFildFPPcod().setText(entry.getValue().getCodigo() + "");
             vista.getFildFPPnombre().setText(entry.getValue().getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("ARL") && (index != -1)) {
             Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
             vista.getFildARLcod().setText(entry.getValue().getCodigo() + "");
             vista.getFildARLnombre().setText(entry.getValue().getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("CCompensacion") && (index != -1)) {
             Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
             vista.getFildCajaComCodigo().setText(entry.getValue().getCodigo() + "");
             vista.getFildCajaComNombre().setText(entry.getValue().getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("Empresa") && (index != -1)) {
             Map.Entry<Integer, ConfiguracionDeEmpresa> entry = (Map.Entry<Integer, ConfiguracionDeEmpresa>) listaMap.get(index);
@@ -223,17 +228,19 @@ public class ViewFormularioController {
             vista.getFildEmpresaTelefono().setText(entry.getValue().getTelefono());
             popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl().get(entry.getValue().getCodigoArl()).getNombre());
             vista.getDropCodCajaCom().setSelectedIndex(0);
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("Devengo") && (index != -1)) {
             Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
             vista.getFildDevengoCodigo().setText(entry.getValue().getCodigo() + "");
             vista.getFildDevengonombre().setText(entry.getValue().getNombre());
-            // vista.getDropbaseDevengo().setSelectedIndex(0);
+            vista.getBtnAñadir().setEnabled(false);
         }
         else if(apartadoFormulario.equals("Deduccion") && (index != -1)) {
             Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
             vista.getFildDeduccionCodigo().setText(entry.getValue().getCodigo() + "");
             vista.getFildDeduccionNombre().setText(entry.getValue().getNombre());
+            vista.getBtnAñadir().setEnabled(false);
         }
     }
 
@@ -565,7 +572,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, Empleado> entry = (Map.Entry<Integer, Empleado>) listaMap.get(index);
                         ingenio.getEmpleadoDAO().deleteEmpleado((entry.getKey()));
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado())); 
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
+                        limpiarCampos("Empleado");
                     } else {
                         mensajeTemporal("Elija el usuario que desea eliminar", "Error", 1150);
                     }
@@ -577,6 +585,7 @@ public class ViewFormularioController {
                         Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
                         ingenio.getEpsDAO().deleteEps(entry.getKey());
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+                        limpiarCampos("Eps");
                     } else {
                         mensajeTemporal("Elija la eps que desea eliminar", "Error", 1150);
                     }
@@ -587,7 +596,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
                         ingenio.getFondoDePensionDAO().deleteFondoDePension(entry.getKey());
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));  
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+                        limpiarCampos("FPP");
                     } else {
                         mensajeTemporal("Elija el fondo de pension que desea eliminar", "Error", 1150);
                     }
@@ -598,7 +608,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
                         ingenio.getArlDAO().deleteArl((entry.getKey()));
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));  
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+                        limpiarCampos("ARL");
                     } else {
                         mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
                     }
@@ -609,7 +620,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
                         ingenio.getCajaDeCompensacionDAO().deleteCajaDeCompensacion((entry.getKey()));
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));  
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+                        limpiarCampos("CCompensacion");  
                     } else {
                         mensajeTemporal("Elija la caja de compensacion que desea eliminar", "Error", 1150);
                     }
@@ -620,7 +632,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<String, ConfiguracionDeEmpresa> entry = (Map.Entry<String, ConfiguracionDeEmpresa>) listaMap.get(index);
                         ingenio.getConfiguracionDeEmpresaDAO().deleteConfiguracionDeEmpresa(entry.getKey());
-                        vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));  
+                        vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+                        limpiarCampos("Empresa");
                     } else {
                         mensajeTemporal("Elija la empresa que desea eliminar", "Error", 1150);
                     }
@@ -631,7 +644,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
                         ingenio.getConceptoDeDevengoDAO().deleteConceptoDeDevengo((entry.getKey()));
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));    
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+                        limpiarCampos("Devengo");
                     } else {
                         mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
                     }
@@ -642,7 +656,8 @@ public class ViewFormularioController {
                     if(index != -1) {
                         Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
                         ingenio.getConceptoDeDeduccionDAO().deleteConceptoDeDeduccion((entry.getKey()));
-                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));  
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+                        limpiarCampos("Deduccion");
                     } else {
                         mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
                     }
@@ -650,28 +665,90 @@ public class ViewFormularioController {
             }
             else if(e.getSource() == vista.getBtnEditar()) {
                 if(apartadoFormulario.equals("Empleado")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    if(esNumerico(vista.getFildEmpleadoId().getText())) {
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setIdentificacion(vista.getFildEmpleadoId().getText());
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setApellidos(vista.getFildEmpleadoApellido().getText());
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNombre(vista.getFildEmpleadoNombre().getText());
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setDireccion(vista.getFildEmpleadoDr().getText());
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoEps(getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), ingenio.getEpsDAO().getMapEps()));
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoFpp(getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeNacimiento(crearFecha(vista.getFildEmpleadoDateN().getText()));
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeIngreso(crearFecha(vista.getFildEmpleadoDateIngr().getText()));
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(crearFecha(vista.getFildEmpleadoDateRet().getText()));
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
+                        ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
+                        limpiarCampos("Empleado");
+                        vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
+                        vista.getBtnAñadir().setEnabled(true);
+                    }
+                    else {
+                        mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);
+                    }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+                    limpiarCampos("Eps");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
                 else if(apartadoFormulario.equals("FPP")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+                    limpiarCampos("FPP");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
                 else if(apartadoFormulario.equals("ARL")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+                    limpiarCampos("ARL");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
                 else if(apartadoFormulario.equals("CCompensacion")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+                    limpiarCampos("CCompensacion");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
                 else if(apartadoFormulario.equals("Empresa")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    if(esNumerico(vista.getFildEmpresaNit().getText()) && esNumerico(vista.getFildEmpresaTelefono().getText()) && esNumerico(vista.getFildEmpresaSalariomin().getText()) && esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNit(vista.getFildEmpresaNit().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNombre(vista.getFildEmpresaNombre().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setTelefono(vista.getFildEmpresaTelefono().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setDireccion(vista.getFildEmpresaDireccion().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setRepresentanteLegal(vista.getFildEmpresaRepre().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCorreoDeContacto(vista.getFildEmpresaCorreo().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoArl(getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()));
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoCajaDeCompensación(getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setSalarioMínimoLegalVigente(vista.getFildEmpresaSalariomin().getText());
+                        ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setAuxilioDeTransporte(vista.getFildEmpresaAuxTrans().getText());
+
+                        vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+                        limpiarCampos("Empresa");
+                        vista.getBtnAñadir().setEnabled(true);
+                    }
+                    else {
+                        mensajeTemporal("NIT, Teléfono, Salario Mínimo y Auxilio de Transporte deben ser numéricos.", "Error de entrada", 1150);
+                    }
                 }
                 else if(apartadoFormulario.equals("Devengo")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+                    limpiarCampos("Devengo");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
                 else if(apartadoFormulario.equals("Deduccion")) {
-                    
+                    index = vista.getTablaDatos().getSelectedRow();
+                    ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
+                    vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+                    limpiarCampos("Deduccion");
+                    vista.getBtnAñadir().setEnabled(true);
                 }
             }
             else if(e.getSource() == vista.getBtnLimpiar()) {
