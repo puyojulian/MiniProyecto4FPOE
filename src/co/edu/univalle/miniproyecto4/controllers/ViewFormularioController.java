@@ -59,7 +59,12 @@ public class ViewFormularioController {
     public ViewFormularioController(ViewFormulario vista) {
         this.vista = vista;
         ingenio = new Ingenio();
-        modeloTabla = new DefaultTableModel();
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         listaMap = new ArrayList<Map.Entry>();
 
         ActionsHandler manejadorDeActionEvents = new ActionsHandler();
@@ -67,6 +72,14 @@ public class ViewFormularioController {
         vista.addListener(manejadorDeActionEvents);
 
         vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeSelectionEvents);
+
+        vista.getFildEmpleadoCod().setEnabled(false);
+        vista.getFildEPSCod().setEnabled(false);
+        vista.getFildARLcod().setEnabled(false);
+        vista.getFildFPPcod().setEnabled(false);
+        vista.getFildCajaComCodigo().setEnabled(false);
+        vista.getFildDevengoCodigo().setEnabled(false);
+        vista.getFildDeduccionCodigo().setEnabled(false);
 
         // if(SerializationUtil.isSerializedObjectExists("mapaARL.bin")) {
         //     ingenio.getArlDAO().setMapArl((Map) SerializationUtil.deserializeObject("mapaARL.bin"));
@@ -278,6 +291,18 @@ public class ViewFormularioController {
 
         for (Map.Entry<Integer, T> entry : entrySetMapa){
             if(entry.getValue().getNombre().equals(nombre)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /* --------------- INSERTE COMENTARIO ------------------- */
+    private <T extends ModelInterface> boolean isCodigoUnico(int codigo, Map<Integer, T> mapa) {
+        Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
+
+        for (Map.Entry<Integer, T> entry : entrySetMapa){
+            if(entry.getValue().getCodigo() == codigo) {
                 return false;
             }
         }
@@ -678,20 +703,4 @@ public class ViewFormularioController {
             }
         }
     }
-
-    
-
-    // btnAñadir.addActionListener(listener);
-    // btnEliminar.addActionListener(listener);
-    // btnEditar.addActionListener(listener);
-    // btnLimpiar.addActionListener(listener);
-
-    // btnEmpleado.addActionListener(listener);
-    // btnEps.addActionListener(listener);
-    // btnFondoP.addActionListener(listener);
-    // btnARL.addActionListener(listener);
-    // btnCajaCompen.addActionListener(listener);
-    // btnEmpresa.addActionListener(listener);
-    // btnDevegno.addActionListener(listener);
-    // btnDeduccion.addActionListener(listener);
 }

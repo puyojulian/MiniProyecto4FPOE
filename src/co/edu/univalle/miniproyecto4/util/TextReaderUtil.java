@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/* --------------- Retorna Matriz de resultados (trabajos realizados) por fichaEmpleado ------------------- */
 public class TextReaderUtil {
   public static List<ArrayList<String>> getListaCantidadTrabajada(String rutaArchivo, int fichaEmpleado) {
     List<ArrayList<String>> matrizRespuesta = new ArrayList<>();
@@ -51,6 +52,7 @@ public class TextReaderUtil {
     return matrizRespuesta;
   }
 
+  /* --------------- INSERTE COMENTARIO ------------------- */
   public static boolean isListaCantidadTrabajada(String rutaArchivo, String lineaPagada) {
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
       String line;
@@ -65,6 +67,7 @@ public class TextReaderUtil {
     return false;
   }
 
+  /* --------------- INSERTE COMENTARIO ------------------- */
   public static void appendLineaArchivo(String rutaArchivo, String linea) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
       writer.write(linea);
@@ -74,6 +77,7 @@ public class TextReaderUtil {
     }
   }
 
+  /* --------------- INSERTE COMENTARIO ------------------- */
   public static <T> void printInformacionModeloKeyInt(String rutaArchivo, Map<Integer, T> mapa) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
       Set<Map.Entry<Integer,T>> entrySet = mapa.entrySet();
@@ -86,6 +90,7 @@ public class TextReaderUtil {
     }
   }
 
+  /* --------------- INSERTE COMENTARIO ------------------- */
   public static <T> void printInformacionModeloKeyStr(String rutaArchivo, Map<String, T> mapa) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
       Set<Map.Entry<String,T>> entrySet = mapa.entrySet();
