@@ -45,6 +45,7 @@ import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.models.ModelInterface;
 import co.edu.univalle.miniproyecto4.repository.EmpleadoDAO;
+import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 
 public class ViewFormularioController {
@@ -95,11 +96,10 @@ public class ViewFormularioController {
                 modeloTabla.addRow(listaTemporal.toArray());
                 listaTemporal.clear();
             }
-            System.out.println(modeloTabla);
+            // TextReaderUtil.printInformacionModeloKeyInt("datos.txt", mapa);
             return modeloTabla;
         }
         else {
-            System.out.println(modeloTabla);
             return modeloTabla;
         }
     }
@@ -128,7 +128,7 @@ public class ViewFormularioController {
                 modeloTabla.addRow(listaTemporal.toArray());
                 listaTemporal.clear();
             }
-            
+            // TextReaderUtil.printInformacionModeloKeyStr("datos.txt", mapa);
             return modeloTabla;
         }
         else {

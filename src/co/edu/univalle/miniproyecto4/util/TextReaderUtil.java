@@ -1,6 +1,8 @@
 package co.edu.univalle.miniproyecto4.util;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -49,7 +51,7 @@ public class TextReaderUtil {
     return matrizRespuesta;
   }
 
-  public static boolean getListaCantidadTrabajada(String rutaArchivo, String lineaPagada) {
+  public static boolean isListaCantidadTrabajada(String rutaArchivo, String lineaPagada) {
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
       String line;
       while ((line = reader.readLine()) != null) {
@@ -67,6 +69,30 @@ public class TextReaderUtil {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
       writer.write(linea);
       writer.newLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static <T> void printInformacionModeloKeyInt(String rutaArchivo, Map<Integer, T> mapa) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+      Set<Map.Entry<Integer,T>> entrySet = mapa.entrySet();
+      for(Map.Entry<Integer,T> entry : entrySet) {
+        writer.write(entry.getValue().toString());
+        writer.newLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static <T> void printInformacionModeloKeyStr(String rutaArchivo, Map<String, T> mapa) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+      Set<Map.Entry<String,T>> entrySet = mapa.entrySet();
+      for(Map.Entry<String,T> entry : entrySet) {
+        writer.write(entry.getValue().toString());
+        writer.newLine();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
