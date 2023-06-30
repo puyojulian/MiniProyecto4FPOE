@@ -473,40 +473,24 @@ public class ViewFormularioController {
                     }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
-                    if(esNumerico(vista.getFildEPSCod().getText())) {
                         ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps(), "Eps"));
                         limpiarCampos("Eps");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
                 else if(apartadoFormulario.equals("FPP")) {
-                    if(esNumerico(vista.getFildFPPcod().getText())) {
                         ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension(), "FPP"));
                         limpiarCampos("FPP");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
                 else if(apartadoFormulario.equals("ARL")) {
-                    if(esNumerico(vista.getFildARLcod().getText())) {
                         ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl(), "ARL"));
                         limpiarCampos("ARL");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
                 else if(apartadoFormulario.equals("CCompensacion")) {
-                    if(esNumerico(vista.getFildCajaComCodigo().getText())) {
                         ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion(), "CCompensacion"));
                         limpiarCampos("CCompensacion");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
                 else if(apartadoFormulario.equals("Empresa")) {
                     if(esNumerico(vista.getFildEmpresaNit().getText()) && esNumerico(vista.getFildEmpresaTelefono().getText()) && esNumerico(vista.getFildEmpresaSalariomin().getText()) && esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
@@ -529,22 +513,14 @@ public class ViewFormularioController {
                     }
                 }
                 else if(apartadoFormulario.equals("Devengo")) {
-                    if(esNumerico(vista.getFildDevengoCodigo().getText())) {
                         ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(new ConceptoDeDevengo(vista.getFildDevengonombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo(), "Devengo"));
                         limpiarCampos("Devengo");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
                 else if(apartadoFormulario.equals("Deduccion")) {
-                    if(esNumerico(vista.getFildDeduccionCodigo().getText())) {
                         ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText()));
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "Deduccion"));
                         limpiarCampos("Deduccion");
-                    }else {
-                        mensajeTemporal("Número de código debe ser numérico.", "Error de entrada", 1150);
-                    }
                 }
             }
             else if(e.getSource() == vista.getBtnEliminar()) {
