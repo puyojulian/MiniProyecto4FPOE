@@ -2,12 +2,15 @@ package co.edu.univalle.miniproyecto4.util;
 
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class TextReaderUtil {
-  public static List<String> getInfoLine(String rutaArchivo, int fichaEmpleado) {
+  public static List<ArrayList<String>> getListaCantidadTrabajada(String rutaArchivo, int fichaEmpleado) {
+    List<ArrayList<String>> matrizRespuesta = new ArrayList<>();
     List<String> lista = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
       String line;
@@ -26,6 +29,10 @@ public class TextReaderUtil {
           lista.add(toneladaCorte);
           lista.add(tipoCana);
           lista.add(diaCorte);
+
+          matrizRespuesta.add((ArrayList<String>)lista);
+
+          lista.clear();
           
           // System.out.println("Ficha: " + ficha);
           // System.out.println("Fecha Corte: " + fechaCorte);
@@ -39,6 +46,29 @@ public class TextReaderUtil {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return lista;
+    return matrizRespuesta;
+  }
+
+  public static boolean getListaCantidadTrabajada(String rutaArchivo, String lineaPagada) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if(line.equals(lineaPagada)) {
+          return true;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public static void appendLineaArchivo(String rutaArchivo, String linea) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+      writer.write(linea);
+      writer.newLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
