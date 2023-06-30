@@ -24,7 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SerializationUtil {
-    
+  /* --------------- SERIALIZA EL OBJETO ------------------- */
   public static void serializeObject(Object obj, String filePath) {
     try {
       FileOutputStream fileOut = new FileOutputStream(filePath);
@@ -38,6 +38,7 @@ public class SerializationUtil {
     }
   } 
 
+  /* --------------- DE-SERIALIZA EL OBJETO ENCONTRADO EN EL ARCHIVO ------------------- */
   public static Object deserializeObject(String filePath) {
     try {
       FileInputStream fileIn = new FileInputStream(filePath);
@@ -52,7 +53,8 @@ public class SerializationUtil {
       return null;
     }
   }
-  
+
+  /* --------------- VERIFICA SI EL OBJETO (ARCHIVO) SERIALIZADO EXISTE ------------------- */
   public static boolean isSerializedObjectExists(String filePath) {
     File file = new File(filePath);
     return file.exists();

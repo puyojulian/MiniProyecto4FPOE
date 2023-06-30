@@ -13,6 +13,7 @@ public class ViewCortePagoController {
   private DefaultTableModel modeloTabla;
   private String apartadoFormulario;
 
+  /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
   public DefaultTableModel actualizarTableModel(int fichaEmpleado) {
     List<ArrayList<String>> matrizTemporal = new ArrayList<>();
 
@@ -39,6 +40,7 @@ public class ViewCortePagoController {
     return modeloTabla;
   }
 
+  /* --------------- FORMATO: CONVIERTE LISTA DE STRINGS EN STRING (SIN DELIMITADORES) ------------------- */
   public String listToString(List<String> lista) {
     String listaString = "";
     for(int i = 0; i < lista.size(); i++) {

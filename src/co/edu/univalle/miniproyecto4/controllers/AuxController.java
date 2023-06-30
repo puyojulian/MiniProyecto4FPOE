@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import co.edu.univalle.miniproyecto4.models.ModelInterface;
 
 public class AuxController {
-  /* --------------- POPULAR COMBOBOX CON BASE EN MAPA (MULTIPLES ITEMS) ------------------- */
+  /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN MAPA (MULTIPLES ITEMS) ------------------- */
   public static <T extends ModelInterface> void popularNombreComboBox(JComboBox<String> comboBox, Map<Integer, T> mapa) {
       comboBox.removeAllItems();
       comboBox.addItem("Seleccionar");
@@ -27,18 +27,31 @@ public class AuxController {
       }
   }
 
-  /* --------------- POPULAR COMBOBOX CON BASE EN STRING (UNICO ITEM)------------------- */
+  /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN STRING (UNICO ITEM)------------------- */
   public static void popularNombreComboBox(JComboBox<String> comboBox, String elemento) {
       comboBox.addItem(elemento);
   }
 
-  /* --------------- LOCALDATE TO STRING ------------------- */
-  public static String fechaToString(LocalDate fecha) {
-      DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      return fecha.format(formateador);
+  /* --------------- RESPUESTA: MUESTRA MENSAJE TEMPORAL ------------------- */
+  public static void mensajeTemporal(String mensaje, String titulo, int milisegundos) {
+      JOptionPane msg = new JOptionPane(mensaje, JOptionPane.INFORMATION_MESSAGE);
+      final JDialog dlg = msg.createDialog(titulo);
+      dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+      new Thread(new Runnable() {
+          @Override
+          public void run() {
+          try {
+              Thread.sleep(milisegundos);
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+          dlg.setVisible(false);
+          }
+      }).start();
+      dlg.setVisible(true);
   }
 
-  /* --------------- VERIFICAR SI EL NOMBRE ESTÁ REGISTRADO ------------------- */
+  /* --------------- VERIFICACIÓN: VERIFICAR SI EL NOMBRE ESTÁ REGISTRADO ------------------- */
   public static <T extends ModelInterface> boolean isNombreUnico(String nombre, Map<Integer, T> mapa) {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
@@ -50,7 +63,7 @@ public class AuxController {
       return true;
   }
 
-  /* --------------- VERIFICA SI EL CÓDIGO ESTÁ REGISTRADO ------------------- */
+  /* --------------- VERIFICACIÓN: VERIFICA SI EL CÓDIGO ESTÁ REGISTRADO ------------------- */
   public static <T extends ModelInterface> boolean isCodigoUnico(int codigo, Map<Integer, T> mapa) {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
@@ -62,7 +75,12 @@ public class AuxController {
       return true;
   }
 
-  /* --------------- RETORNA CODIGO BASADOS EN EL NOMBRE ------------------- */
+  /* --------------- VERIFICACIÓN: VERIFICA SI LA STRING ES NUMÉRICA ------------------- */
+  public static boolean esNumerico(String cadena) {
+      return cadena.matches("\\d+");
+  }
+
+  /* --------------- UTILIDAD: RETORNA CODIGO BASADOS EN EL NOMBRE ------------------- */
   public static <T extends ModelInterface> int getCodByNombre(String nombre, Map<Integer, T> mapa) {
     Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
@@ -74,7 +92,13 @@ public class AuxController {
     return 0;
   }
 
-  /* --------------- CREA FECHA A BASE DE STRING ------------------- */
+  /* --------------- FORMATO/FECHAS: LOCALDATE TO STRING ------------------- */
+  public static String fechaToString(LocalDate fecha) {
+      DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      return fecha.format(formateador);
+  }
+
+  /* --------------- FORMATO/FECHAS: STRING TO LOCALDATE ------------------- */
   public static LocalDate crearFecha(String fecha) {
       LocalDate localDate = LocalDate.now();
       if(fecha.contains("/")) {
@@ -118,29 +142,5 @@ public class AuxController {
           }
       }
       return localDate;
-  }
-
-  /* --------------- VERIFICA SI LA STRING ES NUMÉRICA ------------------- */
-  public static boolean esNumerico(String cadena) {
-      return cadena.matches("\\d+");
-  }
-
-  /* --------------- MUESTRA MENSAJE TEMPORAL ------------------- */
-  public static void mensajeTemporal(String mensaje, String titulo, int milisegundos) {
-      JOptionPane msg = new JOptionPane(mensaje, JOptionPane.INFORMATION_MESSAGE);
-      final JDialog dlg = msg.createDialog(titulo);
-      dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-      new Thread(new Runnable() {
-          @Override
-          public void run() {
-          try {
-              Thread.sleep(milisegundos);
-          } catch (InterruptedException e) {
-              e.printStackTrace();
-          }
-          dlg.setVisible(false);
-          }
-      }).start();
-      dlg.setVisible(true);
   }
 }

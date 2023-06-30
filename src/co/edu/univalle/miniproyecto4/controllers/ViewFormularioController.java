@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,7 @@ import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.Eps;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
+import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 
 public class ViewFormularioController {
@@ -76,7 +79,7 @@ public class ViewFormularioController {
         // }
     }
   
-    /* --------------- ACTUALIZAR MODELO TABLA ------------------- */
+    /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA ------------------- */
     public <T> DefaultTableModel actualizarTableModelInt(Map<Integer, T> mapa) {
         List<Object> listaTemporal = new ArrayList<>();
 
@@ -100,7 +103,7 @@ public class ViewFormularioController {
                 modeloTabla.addRow(listaTemporal.toArray());
                 listaTemporal.clear();
             }
-            // TextReaderUtil.printInformacionModeloKeyInt("datos.txt", mapa);
+            // TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroModelo.txt", mapa);
             return modeloTabla;
         }
         else {
@@ -108,7 +111,7 @@ public class ViewFormularioController {
         }
     }
 
-    /* --------------- ACTUALIZAR MODELO TABLA ------------------- */
+    /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA ------------------- */
     public <T> DefaultTableModel actualizarTableModelString(Map<String, T> mapa) {
         List<Object> listaTemporal = new ArrayList<>();
 
@@ -133,7 +136,7 @@ public class ViewFormularioController {
                 modeloTabla.addRow(listaTemporal.toArray());
                 listaTemporal.clear();
             }
-            // TextReaderUtil.printInformacionModeloKeyStr("datos.txt", mapa);
+            // TextReaderUtil.printInformacionModeloKeyStr("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroModelo.txt", mapa);
             return modeloTabla;
         }
         else {
@@ -142,7 +145,7 @@ public class ViewFormularioController {
         }
     }  
 
-    /* --------------- LLENA CAMPOS DEPENDIENDO EL APARTADOFORMULARIO ACTUAL ------------------- */
+    /* --------------- MUESTREO: LLENA CAMPOS DEPENDIENDO EL APARTADOFORMULARIO ACTUAL ------------------- */
     public void llenarCamposFormulario() {
         index = vista.getTablaDatos().getSelectedRow();
         if(apartadoFormulario.equals("Empleado") && (index != -1)) {
@@ -212,7 +215,7 @@ public class ViewFormularioController {
         }
     }
 
-    /* --------------- INICIALIZA MODELOTABLA CON IDENTIFICADORES ------------------- */
+    /* --------------- MUESTREO: INICIALIZA MODELOTABLA CON IDENTIFICADORES ------------------- */
     public void establecerIdentificadoresColumnas(DefaultTableModel modelo) {
         if(apartadoFormulario.equals("Empleado")) {
             String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP", "FECHA NAC.", "FECHA ING.", "FECHA RET.", "TIPO TRAB.", "NÚM. CUENTA"};
@@ -248,7 +251,7 @@ public class ViewFormularioController {
         }
     }
 
-    /* --------------- RETORNA LOS VALORES DE LOS CAMPOS A SUS VALORES POR DEFECTO ------------------- */
+    /* --------------- MUESTREO: RETORNA LOS VALORES DE LOS CAMPOS A SUS VALORES POR DEFECTO ------------------- */
     private void limpiarCampos(String vistaActual){
         if(vistaActual.equals("Empleado")) {
             vista.getFildEmpleadoApellido().setText("");
@@ -304,7 +307,7 @@ public class ViewFormularioController {
         vista.getTablaDatos().clearSelection();
     }
 
-    /* --------------- MANEJADOR DE EVENTOS DE SELECCIÓN DE LISTA ------------------- */
+    /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN DE LISTA ------------------- */
     class ListSelectionHandler implements ListSelectionListener {
 
         @Override
@@ -313,7 +316,7 @@ public class ViewFormularioController {
         }
     }
 
-    /* --------------- MANEJADOR DE EVENTOS DE ACCIÓN ------------------- */
+    /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE ACCIÓN ------------------- */
     class ActionsHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -353,9 +356,9 @@ public class ViewFormularioController {
                 apartadoFormulario = "Deduccion";
                 vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
             }
-            else if(e.getSource() == vista.getBtnAñadir()) {
+            else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
                 if(apartadoFormulario.equals("Empleado")) {
-                    if(AuxController.esNumerico(vista.getFildEmpleadoId().getText())) {
+                    if(AuxController.esNumerico(vista.getFildEmpleadoId().getText()) && AuxController.esNumerico(vista.getFildEmpleadoNCuenta().getText())) {
                         ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
                             vista.getFildEmpleadoApellido().getText(), 
                             vista.getFildEmpleadoNombre().getText(), 
@@ -373,7 +376,7 @@ public class ViewFormularioController {
                         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
                     }
                     else {
-                        AuxController.mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);
+                        AuxController.mensajeTemporal("Los números de identificación y de cuenta deben ser numéricos.", "Error de entrada", 1150);
                     }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
@@ -427,7 +430,7 @@ public class ViewFormularioController {
                         limpiarCampos("Deduccion");
                 }
             }
-            else if(e.getSource() == vista.getBtnEliminar()) {
+            else if(e.getSource() == vista.getBtnEliminar()) { // ELIMINAR
                 if(apartadoFormulario.equals("Empleado")) {
                     index = vista.getTablaDatos().getSelectedRow();
 
@@ -525,7 +528,7 @@ public class ViewFormularioController {
                     }
                 }
             }
-            else if(e.getSource() == vista.getBtnEditar()) {
+            else if(e.getSource() == vista.getBtnEditar()) { // EDITAR
                 if(apartadoFormulario.equals("Empleado")) {
                     index = vista.getTablaDatos().getSelectedRow();
                     if(AuxController.esNumerico(vista.getFildEmpleadoId().getText())) {
@@ -545,7 +548,7 @@ public class ViewFormularioController {
                         vista.getBtnAñadir().setEnabled(true);
                     }
                     else {
-                        AuxController.mensajeTemporal("Número de identificación debe ser numérico.", "Error de entrada", 1150);
+                        AuxController.mensajeTemporal("Los números de identificación y de cuenta deben ser numéricos.", "Error de entrada", 1150);
                     }
                 }
                 else if(apartadoFormulario.equals("Eps")) {
@@ -613,7 +616,7 @@ public class ViewFormularioController {
                     vista.getBtnAñadir().setEnabled(true);
                 }
             }
-            else if(e.getSource() == vista.getBtnLimpiar()) {
+            else if(e.getSource() == vista.getBtnLimpiar()) { // LIMPIAR
                 vista.getTablaDatos().clearSelection();
                 if(apartadoFormulario.equals("Empleado")) {
                     limpiarCampos("Empleado");
@@ -640,30 +643,30 @@ public class ViewFormularioController {
                     limpiarCampos("Deduccion");
                 }
             }
-            // else if(e.getSource() == vista.getBtnImprimir()) { //FALTA BTN IMPRIMIR
+            // else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR // FALTA AGREGAR BOTÓN EN VISTA
             //     if(apartadoFormulario.equals("Empleado")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
             //     }
             //     else if(apartadoFormulario.equals("Eps")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEmpleadoDAO().getMapEmpleado());  
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEmpleadoDAO().getMapEmpleado());  
             //     }
             //     else if(apartadoFormulario.equals("FPP")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getEmpleadoDAO().getMapEmpleado());   
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getEmpleadoDAO().getMapEmpleado());   
             //     }
             //     else if(apartadoFormulario.equals("ARL")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
             //     }
             //     else if(apartadoFormulario.equals("CCompensacion")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
             //     }
             //     else if(apartadoFormulario.equals("Empresa")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
             //     }
             //     else if(apartadoFormulario.equals("Devengo")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
             //     }
             //     else if(apartadoFormulario.equals("Deduccion")) {
-            //         TextReaderUtil.printInformacionModeloKeyInt(fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
+            //         TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
             //     }
             // }
         }
