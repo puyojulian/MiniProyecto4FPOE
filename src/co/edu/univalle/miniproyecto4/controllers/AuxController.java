@@ -20,19 +20,23 @@ import co.edu.univalle.miniproyecto4.models.ModelInterface;
 
 public class AuxController {
   /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN MAPA (MULTIPLES ITEMS) ------------------- */
-  public static <T extends ModelInterface> void popularNombreComboBox(JComboBox<String> comboBox, Map<Integer, T> mapa) {
+  public static <T extends ModelInterface> List<Integer> popularNombreComboBox(JComboBox<String> comboBox, Map<Integer, T> mapa) {
+    List<Integer> keyList = new ArrayList<>();
     comboBox.removeAllItems();
     comboBox.addItem("Seleccionar");
     if(mapa.size() > 0) {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
       for (Map.Entry<Integer, T> entry : entrySetMapa) {
           comboBox.addItem(entry.getValue().getNombre());
+          keyList.add((Integer) entry.getKey());
       }
     }
+    return keyList;
   }
 
   /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN STRING (UNICO ITEM)------------------- */
   public static void popularNombreComboBox(JComboBox<String> comboBox, String elemento) {
+    comboBox.removeAllItems();
     comboBox.addItem(elemento);
   }
 
@@ -60,7 +64,7 @@ public class AuxController {
     Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
     for (Map.Entry<Integer, T> entry : entrySetMapa){
-      if(entry.getValue().getNombre().equals(nombre)) {
+      if(entry.getValue().getNombre().replaceAll("\\s", "").equalsIgnoreCase(nombre.replaceAll("\\s", ""))) {
         return false;
       }
     }
