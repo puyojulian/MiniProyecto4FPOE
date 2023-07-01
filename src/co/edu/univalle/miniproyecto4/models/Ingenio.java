@@ -40,8 +40,8 @@ public class Ingenio implements Serializable {
   private EmpleadoDAO empleadoDAO;
   private EpsDAO epsDAO;
   private FondoDePensionDAO fondoDePensionDAO;
-  private Map<PairClassUtil, Float> configDevengos;
-  private Map<PairClassUtil, Float> configDeducciones;
+  private Map<Integer, PairClassUtil> configDevengos;
+  private Map<Integer, PairClassUtil> configDeducciones;
   
   public Ingenio() {
     nombre = "Ingenio";
@@ -97,27 +97,27 @@ public class Ingenio implements Serializable {
     return fondoDePensionDAO;
   }
 
-  public Map<PairClassUtil, Float> getMapConfigDevengos() {
+  public Map<Integer, PairClassUtil> getMapConfigDevengos() {
     return configDevengos;
   }
 
-  public Map<PairClassUtil, Float> getMapConfigDeducciones() {
+  public Map<Integer, PairClassUtil> getMapConfigDeducciones() {
     return configDeducciones;
   }
 
-  public void addMapConfigDevengos(PairClassUtil key, Float valor) {
+  public void addMapConfigDevengos(Integer key, PairClassUtil valor) {
     configDevengos.put(key, valor);
   }
 
-  public void addMapConfigDeducciones(PairClassUtil key, Float valor) {
+  public void addMapConfigDeducciones(Integer key, PairClassUtil valor) {
     configDeducciones.put(key, valor);
   }
 
-  public void removeMapConfigDevengos(PairClassUtil key) {
+  public void removeMapConfigDevengos(Integer key) {
     configDevengos.remove(key);
   }
 
-  public void removeMapConfigDeducciones(PairClassUtil key) {
+  public void removeMapConfigDeducciones(Integer key) {
     configDeducciones.remove(key);
   }
 }

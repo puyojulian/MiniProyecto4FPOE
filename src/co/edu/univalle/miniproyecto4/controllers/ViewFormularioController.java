@@ -674,7 +674,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
               ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
               ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-              ingenio.addMapConfigDevengos(new PairClassUtil(conceptoDeDevengo.getCodigo(), codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex())), Float.parseFloat(vista.getFildDevengoValor().getText()));
+              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDevengoValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
             }
@@ -691,7 +691,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
               ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
               ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              ingenio.addMapConfigDeducciones(new PairClassUtil(conceptoDeDeduccion.getCodigo(), codEmpleados.get(vista.getdropDeduccionEmpleado().getSelectedIndex())), Float.parseFloat(vista.getFildDeduccionValor().getText()));
+              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getdropDeduccionEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDeduccionValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
             }

@@ -2,18 +2,18 @@ package co.edu.univalle.miniproyecto4.util;
 
 public class PairClassUtil {
     private int first;
-    private int second;
+    private float second;
     
-    public PairClassUtil(int first, int second) {
+    public PairClassUtil(Integer first, float second) {
         this.first = first;
         this.second = second;
     }
     
-    public int getFirst() {
+    public Object getFirst() {
         return first;
     }
     
-    public int getSecond() {
+    public Object getSecond() {
         return second;
     }
     
@@ -33,9 +33,9 @@ public class PairClassUtil {
     
     @Override
     public int hashCode() {
-        int result = 17;
+        Integer result = 17;
         result = 31 * result + first;
-        result = 31 * result + second;
+        result = 31 * result + (int) second;
         return result;
     }
 }
