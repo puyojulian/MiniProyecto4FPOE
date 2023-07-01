@@ -63,12 +63,17 @@ public class ViewLiquidacion extends JFrame {
     // Tabla devengo
     private JPanel panelTablaDev = new JPanel();
     private JScrollPane jpTablaDev = new JScrollPane();
-    private JTable tablaDevengos = new JTable();
-    
+    private String[] devengosList = {"Elemento 1"};
+    private JList<String> listDevengos = new JList<>(devengosList);
+
     // Tabla deduccion
     private JPanel panelTablaDed = new JPanel();
     private JScrollPane jpTablaDed = new JScrollPane();
-    private JTable tablaDeducciones = new JTable();
+    private String[] deduccionList = {"Elemento 1"};
+    private JList<String> listDeduccion = new JList<>(deduccionList);
+    
+
+    
 
     public ViewLiquidacion(){
         inciarComponentes();
@@ -336,22 +341,10 @@ public class ViewLiquidacion extends JFrame {
         panelDevFondo.add(panelTablaDev);
         panelTablaDev.add(jpTablaDev);
 
-        tablaDevengos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2"
-            }
-        ));
-
-        tablaDevengos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablaDevengos.setBackground(colorFondoWhite);
+        listDevengos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listDevengos.setBackground(colorFondoWhite);
         jpTablaDev.setBounds(0,0,233,220);
-        jpTablaDev.setViewportView(tablaDevengos);
+        jpTablaDev.setViewportView(listDevengos);
 
         imf1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotablita.png");
         imf1.setBounds(0,0,247,234);
@@ -384,21 +377,10 @@ public class ViewLiquidacion extends JFrame {
         panelDecFondo.add(panelTablaDed);
         panelTablaDed.add(jpTablaDed);
 
-        tablaDeducciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2"
-            }
-        ));
-        tablaDeducciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablaDeducciones.setBackground(colorFondoWhite);
+        listDeduccion.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listDeduccion.setBackground(colorFondoWhite);
         jpTablaDed.setBounds(0,0,233,220);
-        jpTablaDed.setViewportView(tablaDeducciones);
+        jpTablaDed.setViewportView(listDeduccion);
 
         imf2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotablita.png");
         imf2.setBounds(0,0,247,234);
@@ -506,13 +488,14 @@ public class ViewLiquidacion extends JFrame {
         return jpTablaDev;
     }
 
-    public JTable getTablaDevengos() {
-        return tablaDevengos;
+    public JList<String> getListDevengos() {
+        return listDevengos;
     }
 
-    public void setTablaDevengos(JTable tablaDevengos) {
-        this.tablaDevengos = tablaDevengos;
+    public void setListDevengos(JList<String> listDevengos) {
+        this.listDevengos = listDevengos;
     }
+    
 
       /* --------------- Para las Tablas DEDUCCCIONES (Getters and Setters) ------------------- */
     
@@ -532,13 +515,15 @@ public class ViewLiquidacion extends JFrame {
         return jpTablaDed;
     }
 
-    public JTable getTablaDeducciones() {
-        return tablaDeducciones;
+    public JList<String> getListDeduccion() {
+        return listDeduccion;
     }
 
-    public void setTablaDeducciones(JTable tablaDeducciones) {
-        this.tablaDeducciones = tablaDeducciones;
+    public void setListDeduccion(JList<String> listDeduccion) {
+        this.listDeduccion = listDeduccion;
     }
+
+    
 
     public void btnAddActionListener(ActionListener actionListener) {
         btnPagados.addActionListener(actionListener);
