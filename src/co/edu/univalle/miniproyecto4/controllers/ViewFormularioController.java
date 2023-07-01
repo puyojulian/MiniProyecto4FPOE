@@ -55,6 +55,7 @@ public class ViewFormularioController {
   private DefaultTableModel modeloTabla;
   private String apartadoFormulario = "";
   private int index;
+  private static String fechaMaxima = "2099-12-31";
 
   public ViewFormularioController(ViewFormulario vista, Ingenio ingenio) {
     this.vista = vista;
@@ -176,7 +177,7 @@ public class ViewFormularioController {
     establecerIdentificadoresColumnas(modeloTabla);
     listaMap.clear();
 
-    if(mapa.size() > 0) {
+    if(!mapa.isEmpty()) {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
 
       listaMap = new ArrayList<>(mapa.entrySet());
@@ -208,7 +209,7 @@ public class ViewFormularioController {
     listaMap.clear();
     establecerIdentificadoresColumnas(modeloTabla);
 
-    if(mapa.size() > 0) {
+    if(!mapa.isEmpty()) {
       Set<Map.Entry<String, T>> entrySetMapa = mapa.entrySet();
 
       listaMap = new ArrayList<>(mapa.entrySet());
@@ -234,20 +235,57 @@ public class ViewFormularioController {
     }
   }  
 
+  /* --------------- MUESTREO: INICIALIZA MODELOTABLA CON IDENTIFICADORES ------------------- */
+  public void establecerIdentificadoresColumnas(DefaultTableModel modelo) {
+    if(apartadoFormulario.equals("Empleado")) {
+      String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP", "FECHA NAC.", "FECHA ING.", "FECHA RET.", "TIPO TRAB.", "NÚM. CUENTA"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("Eps")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("FPP")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("ARL")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("CCompensacion")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("Empresa")) {
+      String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("Devengo")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE", "HACE BASE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+    else if(apartadoFormulario.equals("Deduccion")) {
+      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
+      modelo.setColumnIdentifiers(atributosTabla);
+    }
+  }
+
   /* --------------- MUESTREO: LLENA CAMPOS DEPENDIENDO EL APARTADOFORMULARIO ACTUAL ------------------- */
   public void llenarCamposFormulario() {
     index = vista.getTablaDatos().getSelectedRow();
     if(apartadoFormulario.equals("Empleado") && (index != -1)) {
       Map.Entry<Integer, Empleado> entry = (Map.Entry<Integer, Empleado>) listaMap.get(index);
       vista.getFildEmpleadoApellido().setText(entry.getValue().getApellido());
-      vista.getFildEmpleadoCod().setText(entry.getValue().getNombre());
+      vista.getFildEmpleadoCod().setText(entry.getValue().getCodigo()+"");
       vista.getFildEmpleadoDateIngr().setText(AuxController.fechaToString(entry.getValue().getFechaDeIngreso()));
-      vista.getFildEmpleadoDateN().setText(AuxController.fechaToString(entry.getValue().getFechaDeIngreso()));
-      vista.getFildEmpleadoDateRet().setText(AuxController.fechaToString(entry.getValue().getFechaDeIngreso()));
+      vista.getFildEmpleadoDateN().setText(AuxController.fechaToString(entry.getValue().getFechaDeNacimiento()));
+      vista.getFildEmpleadoDateRet().setText(AuxController.fechaToString(entry.getValue().getFechaDeRetiro()));
       vista.getFildEmpleadoDr().setText(entry.getValue().getDireccion());
       vista.getFildEmpleadoId().setText(entry.getValue().getIdentificacion());
       vista.getFildEmpleadoNCuenta().setText(entry.getValue().getNumeroDeCuenta());
       vista.getFildEmpleadoNombre().setText(entry.getValue().getNombre());
+      vista.getDropTipoEmpleado().setSelectedIndex(entry.getValue().getTipoDeTrabajador());
       AuxController.popularNombreComboBox(vista.getDropEpsEmpleado(), ingenio.getEpsDAO().getMapEps().get(entry.getValue().getCodigoEps()).getNombre());
       AuxController.popularNombreComboBox(vista.getDropFppEmpleado(), ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getValue().getCodigoFpp()).getNombre());
       vista.getBtnAñadir().setEnabled(false);
@@ -304,50 +342,14 @@ public class ViewFormularioController {
     }
   }
 
-  /* --------------- MUESTREO: INICIALIZA MODELOTABLA CON IDENTIFICADORES ------------------- */
-  public void establecerIdentificadoresColumnas(DefaultTableModel modelo) {
-    if(apartadoFormulario.equals("Empleado")) {
-      String[] atributosTabla = {"ID", "COD", "APELLIDOS", "NOMBRES", "DIRECCIÓN", "COD. EPS", "COD. FPP", "FECHA NAC.", "FECHA ING.", "FECHA RET.", "TIPO TRAB.", "NÚM. CUENTA"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("Eps")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("FPP")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("ARL")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("CCompensacion")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("Empresa")) {
-      String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("Devengo")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE", "HACE BASE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-    else if(apartadoFormulario.equals("Deduccion")) {
-      String[] atributosTabla = {"CÓDIGO", "NOMBRE"};
-      modelo.setColumnIdentifiers(atributosTabla);
-    }
-  }
-
   /* --------------- VERIFICACION: VERIFICA QUE LOS CAMPOS PERTINENTES NO ESTÉN VACÍOS ------------------- */
   private boolean verificarCampos(){
     if(apartadoFormulario.equals("Empleado")) {
       if(vista.getFildEmpleadoApellido().getText().isEmpty() ||
-          vista.getFildEmpleadoCod().getText().isEmpty() ||
-          vista.getFildEmpleadoDateIngr().getText().isEmpty() ||
+          // vista.getFildEmpleadoCod().getText().isEmpty() ||
+          // vista.getFildEmpleadoDateIngr().getText().isEmpty() ||
           vista.getFildEmpleadoDateN().getText().isEmpty() ||
-          vista.getFildEmpleadoDateRet().getText().isEmpty() ||
+          // vista.getFildEmpleadoDateRet().getText().isEmpty() ||
           vista.getFildEmpleadoDr().getText().isEmpty() ||
           vista.getFildEmpleadoId().getText().isEmpty() ||
           vista.getFildEmpleadoNCuenta().getText().isEmpty() ||
@@ -394,12 +396,14 @@ public class ViewFormularioController {
     }
     else if(apartadoFormulario.equals("Devengo")) {
       if(vista.getFildDevengonombre().getText().isEmpty() ||
+          vista.getFildDevengoValor().getText().isEmpty() ||
           vista.getDropbaseDevengo().getSelectedIndex() == 0) {
         return false;
       }
     }
     else if(apartadoFormulario.equals("Deduccion")) {
-      if(vista.getFildDeduccionNombre().getText().isEmpty()) {
+      if(vista.getFildDeduccionNombre().getText().isEmpty() ||
+          vista.getFildDevengoValor().getText().isEmpty()) {
         return false;
       }
     }
@@ -459,6 +463,7 @@ public class ViewFormularioController {
       vista.getFildDeduccionCodigo().setText("");
       vista.getFildDeduccionNombre().setText("");
     }
+    vista.getBtnAñadir().setEnabled(true);
     vista.getTablaDatos().clearSelection();
   }
 
@@ -535,17 +540,21 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnDevegno()) {
         apartadoFormulario = "Devengo";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-        // codEmpleados = AuxController.popularNombreComboBox(vista.getDropDevEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        codEmpleados = AuxController.popularNombreComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnDeduccion()) {
         apartadoFormulario = "Deduccion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-        // codEmpleados = AuxController.popularNombreComboBox(vista.getDropDedEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        codEmpleados = AuxController.popularNombreComboBox(vista.getdropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText()) && AuxController.esNumerico(vista.getFildEmpleadoNCuenta().getText())) {
             if(verificarCampos()) {
+              String fechaRetiro = vista.getFildEmpleadoDateRet().getText();
+              if(fechaRetiro.isEmpty()) {
+                fechaRetiro = fechaMaxima;
+              }
               ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
                 vista.getFildEmpleadoApellido().getText(), 
                 vista.getFildEmpleadoNombre().getText(), 
@@ -556,7 +565,7 @@ public class ViewFormularioController {
                 ingenio.getFondoDePensionDAO().getMapFondoDePension()), 
                 AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()), 
                 AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()), 
-                AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()), 
+                AuxController.crearFecha(fechaRetiro), 
                 vista.getDropTipoEmpleado().getSelectedIndex(), 
                 vista.getFildEmpleadoNCuenta().getText()));
                 limpiarCampos();
@@ -665,7 +674,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
               ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
               ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-              // ingenio.addMapConfigDevengos(new PairClassUtil(conceptoDeDevengo.getCodigo(), codEmpleados.get(vista.getDropDevEmpleado().getSelectedIndex())), null); // agregar valor desde TextField
+              ingenio.addMapConfigDevengos(new PairClassUtil(conceptoDeDevengo.getCodigo(), codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex())), Float.parseFloat(vista.getFildDevengoValor().getText()));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
             }
@@ -682,7 +691,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
               ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
               ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              // ingenio.addMapConfigDeducciones(new PairClassUtil(conceptoDeDeduccion.getCodigo(), codEmpleados.get(vista.getDropDedEmpleado().getSelectedIndex())), null); // agregar valor desde TextField
+              ingenio.addMapConfigDeducciones(new PairClassUtil(conceptoDeDeduccion.getCodigo(), codEmpleados.get(vista.getdropDeduccionEmpleado().getSelectedIndex())), Float.parseFloat(vista.getFildDeduccionValor().getText()));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
             }
@@ -798,6 +807,10 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText())) {
             if(verificarCampos()) {
+              String fechaRetiro = vista.getFildEmpleadoDateRet().getText();
+              if(fechaRetiro.isEmpty()) {
+                fechaRetiro = fechaMaxima;
+              }
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setIdentificacion(vista.getFildEmpleadoId().getText());
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setApellidos(vista.getFildEmpleadoApellido().getText());
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNombre(vista.getFildEmpleadoNombre().getText());
@@ -806,7 +819,7 @@ public class ViewFormularioController {
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoFpp(AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeNacimiento(AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()));
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeIngreso(AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(AuxController.crearFecha(fechaRetiro));
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
               ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
               limpiarCampos();

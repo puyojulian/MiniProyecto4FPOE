@@ -36,8 +36,14 @@ public class AuxController {
 
   /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN STRING (UNICO ITEM)------------------- */
   public static void popularNombreComboBox(JComboBox<String> comboBox, String elemento) {
-    comboBox.removeAllItems();
-    comboBox.addItem(elemento);
+    int itemCount = comboBox.getItemCount();
+    for (int i = 0; i < itemCount; i++) {
+      String currentItem = comboBox.getItemAt(i);
+      if (currentItem.equals(elemento)) {
+          comboBox.setSelectedIndex(i);
+          break;
+      }
+    }
   }
 
   /* --------------- RESPUESTA: MUESTRA MENSAJE TEMPORAL ------------------- */

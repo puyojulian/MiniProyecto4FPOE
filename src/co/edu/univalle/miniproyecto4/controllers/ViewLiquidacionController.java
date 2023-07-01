@@ -158,7 +158,7 @@ public class ViewLiquidacionController {
       }
       else if(e.getSource() == vista.getBtnRegistrar()) {
       }
-      else if(e.getSource() == vista.getBtnImpresora()) {
+      else if(e.getSource() == vista.getbtnPreviz()) {
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
       }
