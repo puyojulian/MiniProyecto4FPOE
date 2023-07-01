@@ -28,8 +28,10 @@ public class ViewIncio extends JFrame implements ActionListener {
     private JPanel jpnaleIcono, jpanelTexto;
     private Decolib imFondo, imIcon, imTexto;
     private JButton btnInciar;
+    private Ingenio ingenio;
 
-    public ViewIncio(){
+    public ViewIncio(Ingenio ingenio){
+        this.ingenio = ingenio;
         iniciarComponentes();
         imFondo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistainicio/fondo.png");
         imFondo.setBounds(0,0,1280, 720);
@@ -85,7 +87,7 @@ public class ViewIncio extends JFrame implements ActionListener {
         if(e.getSource() == btnInciar){
             dispose();
             ViewFormulario viewFormulario = new ViewFormulario();
-            Ingenio ingenio = new Ingenio();
+            // Ingenio ingenio = new Ingenio();
             ViewFormularioController viewFormularioController = new ViewFormularioController(viewFormulario, ingenio);
         }
     }

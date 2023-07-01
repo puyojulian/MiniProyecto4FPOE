@@ -92,7 +92,7 @@ public class ViewLiquidacionController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if(e.getSource() == vista.getBtnPagados()) {
-
+        
       }
       else if(e.getSource() == vista.getBtnPendientes()) {
 
