@@ -49,9 +49,9 @@ public class ViewFormularioController {
   private String apartadoFormulario = "";
   private int index;
 
-  public ViewFormularioController(ViewFormulario vista) {
+  public ViewFormularioController(ViewFormulario vista, Ingenio ingenio) {
     this.vista = vista;
-    ingenio = new Ingenio();
+    this.ingenio = ingenio;
     modeloTabla = new DefaultTableModel() {
       @Override
       public boolean isCellEditable(int row, int column) {
