@@ -17,6 +17,8 @@
 package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.edu.univalle.miniproyecto4.repository.ArlDAO;
 import co.edu.univalle.miniproyecto4.repository.CajaDeCompensacionDAO;
@@ -37,6 +39,8 @@ public class Ingenio implements Serializable {
   private EmpleadoDAO empleadoDAO;
   private EpsDAO epsDAO;
   private FondoDePensionDAO fondoDePensionDAO;
+  private Map<Integer, Float> configDevengos;
+  private Map<Integer, Float> configDeducciones;
   
   public Ingenio() {
     nombre = "Ingenio";
@@ -48,6 +52,8 @@ public class Ingenio implements Serializable {
     empleadoDAO = new EmpleadoDAO();
     epsDAO = new EpsDAO();
     fondoDePensionDAO = new FondoDePensionDAO();
+    configDevengos = new HashMap<>();
+    configDeducciones = new HashMap<>();
   }
 
   public void setNombre(String nombre) {
@@ -88,5 +94,29 @@ public class Ingenio implements Serializable {
 
   public FondoDePensionDAO getFondoDePensionDAO() {
     return fondoDePensionDAO;
+  }
+
+  public Map<Integer, Float> getMapConfigDevengos() {
+    return configDevengos;
+  }
+
+  public Map<Integer, Float> getMapConfigDeducciones() {
+    return configDeducciones;
+  }
+
+  public void addMapConfigDevengos(Integer key, Float valor) {
+    configDevengos.put(key, valor);
+  }
+
+  public void addMapConfigDeducciones(Integer key, Float valor) {
+    configDeducciones.put(key, valor);
+  }
+
+  public void removeMapConfigDevengos(Integer key) {
+    configDevengos.remove(key);
+  }
+
+  public void removeMapConfigDeducciones(Integer key) {
+    configDeducciones.remove(key);
   }
 }
