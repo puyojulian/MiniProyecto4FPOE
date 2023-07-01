@@ -643,32 +643,32 @@ public class ViewFormularioController {
               limpiarCampos("Deduccion");
           }
       }
-      // else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR // FALTA AGREGAR BOTÓN EN VISTA
-      //   if(apartadoFormulario.equals("Empleado")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
-      //   }
-      //   else if(apartadoFormulario.equals("Eps")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEmpleadoDAO().getMapEmpleado());  
-      //   }
-      //   else if(apartadoFormulario.equals("FPP")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getEmpleadoDAO().getMapEmpleado());   
-      //   }
-      //   else if(apartadoFormulario.equals("ARL")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("CCompensacion")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Empresa")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Devengo")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Deduccion")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      // }
+      else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR
+        if(apartadoFormulario.equals("Empleado")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
+        }
+        else if(apartadoFormulario.equals("Eps")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEpsDAO().getMapEps());  
+        }
+        else if(apartadoFormulario.equals("FPP")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getFondoDePensionDAO().getMapFondoDePension());   
+        }
+        else if(apartadoFormulario.equals("ARL")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getArlDAO().getMapArl());    
+        }
+        else if(apartadoFormulario.equals("CCompensacion")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());    
+        }
+        else if(apartadoFormulario.equals("Empresa")) {
+          TextReaderUtil.printInformacionModeloKeyStr("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa());    
+        }
+        else if(apartadoFormulario.equals("Devengo")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());    
+        }
+        else if(apartadoFormulario.equals("Deduccion")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());    
+        }
+      }
     }
   }
 }
