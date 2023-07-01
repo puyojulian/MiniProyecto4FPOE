@@ -31,10 +31,10 @@ public class ViewFormulario extends JFrame implements ActionListener{
     private Decolib imFFondo;
 
     // Crear objetos de tipo boton para el CRUD
-    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar;
-    private Decolib btnAdd, btnDelte, btnedit, btnclear;
+    private JButton btnAñadir, btnEliminar, btnEditar, btnLimpiar, btnImprimir;
+    private Decolib btnAdd, btnDelte, btnedit, btnclear, ic2;
     // Crear objetos de tipo boton para el cambio de los apartados
-    private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion;
+    private JButton btnEmpleado, btnEps, btnFondoP, btnARL, btnCajaCompen, btnEmpresa, btnDevegno, btnDeduccion, btnLiquidacion;
 
     //Paneles para las categorias y titulos (Remplazar)
     private JPanel jpTittleR, jpTittleEmpleado, jpTittleEPS, jpTittleFondoP, jpTittleARL, jpTittleCaja, jpTittleEmpresa, jpTittleDevengo, jpTittleDeduccion;
@@ -125,7 +125,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         setVisible(true);
         setResizable(false);
         setLayout(null);
-        setAlwaysOnTop(true);
+        // setAlwaysOnTop(true);
 
         //Fuentes y colores para los objetos del programa
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 36);
@@ -200,6 +200,14 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnDeduccion.setBackground(colorFondoWhite);
         add( btnDeduccion);
 
+        btnLiquidacion = new JButton("Liquidar");
+        btnLiquidacion.setBounds(70, 621 ,285,41);
+        btnLiquidacion.setFont(nuevaTipografia);
+        btnLiquidacion.setForeground(colorFuente);
+        btnLiquidacion.setOpaque(true);
+        btnLiquidacion.setBackground(colorFondoWhite);
+        add(btnLiquidacion);
+
         btnEmpleado.addActionListener(this);
         btnEps.addActionListener(this);
         btnFondoP.addActionListener(this);
@@ -208,6 +216,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEmpresa.addActionListener(this);
         btnDevegno.addActionListener(this);
         btnDeduccion.addActionListener(this);
+        btnLiquidacion.addActionListener(this);
 
 
         /* ------------ PANELES DE LOS TITULOS DEL APARTADO ------------------  
@@ -909,6 +918,18 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEditar.setLayout(null);
         add(btnEditar);
 
+        btnImprimir = new JButton();
+        btnImprimir.setBounds(1188,393,74,30);
+        btnImprimir.setOpaque(true);
+        btnImprimir.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnImprimir.setContentAreaFilled(false);
+        btnImprimir.setLayout(null);
+        add(btnImprimir);
+
+        ic2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnimp.png");
+        ic2.setBounds(0,0,74,30);
+        btnImprimir.add(ic2);
+
         btnAdd = new Decolib("/co/edu/univalle/miniproyecto4/img/btns/add.png");
         btnAdd.setBounds(0,0,149,49);
         btnAñadir.add(btnAdd);
@@ -925,6 +946,8 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnedit.setBounds(0,0,149,49);
         btnEditar.add(btnedit);
 
+
+
         /* -------------- PANEL DE TABLAS ---------------  */
         
         jpfondotabla = new JPanel();
@@ -938,8 +961,6 @@ public class ViewFormulario extends JFrame implements ActionListener{
         jpTablaDatos.setBackground(colorFuente);
         jpfondotabla.add(jpTablaDatos);
         jpTablaDatos.add(panelTabla);
-
-        
 
         fondotabla = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/tablas/fondo.png");
         fondotabla.setBounds(0,0,727,275);
@@ -1002,6 +1023,11 @@ public class ViewFormulario extends JFrame implements ActionListener{
             System.out.println("Apartado deduccion");
             mostrartitle(jpTittleDeduccion);
             mostrarPanel(jpDed);
+        } else if (event.getSource() == btnLiquidacion){
+            System.out.println("Liquidar");
+            ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
+            viewLiquidacion.setVisible(true);
+            
         }
     }
 
@@ -1018,7 +1044,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEmpresa.addActionListener(listener);
         btnDevegno.addActionListener(listener);
         btnDeduccion.addActionListener(listener);
-        
+        btnImprimir.addActionListener(listener);
     } 
 
     private void mostrartitle(JPanel showPanel){
@@ -1303,5 +1329,9 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     public JButton getBtnDeduccion() {
         return btnDeduccion;
+    }
+
+    public JButton getBtnImprimir() {
+        return btnImprimir;
     }
 }
