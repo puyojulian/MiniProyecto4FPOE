@@ -88,16 +88,16 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     // -------------- PARA EL OBJETO DEVENOG ---------------- //
 
-    private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev;
-    private JTextField fildDevengoCodigo, fildDevengonombre;
+    private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev, lblAdicional1Dev, lblAdiconal2Dev;
+    private JTextField fildDevengoCodigo, fildDevengonombre, fildDevengoAdcion1, fildDevengoAdcion2;
     private String[] hacenbase = {"Seleccionar", "Si hace base","No hace base"};
     private JComboBox<String> dropbaseDevengo = new JComboBox<>(hacenbase);
     private Decolib fondoDevengo;
 
     // -------------- PARA EL OBJETO DEDUCCION ---------------- //
 
-    private JLabel lblcodigoDed, lblnombreDed;
-    private JTextField fildDeduccionCodigo, fildDeduccionNombre;
+    private JLabel lblcodigoDed, lblnombreDed, lblAdd1, lblAdd2;
+    private JTextField fildDeduccionCodigo, fildDeduccionNombre, fildDeduccionAdcion1, fildDeduccionAdcion2;
     
     // ------------- ELEMENTOS PARA LAS TABLAS ----------------//
     private JPanel jpfondotabla;
@@ -811,6 +811,16 @@ public class ViewFormulario extends JFrame implements ActionListener{
         lblhacebaseDev.setFont(nuevaTipografia2);
         lblhacebaseDev.setForeground(colorFuente);
 
+        lblAdicional1Dev = new JLabel("Adicional1");
+        lblAdicional1Dev.setBounds(14,124,139,30);
+        lblAdicional1Dev.setFont(nuevaTipografia2);
+        lblAdicional1Dev.setForeground(colorFuente);
+        
+        lblAdiconal2Dev = new JLabel("Adicional2");
+        lblAdiconal2Dev.setBounds(14,161,139,30);
+        lblAdiconal2Dev.setFont(nuevaTipografia2);
+        lblAdiconal2Dev.setForeground(colorFuente);
+
         fildDevengoCodigo = new JTextField();
         fildDevengoCodigo.setBounds(167,15,203,30);
         fildDevengoCodigo.setFont(nuevaTipografia2);
@@ -829,12 +839,30 @@ public class ViewFormulario extends JFrame implements ActionListener{
         dropbaseDevengo.setForeground(colorFuente);
         dropbaseDevengo.setBackground(colorFondoWhite);
 
+        fildDevengoAdcion1 = new JTextField();
+        fildDevengoAdcion1.setBounds(167,124,203,30);
+        fildDevengoAdcion1.setOpaque(true);
+        fildDevengoAdcion1.setFont(nuevaTipografia2);
+        fildDevengoAdcion1.setForeground(colorFuente);
+        fildDevengoAdcion1.setBackground(colorFondoWhite);
+
+        fildDevengoAdcion2 = new JTextField();
+        fildDevengoAdcion2.setBounds(167,161,203,30);
+        fildDevengoAdcion2.setOpaque(true);
+        fildDevengoAdcion2.setFont(nuevaTipografia2);
+        fildDevengoAdcion2.setForeground(colorFuente);
+        fildDevengoAdcion2.setBackground(colorFondoWhite);
+
         jpDev.add(lblcodigoDev);
         jpDev.add(lblnombreDeven);
         jpDev.add(lblhacebaseDev);
+        jpDev.add(lblAdicional1Dev);
+        jpDev.add(lblAdiconal2Dev);
         jpDev.add(fildDevengoCodigo);
         jpDev.add(fildDevengonombre);
         jpDev.add(dropbaseDevengo);
+        jpDev.add(fildDevengoAdcion1);
+        jpDev.add(fildDevengoAdcion2);
 
         fondoDevengo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
         fondoDevengo.setBounds(0,0,758,246);
@@ -857,6 +885,16 @@ public class ViewFormulario extends JFrame implements ActionListener{
         lblnombreDed.setFont(nuevaTipografia2);
         lblnombreDed.setForeground(colorFuente);
 
+        lblAdd1 = new JLabel("Adicional 1");
+        lblAdd1.setBounds(14,87,139,30);
+        lblAdd1.setFont(nuevaTipografia2);
+        lblAdd1.setForeground(colorFuente);
+
+        lblAdd2 = new JLabel("Adicional 2");
+        lblAdd2.setBounds(14,124,139,30);
+        lblAdd2.setFont(nuevaTipografia2);
+        lblAdd2.setForeground(colorFuente);
+
         fildDeduccionCodigo = new JTextField();
         fildDeduccionCodigo.setBounds(167,15,203,30);
         fildDeduccionCodigo.setFont(nuevaTipografia2);
@@ -869,10 +907,26 @@ public class ViewFormulario extends JFrame implements ActionListener{
         fildDeduccionNombre.setForeground(colorFuente);
         fildDeduccionNombre.setBackground(colorFondoWhite);
 
+        fildDeduccionAdcion1 = new JTextField();
+        fildDeduccionAdcion1.setBounds(167,87,203,30);
+        fildDeduccionAdcion1.setFont(nuevaTipografia2);
+        fildDeduccionAdcion1.setForeground(colorFuente);
+        fildDeduccionAdcion1.setBackground(colorFondoWhite);
+
+        fildDeduccionAdcion2 = new JTextField();
+        fildDeduccionAdcion2.setBounds(167,124,203,30);
+        fildDeduccionAdcion2.setFont(nuevaTipografia2);
+        fildDeduccionAdcion2.setForeground(colorFuente);
+        fildDeduccionAdcion2.setBackground(colorFondoWhite);
+
         jpDed.add(lblnombreDed);
         jpDed.add(lblcodigoDed);
+        jpDed.add(lblAdd1);
+        jpDed.add(lblAdd2);
         jpDed.add(fildDeduccionCodigo);
         jpDed.add(fildDeduccionNombre);
+        jpDed.add(fildDeduccionAdcion1);
+        jpDed.add(fildDeduccionAdcion2);
 
         fondoDed = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
         fondoDed.setBounds(0,0,758,246);

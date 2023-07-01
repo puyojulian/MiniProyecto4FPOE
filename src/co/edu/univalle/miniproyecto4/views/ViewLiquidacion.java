@@ -50,20 +50,37 @@ public class ViewLiquidacion extends JFrame {
     private JScrollPane jpTabla = new JScrollPane();
     private JTable tablaDatos = new JTable();
 
-    private Decolib im1, im2, im3, ic1;
+    private Decolib im1, im2, im3, ic1, imf1, imf2;
+
+    /* Para tablas de devengo y deducciones */
+    private JPanel panelDevFondo, panelDecFondo;
+    private JLabel devTittle, decTittle;
+    private String[] devengos = {"Seleccionar"};
+    private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
+    private String[] deducciones = {"Seleccionar"};
+    private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
     
+    // Tabla devengo
+    private JPanel panelTablaDev = new JPanel();
+    private JScrollPane jpTablaDev = new JScrollPane();
+    private JTable tablaDevengos = new JTable();
+    
+    // Tabla deduccion
+    private JPanel panelTablaDed = new JPanel();
+    private JScrollPane jpTablaDed = new JScrollPane();
+    private JTable tablaDeducciones = new JTable();
 
     public ViewLiquidacion(){
         inciarComponentes();
         im1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondo.png");
-        im1.setBounds(0,0,1080, 700);
+        im1.setBounds(0,0,1330, 700);  
         add(im1);
     }
 
     private void inciarComponentes() {
         setTitle("Ingenio de caña (Ventana Liquidacion)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1094, 735);
+        setSize(1344, 735);
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
@@ -253,6 +270,22 @@ public class ViewLiquidacion extends JFrame {
         panelTabla.add(panelconTabla);
         panelconTabla.add(jpTabla);
 
+        tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaDatos.setBackground(colorFondoWhite);
+        jpTabla.setBounds(0,0,378,248);
+        jpTabla.setViewportView(tablaDatos); 
+
         im2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotabla.png");
         im2.setBounds(0,0,399,305);
         panelTabla.add(im2);
@@ -274,6 +307,102 @@ public class ViewLiquidacion extends JFrame {
         im3.setBounds(0,0,561,305);
         panelTxtarea.add(im3);
 
+        /*-------------------- Nuevo apartado --------------------------- */
+
+        devTittle = new JLabel("Devengos");
+        devTittle.setBounds(1073,21,206,29);
+        devTittle.setFont(nuevaTipografia);
+        devTittle.setForeground(colorFuente);
+        devTittle.setHorizontalAlignment(JLabel.CENTER);
+
+        dropDevengos.setBounds(1073,308,206,29);
+        dropDevengos.setOpaque(true);
+        dropDevengos.setFont(nuevaTipografia);
+        dropDevengos.setForeground(colorFuente);
+        dropDevengos.setBackground(colorFondoWhite);
+
+        add(devTittle);
+        add(dropDevengos);
+
+        panelDevFondo = new JPanel();
+        panelDevFondo.setBounds(1052,61,247,234);
+        panelDevFondo.setBackground(colorFondoWhite);
+        panelDevFondo.setLayout(null);
+        add(panelDevFondo);
+
+        panelTablaDev.setBounds(7,7,233,220);
+        panelTablaDev.setLayout(null);
+        panelTablaDev.setBackground(colorFondoWhite);
+        panelDevFondo.add(panelTablaDev);
+        panelTablaDev.add(jpTablaDev);
+
+        tablaDevengos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+
+        tablaDevengos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaDevengos.setBackground(colorFondoWhite);
+        jpTablaDev.setBounds(0,0,233,220);
+        jpTablaDev.setViewportView(tablaDevengos);
+
+        imf1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotablita.png");
+        imf1.setBounds(0,0,247,234);
+        panelDevFondo.add(imf1);
+
+        decTittle = new JLabel("Deducciones");
+        decTittle.setBounds(1074,352,206,29);
+        decTittle.setFont(nuevaTipografia);
+        decTittle.setForeground(colorFuente);
+        decTittle.setHorizontalAlignment(JLabel.CENTER);
+
+        dropDeducciones.setBounds(1074,637,206,29);
+        dropDeducciones.setOpaque(true);
+        dropDeducciones.setFont(nuevaTipografia);
+        dropDeducciones.setForeground(colorFuente);
+        dropDeducciones.setBackground(colorFondoWhite);
+
+        add(decTittle);
+        add(dropDeducciones);
+
+        panelDecFondo = new JPanel();
+        panelDecFondo.setBounds(1052,390,247,234);
+        panelDecFondo.setBackground(colorFondoWhite);
+        panelDecFondo.setLayout(null);
+        add(panelDecFondo);
+
+        panelTablaDed.setBounds(7,7,233,220);
+        panelTablaDed.setLayout(null);
+        panelTablaDed.setBackground(colorFondoWhite);
+        panelDecFondo.add(panelTablaDed);
+        panelTablaDed.add(jpTablaDed);
+
+        tablaDeducciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        tablaDeducciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaDeducciones.setBackground(colorFondoWhite);
+        jpTablaDed.setBounds(0,0,233,220);
+        jpTablaDed.setViewportView(tablaDeducciones);
+
+        imf2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotablita.png");
+        imf2.setBounds(0,0,247,234);
+        panelDecFondo.add(imf2);
         
     }
 
@@ -332,5 +461,60 @@ public class ViewLiquidacion extends JFrame {
     public void setTablaDatos(JTable tablaDatos) {
         this.tablaDatos = tablaDatos;
     }
+
+    public JPanel getPanelconTabla() {
+        return panelconTabla;
+    }
     
+     /* --------------- Para las Tablas  DEVENGOS (Getters and Setters) ------------------- */
+
+    public JComboBox<String> getDropDevengos() {
+        return dropDevengos;
+    }
+
+    public void setDropDevengos(JComboBox<String> dropDevengos) {
+        this.dropDevengos = dropDevengos;
+    }
+
+    public JPanel getPanelTablaDev() {
+        return panelTablaDev;
+    }
+
+    public JScrollPane getJpTablaDev() {
+        return jpTablaDev;
+    }
+
+    public JTable getTablaDevengos() {
+        return tablaDevengos;
+    }
+
+    public void setTablaDevengos(JTable tablaDevengos) {
+        this.tablaDevengos = tablaDevengos;
+    }
+
+      /* --------------- Para las Tablas DEDUCCCIONES (Getters and Setters) ------------------- */
+    
+    public JComboBox<String> getDropDeducciones() {
+        return dropDeducciones;
+    }
+
+    public void setDropDeducciones(JComboBox<String> dropDeducciones) {
+        this.dropDeducciones = dropDeducciones;
+    }
+
+    public JPanel getPanelTablaDed() {
+        return panelTablaDed;
+    }
+
+    public JScrollPane getJpTablaDed() {
+        return jpTablaDed;
+    }
+
+    public JTable getTablaDeducciones() {
+        return tablaDeducciones;
+    }
+
+    public void setTablaDeducciones(JTable tablaDeducciones) {
+        this.tablaDeducciones = tablaDeducciones;
+    }
 }
