@@ -18,7 +18,7 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
-public class ConceptoDeDevengo implements Serializable {
+public class ConceptoDeDevengo implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
   private boolean haceBase;
