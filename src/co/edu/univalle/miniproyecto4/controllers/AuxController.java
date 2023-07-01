@@ -8,9 +8,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 import co.edu.univalle.miniproyecto4.models.ModelInterface;
 
@@ -142,5 +146,39 @@ public class AuxController {
       }
     }
     return localDate;
+  }
+
+  /* --------------- FORMATO: RETORNA LISTA CON ELEMENTOS DE JLISTA ------------------- */
+  public static List<String> getNombresLista(JList<String> jlist) {
+    ListModel<String> listModel = jlist.getModel();
+    List<String> lista = new ArrayList<>();
+    for (int i = 0; i < listModel.getSize(); i++) {
+      String element = listModel.getElementAt(i);
+      lista.add(element);
+    }
+    return lista;
+  }
+
+  /* --------------- FORMATO: RETORNA LISTA CON CÓDIGOS DESDE ELEMENTOS DE JLISTA ------------------- */
+  public static <T extends ModelInterface> List<Integer> getCodigosJLista(JList<String> jlist, Map<Integer, T> mapa) {
+    ListModel<String> listModel = jlist.getModel();
+    List<Integer> lista = new ArrayList<>();
+    for (int i = 0; i < listModel.getSize(); i++) {
+      String element = listModel.getElementAt(i);
+      lista.add(getCodByNombre(element, mapa));
+    }
+    return lista;
+  }
+  
+  /* --------------- VERIFICACIÓN: VERIFICA SI EL ELEMENTO ESTÁ EN LA JLISTA ------------------- */
+  public static boolean elementoYaEnLista(DefaultListModel<String> listModel, JComboBox<String> jComboBox) {
+    if(!listModel.isEmpty()) {
+      for (int i = 0; i < listModel.getSize(); i++) {
+        if(listModel.getElementAt(i).equals(jComboBox.getSelectedItem())) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

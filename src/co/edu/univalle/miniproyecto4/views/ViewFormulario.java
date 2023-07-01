@@ -1098,7 +1098,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnEmpresa.addActionListener(listener);
         btnDevegno.addActionListener(listener);
         btnDeduccion.addActionListener(listener);
-        
+        btnImprimir.addActionListener(listener);
     } 
 
     private void mostrartitle(JPanel showPanel){
@@ -1383,5 +1383,9 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     public JButton getBtnDeduccion() {
         return btnDeduccion;
+    }
+
+    public JButton getBtnImprimir() {
+        return btnImprimir;
     }
 }

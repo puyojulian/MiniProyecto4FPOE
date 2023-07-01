@@ -49,9 +49,9 @@ public class ViewFormularioController {
   private String apartadoFormulario = "";
   private int index;
 
-  public ViewFormularioController(ViewFormulario vista) {
+  public ViewFormularioController(ViewFormulario vista, Ingenio ingenio) {
     this.vista = vista;
-    ingenio = new Ingenio();
+    this.ingenio = ingenio;
     modeloTabla = new DefaultTableModel() {
       @Override
       public boolean isCellEditable(int row, int column) {
@@ -251,9 +251,75 @@ public class ViewFormularioController {
     }
   }
 
+  /* --------------- VERIFICACION: VERIFICA QUE LOS CAMPOS PERTINENTES NO ESTÉN VACÍOS ------------------- */
+  private boolean verificarCampos(){
+    if(apartadoFormulario.equals("Empleado")) {
+      if(vista.getFildEmpleadoApellido().getText().isEmpty() ||
+          vista.getFildEmpleadoCod().getText().isEmpty() ||
+          vista.getFildEmpleadoDateIngr().getText().isEmpty() ||
+          vista.getFildEmpleadoDateN().getText().isEmpty() ||
+          vista.getFildEmpleadoDateRet().getText().isEmpty() ||
+          vista.getFildEmpleadoDr().getText().isEmpty() ||
+          vista.getFildEmpleadoId().getText().isEmpty() ||
+          vista.getFildEmpleadoNCuenta().getText().isEmpty() ||
+          vista.getFildEmpleadoNombre().getText().isEmpty() ||
+          vista.getDropEpsEmpleado().getSelectedIndex() == 0 ||
+          vista.getDropFppEmpleado().getSelectedIndex() == 0 ||
+          vista.getDropTipoEmpleado().getSelectedIndex() == 0) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("Eps")) {
+      if(vista.getFildEPSNombre().getText().isEmpty()) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("FPP")) {
+      if(vista.getFildFPPnombre().getText().isEmpty()) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("ARL")) {
+      if(vista.getFildARLnombre().getText().isEmpty()) {
+        return false;
+      }    
+    }
+    else if(apartadoFormulario.equals("CCompensacion")) {
+      if(vista.getFildCajaComNombre().getText().isEmpty()) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("Empresa")) {
+      if(vista.getFildEmpresaAuxTrans().getText().isEmpty() ||
+          vista.getFildEmpresaCorreo().getText().isEmpty() ||
+          vista.getFildEmpresaDireccion().getText().isEmpty() ||
+          vista.getFildEmpresaNit().getText().isEmpty() ||
+          vista.getFildEmpresaNombre().getText().isEmpty() ||
+          vista.getFildEmpresaRepre().getText().isEmpty() ||
+          vista.getFildEmpresaSalariomin().getText().isEmpty() ||
+          vista.getFildEmpresaTelefono().getText().isEmpty() ||
+          vista.getDropCodARLEMPRESA().getSelectedIndex() == 0 ||
+          vista.getDropCodCajaCom().getSelectedIndex() == 0) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("Devengo")) {
+      if(vista.getFildDevengonombre().getText().isEmpty() ||
+          vista.getDropbaseDevengo().getSelectedIndex() == 0) {
+        return false;
+      }
+    }
+    else if(apartadoFormulario.equals("Deduccion")) {
+      if(vista.getFildDeduccionNombre().getText().isEmpty()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   /* --------------- MUESTREO: RETORNA LOS VALORES DE LOS CAMPOS A SUS VALORES POR DEFECTO ------------------- */
-  private void limpiarCampos(String vistaActual){
-    if(vistaActual.equals("Empleado")) {
+  private void limpiarCampos() {
+    if(apartadoFormulario.equals("Empleado")) {
       vista.getFildEmpleadoApellido().setText("");
       vista.getFildEmpleadoCod().setText("");
       vista.getFildEmpleadoDateIngr().setText("");
@@ -267,23 +333,23 @@ public class ViewFormularioController {
       vista.getDropFppEmpleado().setSelectedIndex(0);
       vista.getDropTipoEmpleado().setSelectedIndex(0);
     }
-    else if(vistaActual.equals("Eps")) {
+    else if(apartadoFormulario.equals("Eps")) {
       vista.getFildEPSCod().setText("");
       vista.getFildEPSNombre().setText("");
     }
-    else if(vistaActual.equals("FPP")) {
+    else if(apartadoFormulario.equals("FPP")) {
       vista.getFildFPPcod().setText("");
       vista.getFildFPPnombre().setText("");
     }
-    else if(vistaActual.equals("ARL")) {
+    else if(apartadoFormulario.equals("ARL")) {
       vista.getFildARLcod().setText("");
       vista.getFildARLnombre().setText("");
     }
-    else if(vistaActual.equals("CCompensacion")) {
+    else if(apartadoFormulario.equals("CCompensacion")) {
       vista.getFildCajaComCodigo().setText("");
       vista.getFildCajaComNombre().setText("");
     }
-    else if(vistaActual.equals("Empresa")) {
+    else if(apartadoFormulario.equals("Empresa")) {
       vista.getFildEmpresaAuxTrans().setText("");
       vista.getFildEmpresaCorreo().setText("");
       vista.getFildEmpresaDireccion().setText("");
@@ -295,12 +361,12 @@ public class ViewFormularioController {
       vista.getDropCodARLEMPRESA().setSelectedIndex(0);
       vista.getDropCodCajaCom().setSelectedIndex(0);
     }
-    else if(vistaActual.equals("Devengo")) {
+    else if(apartadoFormulario.equals("Devengo")) {
       vista.getFildDevengoCodigo().setText("");
       vista.getFildDevengonombre().setText("");
       vista.getDropbaseDevengo().setSelectedIndex(0);
     }
-    else if(vistaActual.equals("Deduccion")) {
+    else if(apartadoFormulario.equals("Deduccion")) {
       vista.getFildDeduccionCodigo().setText("");
       vista.getFildDeduccionNombre().setText("");
     }
@@ -359,75 +425,119 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText()) && AuxController.esNumerico(vista.getFildEmpleadoNCuenta().getText())) {
-            ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
-              vista.getFildEmpleadoApellido().getText(), 
-              vista.getFildEmpleadoNombre().getText(), 
-              vista.getFildEmpleadoDr().getText(), 
-              AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), 
-              ingenio.getEpsDAO().getMapEps()), 
-              AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), 
-              ingenio.getFondoDePensionDAO().getMapFondoDePension()), 
-              AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()), 
-              AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()), 
-              AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()), 
-              vista.getDropTipoEmpleado().getSelectedIndex(), 
-              vista.getFildEmpleadoNCuenta().getText()));
-              limpiarCampos("Empleado");
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
+            if(verificarCampos()) {
+              ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
+                vista.getFildEmpleadoApellido().getText(), 
+                vista.getFildEmpleadoNombre().getText(), 
+                vista.getFildEmpleadoDr().getText(), 
+                AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), 
+                ingenio.getEpsDAO().getMapEps()), 
+                AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), 
+                ingenio.getFondoDePensionDAO().getMapFondoDePension()), 
+                AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()), 
+                AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()), 
+                AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()), 
+                vista.getDropTipoEmpleado().getSelectedIndex(), 
+                vista.getFildEmpleadoNCuenta().getText()));
+                limpiarCampos();
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
+            }
+            else {
+              AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            }
           }
           else {
             AuxController.mensajeTemporal("Los números de identificación y de cuenta deben ser numéricos.", "Error de entrada", 1150);
           }
         }
         else if(apartadoFormulario.equals("Eps")) {
-          ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-          limpiarCampos("Eps");
+          if(verificarCampos()) {
+            ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+            limpiarCampos();
+          }
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("FPP")) {
-          ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-          limpiarCampos("FPP");
+          if(verificarCampos()) {
+            ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+            limpiarCampos();
+          }
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("ARL")) {
-          ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-          limpiarCampos("ARL");
+          if(verificarCampos()) {
+            ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+            limpiarCampos();
+          }
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
-          ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-          limpiarCampos("CCompensacion");
+          if(verificarCampos()) {
+            ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+            limpiarCampos();
+          }
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("Empresa")) {
           if(AuxController.esNumerico(vista.getFildEmpresaNit().getText()) && AuxController.esNumerico(vista.getFildEmpresaTelefono().getText()) && AuxController.esNumerico(vista.getFildEmpresaSalariomin().getText()) && AuxController.esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
-            ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(vista.getFildEmpresaNit().getText(), 
-              vista.getFildEmpresaNombre().getText(), 
-              vista.getFildEmpresaTelefono().getText(), 
-              vista.getFildEmpresaDireccion().getText(), 
-              vista.getFildEmpresaRepre().getText(), 
-              vista.getFildEmpresaCorreo().getText(), 
-              AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()), 
-              AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
-              vista.getFildEmpresaSalariomin().getText(), 
-              vista.getFildEmpresaAuxTrans().getText()));
+            if(verificarCampos()) {
+              ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(vista.getFildEmpresaNit().getText(), 
+                vista.getFildEmpresaNombre().getText(), 
+                vista.getFildEmpresaTelefono().getText(), 
+                vista.getFildEmpresaDireccion().getText(), 
+                vista.getFildEmpresaRepre().getText(), 
+                vista.getFildEmpresaCorreo().getText(), 
+                AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()), 
+                AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
+                vista.getFildEmpresaSalariomin().getText(), 
+                vista.getFildEmpresaAuxTrans().getText()));
 
-            vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
-            limpiarCampos("Empresa");
+              vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            }
           }
           else {
             AuxController.mensajeTemporal("NIT, Teléfono, Salario Mínimo y Auxilio de Transporte deben ser numéricos.", "Error de entrada", 1150);
           }
         }
         else if(apartadoFormulario.equals("Devengo")) {
-          ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(new ConceptoDeDevengo(vista.getFildDevengonombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-          limpiarCampos("Devengo");
+          if(verificarCampos()) {
+            ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
+            ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
+            ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), null); // agregar valor desde TextField
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+            limpiarCampos();
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("Deduccion")) {
-          ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText()));
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-          limpiarCampos("Deduccion");
+          if(verificarCampos()) {
+            ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
+            ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
+            ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), null); // agregar valor desde TextField
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+            limpiarCampos();
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
       }
       else if(e.getSource() == vista.getBtnEliminar()) { // ELIMINAR
@@ -438,7 +548,7 @@ public class ViewFormularioController {
           Map.Entry<Integer, Empleado> entry = (Map.Entry<Integer, Empleado>) listaMap.get(index);
           ingenio.getEmpleadoDAO().deleteEmpleado((entry.getKey()));
           vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
-          limpiarCampos("Empleado");
+          limpiarCampos();
         } else {
           AuxController.mensajeTemporal("Elija el usuario que desea eliminar", "Error", 1150);
         }
@@ -450,7 +560,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
             ingenio.getEpsDAO().deleteEps(entry.getKey());
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-            limpiarCampos("Eps");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija la eps que desea eliminar", "Error", 1150);
           }
@@ -462,7 +572,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
             ingenio.getFondoDePensionDAO().deleteFondoDePension(entry.getKey());
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-            limpiarCampos("FPP");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija el fondo de pension que desea eliminar", "Error", 1150);
           }
@@ -474,7 +584,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
             ingenio.getArlDAO().deleteArl((entry.getKey()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-            limpiarCampos("ARL");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
           }
@@ -486,7 +596,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
             ingenio.getCajaDeCompensacionDAO().deleteCajaDeCompensacion((entry.getKey()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-            limpiarCampos("CCompensacion");  
+            limpiarCampos();  
           } else {
             AuxController.mensajeTemporal("Elija la caja de compensacion que desea eliminar", "Error", 1150);
           }
@@ -498,7 +608,7 @@ public class ViewFormularioController {
             Map.Entry<String, ConfiguracionDeEmpresa> entry = (Map.Entry<String, ConfiguracionDeEmpresa>) listaMap.get(index);
             ingenio.getConfiguracionDeEmpresaDAO().deleteConfiguracionDeEmpresa(entry.getKey());
             vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
-            limpiarCampos("Empresa");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija la empresa que desea eliminar", "Error", 1150);
           }
@@ -510,7 +620,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
             ingenio.getConceptoDeDevengoDAO().deleteConceptoDeDevengo((entry.getKey()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-            limpiarCampos("Devengo");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
           }
@@ -522,7 +632,7 @@ public class ViewFormularioController {
             Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
             ingenio.getConceptoDeDeduccionDAO().deleteConceptoDeDeduccion((entry.getKey()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-            limpiarCampos("Deduccion");
+            limpiarCampos();
           } else {
             AuxController.mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
           }
@@ -532,20 +642,25 @@ public class ViewFormularioController {
         if(apartadoFormulario.equals("Empleado")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText())) {
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setIdentificacion(vista.getFildEmpleadoId().getText());
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setApellidos(vista.getFildEmpleadoApellido().getText());
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNombre(vista.getFildEmpleadoNombre().getText());
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setDireccion(vista.getFildEmpleadoDr().getText());
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoEps(AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), ingenio.getEpsDAO().getMapEps()));
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoFpp(AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeNacimiento(AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()));
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeIngreso(AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()));
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()));
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
-            ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
-            limpiarCampos("Empleado");
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
-            vista.getBtnAñadir().setEnabled(true);
+            if(verificarCampos()) {
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setIdentificacion(vista.getFildEmpleadoId().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setApellidos(vista.getFildEmpleadoApellido().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNombre(vista.getFildEmpleadoNombre().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setDireccion(vista.getFildEmpleadoDr().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoEps(AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), ingenio.getEpsDAO().getMapEps()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoFpp(AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeNacimiento(AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeIngreso(AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(AuxController.crearFecha(vista.getFildEmpleadoDateRet().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
+              limpiarCampos();
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            }
           }
           else {
             AuxController.mensajeTemporal("Los números de identificación y de cuenta deben ser numéricos.", "Error de entrada", 1150);
@@ -553,49 +668,74 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Eps")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-          limpiarCampos("Eps");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("FPP")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-          limpiarCampos("FPP");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("ARL")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-          limpiarCampos("ARL");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-          limpiarCampos("CCompensacion");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("Empresa")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(AuxController.esNumerico(vista.getFildEmpresaNit().getText()) && AuxController.esNumerico(vista.getFildEmpresaTelefono().getText()) && AuxController.esNumerico(vista.getFildEmpresaSalariomin().getText()) && AuxController.esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNit(vista.getFildEmpresaNit().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNombre(vista.getFildEmpresaNombre().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setTelefono(vista.getFildEmpresaTelefono().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setDireccion(vista.getFildEmpresaDireccion().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setRepresentanteLegal(vista.getFildEmpresaRepre().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCorreoDeContacto(vista.getFildEmpresaCorreo().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoArl(AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()));
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoCajaDeCompensación(AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setSalarioMínimoLegalVigente(vista.getFildEmpresaSalariomin().getText());
-            ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setAuxilioDeTransporte(vista.getFildEmpresaAuxTrans().getText());
+            if(verificarCampos()) {
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNit(vista.getFildEmpresaNit().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNombre(vista.getFildEmpresaNombre().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setTelefono(vista.getFildEmpresaTelefono().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setDireccion(vista.getFildEmpresaDireccion().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setRepresentanteLegal(vista.getFildEmpresaRepre().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCorreoDeContacto(vista.getFildEmpresaCorreo().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoArl(AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()));
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoCajaDeCompensación(AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setSalarioMínimoLegalVigente(vista.getFildEmpresaSalariomin().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setAuxilioDeTransporte(vista.getFildEmpresaAuxTrans().getText());
 
-            vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
-            limpiarCampos("Empresa");
-            vista.getBtnAñadir().setEnabled(true);
+              vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            }
           }
           else {
             AuxController.mensajeTemporal("NIT, Teléfono, Salario Mínimo y Auxilio de Transporte deben ser numéricos.", "Error de entrada", 1150);
@@ -603,72 +743,82 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Devengo")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-          limpiarCampos("Devengo");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
         else if(apartadoFormulario.equals("Deduccion")) {
           index = vista.getTablaDatos().getSelectedRow();
-          ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
-          vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-          limpiarCampos("Deduccion");
-          vista.getBtnAñadir().setEnabled(true);
+          if(verificarCampos()) {
+            ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+          } 
+          else {
+            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+          }
         }
       }
       else if(e.getSource() == vista.getBtnLimpiar()) { // LIMPIAR
           vista.getTablaDatos().clearSelection();
           if(apartadoFormulario.equals("Empleado")) {
-              limpiarCampos("Empleado");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("Eps")) {
-              limpiarCampos("Eps");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("FPP")) {
-              limpiarCampos("FPP");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("ARL")) {
-              limpiarCampos("ARL");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("CCompensacion")) {
-              limpiarCampos("CCompensacion");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("Empresa")) {
-              limpiarCampos("Empresa");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("Devengo")) {
-              limpiarCampos("Devengo");
+              limpiarCampos();
           }
           else if(apartadoFormulario.equals("Deduccion")) {
-              limpiarCampos("Deduccion");
+              limpiarCampos();
           }
       }
-      // else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR // FALTA AGREGAR BOTÓN EN VISTA
-      //   if(apartadoFormulario.equals("Empleado")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
-      //   }
-      //   else if(apartadoFormulario.equals("Eps")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEmpleadoDAO().getMapEmpleado());  
-      //   }
-      //   else if(apartadoFormulario.equals("FPP")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getEmpleadoDAO().getMapEmpleado());   
-      //   }
-      //   else if(apartadoFormulario.equals("ARL")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("CCompensacion")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Empresa")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Devengo")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      //   else if(apartadoFormulario.equals("Deduccion")) {
-      //     TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getEmpleadoDAO().getMapEmpleado());    
-      //   }
-      // }
+      else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR
+        if(apartadoFormulario.equals("Empleado")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
+        }
+        else if(apartadoFormulario.equals("Eps")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEpsDAO().getMapEps());  
+        }
+        else if(apartadoFormulario.equals("FPP")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getFondoDePensionDAO().getMapFondoDePension());   
+        }
+        else if(apartadoFormulario.equals("ARL")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getArlDAO().getMapArl());    
+        }
+        else if(apartadoFormulario.equals("CCompensacion")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());    
+        }
+        else if(apartadoFormulario.equals("Empresa")) {
+          TextReaderUtil.printInformacionModeloKeyStr("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa());    
+        }
+        else if(apartadoFormulario.equals("Devengo")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());    
+        }
+        else if(apartadoFormulario.equals("Deduccion")) {
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());    
+        }
+      }
     }
   }
 }

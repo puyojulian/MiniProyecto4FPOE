@@ -85,7 +85,7 @@ public class ViewLiquidacion extends JFrame {
         setVisible(true);
         setResizable(false);
         setLayout(null);
-        setVisible(false);
+        // setVisible(false);
 
 
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 22);
@@ -516,5 +516,13 @@ public class ViewLiquidacion extends JFrame {
 
     public void setTablaDeducciones(JTable tablaDeducciones) {
         this.tablaDeducciones = tablaDeducciones;
+    }
+
+    public void btnAddActionListener(ActionListener actionListener) {
+        btnPagados.addActionListener(actionListener);
+        btnPendientes.addActionListener(actionListener);
+        btnRegistrar.addActionListener(actionListener);
+        btnFacturarEmitir.addActionListener(actionListener);
+        btnImpresora.addActionListener(actionListener);
     }
 }

@@ -10,7 +10,10 @@
 package co.edu.univalle.miniproyecto4;
 
 import javax.swing.text.View;
+
+import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.views.ViewIncio;
+import co.edu.univalle.miniproyecto4.views.ViewLiquidacion;
 
 public class Main {
 
@@ -19,8 +22,5 @@ public class Main {
      */
     public static void main(String[] args) {
         ViewIncio viewIncio = new ViewIncio();
-        
-        
     }
-    
 }
