@@ -19,6 +19,10 @@ public class ViewLiquidacionController {
   private List<ArrayList<String>> matrizPendiente;
   private List<ArrayList<String>> matrizFacturado;
   private List<String> trabajoFacturadoList;
+  private List<Integer> codDevengos;
+  private List<Integer> codDeducciones;
+  private List<String> devengos;
+  private List<String> deducciones;
   private DefaultTableModel modeloTabla;
   private String apartadoFormulario = "";
 
@@ -26,6 +30,10 @@ public class ViewLiquidacionController {
     this.vista = vista;
     this.ingenio = ingenio;
     trabajoFacturadoList = new ArrayList<String>();
+    devengos = new ArrayList<String>();
+    codDevengos = new ArrayList<Integer>();
+    deducciones = new ArrayList<String>();
+    codDeducciones = new ArrayList<Integer>();
     modeloTabla = new DefaultTableModel() {
       @Override
       public boolean isCellEditable(int row, int column) {
@@ -33,6 +41,7 @@ public class ViewLiquidacionController {
       }
     };
 
+    AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
     vista.getBtnPendientes().setSelected(true);
     
     ListSelectionHandler manejadorDeListSelectionEvents = new ListSelectionHandler();
@@ -40,7 +49,7 @@ public class ViewLiquidacionController {
     ActionsHandler manejadorDeActionEvents = new ActionsHandler();
     vista.btnAddActionListener(manejadorDeActionEvents);
 
-    AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+    
   }
 
   /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
@@ -53,11 +62,11 @@ public class ViewLiquidacionController {
     modeloTabla.setColumnIdentifiers(atributosTabla);
 
     if(vista.getBtnPendientes().isSelected()) {
-      matrizPendiente = TextReaderUtil.getListaCantidadTrabajada("PagosPendientes.txt", fichaEmpleado);
+      matrizPendiente = TextReaderUtil.getListaCantidadTrabajada("InformacionPagos/RegistroCortePendiente.txt", fichaEmpleado);
       matrizTemporal = matrizPendiente;
     }
     else if(vista.getBtnPagados().isSelected()) {
-      matrizFacturado = TextReaderUtil.getListaCantidadTrabajada("PagosFacturados.txt", fichaEmpleado);
+      matrizFacturado = TextReaderUtil.getListaCantidadTrabajada("InformacionPagos/RegistroCortePagado.txt", fichaEmpleado);
       matrizTemporal = matrizFacturado;
     }
 
@@ -78,6 +87,19 @@ public class ViewLiquidacionController {
     }
     return listaString;
   }
+  /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LOS DEVENGOS EN LA LISTA ------------------- */
+
+  /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LAS DEDUCCIONES EN LA LISTA ------------------- */
+
+  /* --------------- CÁLCULO: CALCULA DEVENGO Y RETORNA STRING ------------------- */
+
+  /* --------------- CÁLCULO: CALCULA DEDUCCIÓN Y RETORNA STRING ------------------- */
+
+  /* --------------- CÁLCULO: LLENA LISTA DEVENGOS CON LOS DEVENGOS CALCULADOS ------------------- */
+
+  /* --------------- CÁLCULO: LLENA LISTA DEDUCCIONES CON LAS DEDUCCIONES CALCULADAS ------------------- */
+
+  
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
   class ListSelectionHandler implements ListSelectionListener {

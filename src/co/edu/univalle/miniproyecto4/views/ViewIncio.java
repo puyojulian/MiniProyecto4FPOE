@@ -22,16 +22,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import co.edu.univalle.miniproyecto4.controllers.ViewFormularioController;
+import co.edu.univalle.miniproyecto4.controllers.ViewLiquidacionController;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 
 public class ViewIncio extends JFrame implements ActionListener {
     private JPanel jpnaleIcono, jpanelTexto;
     private Decolib imFondo, imIcon, imTexto;
     private JButton btnInciar;
-    private Ingenio ingenio;
 
-    public ViewIncio(Ingenio ingenio){
-        this.ingenio = ingenio;
+    public ViewIncio(){
         iniciarComponentes();
         imFondo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistainicio/fondo.png");
         imFondo.setBounds(0,0,1280, 720);
@@ -86,9 +85,11 @@ public class ViewIncio extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnInciar){
             dispose();
+            Ingenio ingenio = new Ingenio();
             ViewFormulario viewFormulario = new ViewFormulario();
-            // Ingenio ingenio = new Ingenio();
             ViewFormularioController viewFormularioController = new ViewFormularioController(viewFormulario, ingenio);
+            ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
+            ViewLiquidacionController viewLiquidacionController = new ViewLiquidacionController(viewLiquidacion, ingenio);
         }
     }
 

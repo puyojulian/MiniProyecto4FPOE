@@ -68,7 +68,7 @@ public class ViewLiquidacion extends JFrame {
         setVisible(true);
         setResizable(false);
         setLayout(null);
-        setVisible(false);
+        // setVisible(false);
 
 
         Font nuevaTipografia = new Font("Berlin Sans FB Demi", Font.BOLD, 22);
@@ -252,6 +252,21 @@ public class ViewLiquidacion extends JFrame {
         panelconTabla.setBackground(colorFondoWhite);
         panelTabla.add(panelconTabla);
         panelconTabla.add(jpTabla);
+
+        tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jpTabla.setBounds(0,0,378,284);
+        jpTabla.setViewportView(tablaDatos);
 
         im2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotabla.png");
         im2.setBounds(0,0,399,305);

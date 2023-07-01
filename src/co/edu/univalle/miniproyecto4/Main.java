@@ -13,6 +13,7 @@ import javax.swing.text.View;
 
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.views.ViewIncio;
+import co.edu.univalle.miniproyecto4.views.ViewLiquidacion;
 
 public class Main {
 
@@ -20,10 +21,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Ingenio ingenio = new Ingenio();
-        ViewIncio viewIncio = new ViewIncio(ingenio);
-        
-        
+        ViewIncio viewIncio = new ViewIncio();
     }
-    
 }
