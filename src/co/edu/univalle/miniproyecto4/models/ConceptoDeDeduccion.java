@@ -18,7 +18,7 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
-public class ConceptoDeDeduccion implements Serializable {
+public class ConceptoDeDeduccion implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
   private static int consecutivo = 0;

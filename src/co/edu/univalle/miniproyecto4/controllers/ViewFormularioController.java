@@ -373,6 +373,35 @@ public class ViewFormularioController {
     vista.getTablaDatos().clearSelection();
   }
 
+  /* --------------- UTILIDAD: RETORNA MAPA DE LLAVE INTEGER SEGÚN APARTADOFORMULARIO ------------------- */
+  private Map getMapIngenio() {
+    if(apartadoFormulario.equals("Empleado")) {
+      return ingenio.getEmpleadoDAO().getMapEmpleado();
+    }
+    else if(apartadoFormulario.equals("Eps")) {
+      return ingenio.getEpsDAO().getMapEps();
+    }
+    else if(apartadoFormulario.equals("FPP")) {
+      return ingenio.getFondoDePensionDAO().getMapFondoDePension();
+    }
+    else if(apartadoFormulario.equals("ARL")) {
+      return ingenio.getArlDAO().getMapArl();
+    }
+    else if(apartadoFormulario.equals("CCompensacion")) {
+      return ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion();
+    }
+    else if(apartadoFormulario.equals("Empresa")) {
+      return ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa();
+    }
+    else if(apartadoFormulario.equals("Devengo")) {
+      return ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo();
+    }
+    else if(apartadoFormulario.equals("Deduccion")) {
+      return ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion();
+    }
+    return null;
+  }
+
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN DE LISTA ------------------- */
   class ListSelectionHandler implements ListSelectionListener {
 
@@ -452,39 +481,59 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Eps")) {
           if(verificarCampos()) {
-            ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildEPSNombre().getText(), ingenio.getEpsDAO().getMapEps())) {
+              ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("La EPS ya está registrada.", "Error de entrada", 1150);
+            }
           }
           else {
-            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
           }
         }
         else if(apartadoFormulario.equals("FPP")) {
           if(verificarCampos()) {
-            ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildFPPnombre().getText(), ingenio.getFondoDePensionDAO().getMapFondoDePension())) {
+              ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("El fondo de pensión ya está registrado.", "Error de entrada", 1150);
+            }
           }
           else {
-            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
           }
         }
         else if(apartadoFormulario.equals("ARL")) {
           if(verificarCampos()) {
-            ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildARLnombre().getText(), ingenio.getArlDAO().getMapArl())) {
+              ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("La ARL ya está registrada.", "Error de entrada", 1150);
+            }
           }
           else {
-            AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+            AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
           }
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
           if(verificarCampos()) {
-            ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildCajaComNombre().getText(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion())) {
+              ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("La Caja de Compensación ya está registrada.", "Error de entrada", 1150);
+            }
           }
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -492,23 +541,28 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Empresa")) {
           if(AuxController.esNumerico(vista.getFildEmpresaNit().getText()) && AuxController.esNumerico(vista.getFildEmpresaTelefono().getText()) && AuxController.esNumerico(vista.getFildEmpresaSalariomin().getText()) && AuxController.esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
-            if(verificarCampos()) {
-              ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(vista.getFildEmpresaNit().getText(), 
-                vista.getFildEmpresaNombre().getText(), 
-                vista.getFildEmpresaTelefono().getText(), 
-                vista.getFildEmpresaDireccion().getText(), 
-                vista.getFildEmpresaRepre().getText(), 
-                vista.getFildEmpresaCorreo().getText(), 
-                AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()), 
-                AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
-                vista.getFildEmpresaSalariomin().getText(), 
-                vista.getFildEmpresaAuxTrans().getText()));
+            if(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().size() < 1) {
+              if(verificarCampos()) {
+                ingenio.getConfiguracionDeEmpresaDAO().addConfiguracionDeEmpresa(new ConfiguracionDeEmpresa(vista.getFildEmpresaNit().getText(), 
+                  vista.getFildEmpresaNombre().getText(), 
+                  vista.getFildEmpresaTelefono().getText(), 
+                  vista.getFildEmpresaDireccion().getText(), 
+                  vista.getFildEmpresaRepre().getText(), 
+                  vista.getFildEmpresaCorreo().getText(), 
+                  AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()), 
+                  AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()), 
+                  vista.getFildEmpresaSalariomin().getText(), 
+                  vista.getFildEmpresaAuxTrans().getText()));
 
-              vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
-              limpiarCampos();
+                vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+                limpiarCampos();
+              }
+              else {
+                AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+              }
             }
             else {
-              AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
+              AuxController.mensajeTemporal("Este sistema solo permite registrar la configuración de una empresa.", "Error de entrada", 1150);
             }
           }
           else {
@@ -517,11 +571,16 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Devengo")) {
           if(verificarCampos()) {
-            ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
-            ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-            ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), null); // agregar valor desde TextField
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
+              ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
+              ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
+              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), null); // agregar valor desde TextField
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("El concepto de devengo ya está registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -529,11 +588,16 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Deduccion")) {
           if(verificarCampos()) {
-            ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
-            ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-            ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), null); // agregar valor desde TextField
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-            limpiarCampos();
+            if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
+              ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
+              ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
+              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), null); // agregar valor desde TextField
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("El concepto de deducción ya está registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -669,10 +733,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("Eps")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildEPSNombre().getText(), getMapIngenio())) {
+              ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -681,10 +750,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("FPP")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildFPPnombre().getText(), getMapIngenio())) {
+              ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -693,10 +767,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("ARL")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildARLnombre().getText(), getMapIngenio())) {
+              ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -705,10 +784,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("CCompensacion")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildCajaComNombre().getText(), getMapIngenio())) {
+              ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            } 
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -744,10 +828,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("Devengo")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), getMapIngenio())) {
+              ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            }
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -756,10 +845,15 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("Deduccion")) {
           index = vista.getTablaDatos().getSelectedRow();
           if(verificarCampos()) {
-            ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-            limpiarCampos();
-            vista.getBtnAñadir().setEnabled(true);
+            if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), getMapIngenio())) {
+              ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+              limpiarCampos();
+              vista.getBtnAñadir().setEnabled(true);
+            }
+            else {
+              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
+            }
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
