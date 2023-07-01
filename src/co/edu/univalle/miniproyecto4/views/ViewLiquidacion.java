@@ -42,7 +42,7 @@ public class ViewLiquidacion extends JFrame {
     private JPanel panelTabla, panelTxtarea;
     private JLabel lblPagados, lblPendientes;
     private JRadioButton btnPagados, btnPendientes;
-    private JButton btnRegistrar, btnFacturarEmitir, btnImpresora;
+    private JButton btnRegistrar, btnFacturarEmitir, btnPreviz;
     private JLabel lblPrevizNonima;
     private JTextArea areaComprobanteNomina;
 
@@ -59,6 +59,8 @@ public class ViewLiquidacion extends JFrame {
     private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
     private String[] deducciones = {"Seleccionar"};
     private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
+    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion;
+    private Decolib bt1, bt2, bt3, bt4;
     
     // Tabla devengo
     private JPanel panelTablaDev = new JPanel();
@@ -234,23 +236,23 @@ public class ViewLiquidacion extends JFrame {
         add(btnPagados);
         add(btnPendientes);
 
-        lblPrevizNonima = new JLabel("Previzualizacion comprobante de nomina");
+        lblPrevizNonima = new JLabel("Previzualizacion comprobante");
         lblPrevizNonima.setBounds(479,299,319,29);
         lblPrevizNonima.setFont(nuevaTipografia);
         lblPrevizNonima.setForeground(colorFuente);
         add(lblPrevizNonima);
 
-        btnImpresora = new JButton();
-        btnImpresora.setBounds(961,294,74,30);
-        btnImpresora.setOpaque(true);
-        btnImpresora.setBorder(BorderFactory.createLineBorder(colorFuente));
-        btnImpresora.setContentAreaFilled(false);
-        btnImpresora.setLayout(null);
-        add(btnImpresora);
+        btnPreviz = new JButton();
+        btnPreviz.setBounds(961,294,74,30);
+        btnPreviz.setOpaque(true);
+        btnPreviz.setBorder(BorderFactory.createLineBorder(colorFuente));
+        btnPreviz.setContentAreaFilled(false);
+        btnPreviz.setLayout(null);
+        add(btnPreviz);
 
-        ic1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnimp.png");
+        ic1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnwacth.png");
         ic1.setBounds(0,0,74,30);
-        btnImpresora.add(ic1);
+        btnPreviz.add(ic1);
 
 
         btnFacturarEmitir = new JButton("Facturar|Emitir pago");
@@ -315,7 +317,7 @@ public class ViewLiquidacion extends JFrame {
         /*-------------------- Nuevo apartado --------------------------- */
 
         devTittle = new JLabel("Devengos");
-        devTittle.setBounds(1073,21,206,29);
+        devTittle.setBounds(1050,21,159,29);
         devTittle.setFont(nuevaTipografia);
         devTittle.setForeground(colorFuente);
         devTittle.setHorizontalAlignment(JLabel.CENTER);
@@ -326,9 +328,31 @@ public class ViewLiquidacion extends JFrame {
         dropDevengos.setForeground(colorFuente);
         dropDevengos.setBackground(colorFondoWhite);
 
+        btnAddDevengo = new JButton();
+        btnAddDevengo.setBounds(1218,21,30,29);
+        btnAddDevengo.setOpaque(true);
+        btnAddDevengo.setBackground(colorFondoWhite);
+        btnAddDevengo.setLayout(null);
+        add(btnAddDevengo);
+
+        btnDelDevengo = new JButton();
+        btnDelDevengo.setBounds(1261,21,30,29);
+        btnDelDevengo.setOpaque(true);
+        btnDelDevengo.setBackground(colorFondoWhite);
+        btnDelDevengo.setLayout(null);
+        add(btnDelDevengo);
+
+        bt1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnadd.png");
+        bt1.setBounds(0,0,30,29);
+        btnAddDevengo.add(bt1);
+
+        bt2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btndelete.png");
+        bt2.setBounds(0,0,30,29);
+        btnDelDevengo.add(bt2);
+
         add(devTittle);
         add(dropDevengos);
-
+    
         panelDevFondo = new JPanel();
         panelDevFondo.setBounds(1052,61,247,234);
         panelDevFondo.setBackground(colorFondoWhite);
@@ -351,7 +375,7 @@ public class ViewLiquidacion extends JFrame {
         panelDevFondo.add(imf1);
 
         decTittle = new JLabel("Deducciones");
-        decTittle.setBounds(1074,352,206,29);
+        decTittle.setBounds(1050,352,159,29);
         decTittle.setFont(nuevaTipografia);
         decTittle.setForeground(colorFuente);
         decTittle.setHorizontalAlignment(JLabel.CENTER);
@@ -361,6 +385,28 @@ public class ViewLiquidacion extends JFrame {
         dropDeducciones.setFont(nuevaTipografia);
         dropDeducciones.setForeground(colorFuente);
         dropDeducciones.setBackground(colorFondoWhite);
+
+        btnAddDeduccion = new JButton();
+        btnAddDeduccion.setBounds(1218,350,30,29);
+        btnAddDeduccion.setOpaque(true);
+        btnAddDeduccion.setBackground(colorFondoWhite);
+        btnAddDeduccion.setLayout(null);
+        add(btnAddDeduccion);
+
+        btnDeleteDeduccion = new JButton();
+        btnDeleteDeduccion .setBounds(1261,350,30,29);
+        btnDeleteDeduccion .setOpaque(true);
+        btnDeleteDeduccion .setBackground(colorFondoWhite);
+        btnDeleteDeduccion.setLayout(null);
+        add(btnDeleteDeduccion);
+
+        bt3 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnadd.png");
+        bt3.setBounds(0,0,30,29);
+        btnAddDeduccion.add(bt3);
+
+        bt4 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btndelete.png");
+        bt4.setBounds(0,0,30,29);
+        btnDeleteDeduccion.add(bt4);
 
         add(decTittle);
         add(dropDeducciones);
@@ -406,8 +452,8 @@ public class ViewLiquidacion extends JFrame {
         return btnFacturarEmitir;
     }
 
-    public JButton getBtnImpresora() {
-        return btnImpresora;
+    public JButton getbtnPreviz() {
+        return btnPreviz;
     }
 
     /* --------------- Para la liquidacion del ingenio (Getters and Setters) ------------------- */
@@ -530,6 +576,6 @@ public class ViewLiquidacion extends JFrame {
         btnPendientes.addActionListener(actionListener);
         btnRegistrar.addActionListener(actionListener);
         btnFacturarEmitir.addActionListener(actionListener);
-        btnImpresora.addActionListener(actionListener);
+        btnPreviz.addActionListener(actionListener);
     }
 }
