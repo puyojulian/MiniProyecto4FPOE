@@ -38,7 +38,7 @@ public class TextReaderUtil {
       while ((line = reader.readLine()) != null) {
         List<String> lista = new ArrayList<>();
         String ficha = line.substring(0, 4).trim();
-        if(ficha.equals(fichaEmpleado+"")) {
+        if(Integer.parseInt(ficha) == fichaEmpleado) {
           String fechaCorte = line.substring(4, 12).trim();
           String haciendaSuerte = line.substring(12, 18).trim();
           String toneladaCorte = line.substring(22, 27).trim();

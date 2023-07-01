@@ -85,7 +85,7 @@ public class ViewLiquidacionController {
 
     modeloTabla.setRowCount(0);
 
-    String[] atributosTabla = {"FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
+    String[] atributosTabla = {"FICHA", "FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
     modeloTabla.setColumnIdentifiers(atributosTabla);
 
     if(vista.getBtnPendientes().isSelected()) {
@@ -100,7 +100,7 @@ public class ViewLiquidacionController {
     for(int i = 0; i < matrizTemporal.size(); i++) {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
       if(matrizTemporal.get(i).size() > 0) {
-        String[] arregloTemporal = {matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
+        String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
         modeloTabla.addRow(arregloTemporal);
       }
     }
