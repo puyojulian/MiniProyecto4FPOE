@@ -171,7 +171,7 @@ public class TextReaderUtil {
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String line;
       while ((line = reader.readLine()) != null) {
-        if(!line.equals(lineaABorrar)) {
+        if(!line.replaceAll("\\s", "").equals(lineaABorrar)) {
           writer.write(line);
           writer.newLine();
         }

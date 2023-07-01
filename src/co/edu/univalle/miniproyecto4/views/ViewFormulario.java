@@ -115,13 +115,11 @@ public class ViewFormulario extends JFrame implements ActionListener{
         imFFondo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/fondo.png");
         imFFondo.setBounds(0,0,1280,720);
         add(imFFondo);
-        
-
     }
 
     private void iniciarComponentes() {
         setTitle("Ingenio de caña (Ventana formulario)");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(1280, 750);
         setLocationRelativeTo(null);
         setVisible(true);

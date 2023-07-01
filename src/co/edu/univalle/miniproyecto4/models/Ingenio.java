@@ -28,6 +28,7 @@ import co.edu.univalle.miniproyecto4.repository.ConfiguracionDeEmpresaDAO;
 import co.edu.univalle.miniproyecto4.repository.EmpleadoDAO;
 import co.edu.univalle.miniproyecto4.repository.EpsDAO;
 import co.edu.univalle.miniproyecto4.repository.FondoDePensionDAO;
+import co.edu.univalle.miniproyecto4.util.PairClassUtil;
 
 public class Ingenio implements Serializable {
   private String nombre;
@@ -39,8 +40,8 @@ public class Ingenio implements Serializable {
   private EmpleadoDAO empleadoDAO;
   private EpsDAO epsDAO;
   private FondoDePensionDAO fondoDePensionDAO;
-  private Map<Integer, Float> configDevengos;
-  private Map<Integer, Float> configDeducciones;
+  private Map<PairClassUtil, Float> configDevengos;
+  private Map<PairClassUtil, Float> configDeducciones;
   
   public Ingenio() {
     nombre = "Ingenio";
@@ -96,27 +97,27 @@ public class Ingenio implements Serializable {
     return fondoDePensionDAO;
   }
 
-  public Map<Integer, Float> getMapConfigDevengos() {
+  public Map<PairClassUtil, Float> getMapConfigDevengos() {
     return configDevengos;
   }
 
-  public Map<Integer, Float> getMapConfigDeducciones() {
+  public Map<PairClassUtil, Float> getMapConfigDeducciones() {
     return configDeducciones;
   }
 
-  public void addMapConfigDevengos(Integer key, Float valor) {
+  public void addMapConfigDevengos(PairClassUtil key, Float valor) {
     configDevengos.put(key, valor);
   }
 
-  public void addMapConfigDeducciones(Integer key, Float valor) {
+  public void addMapConfigDeducciones(PairClassUtil key, Float valor) {
     configDeducciones.put(key, valor);
   }
 
-  public void removeMapConfigDevengos(Integer key) {
+  public void removeMapConfigDevengos(PairClassUtil key) {
     configDevengos.remove(key);
   }
 
-  public void removeMapConfigDeducciones(Integer key) {
+  public void removeMapConfigDeducciones(PairClassUtil key) {
     configDeducciones.remove(key);
   }
 }

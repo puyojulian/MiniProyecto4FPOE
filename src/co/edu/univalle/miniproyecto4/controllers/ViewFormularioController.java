@@ -23,8 +23,11 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +41,8 @@ import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.Eps;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
+import co.edu.univalle.miniproyecto4.util.PairClassUtil;
+import co.edu.univalle.miniproyecto4.util.SerializationUtil;
 import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
 import co.edu.univalle.miniproyecto4.views.ViewLiquidacion;
@@ -46,6 +51,7 @@ public class ViewFormularioController {
   private ViewFormulario vista;
   private Ingenio ingenio;
   private List listaMap;
+  private List<Integer> codEmpleados;
   private DefaultTableModel modeloTabla;
   private String apartadoFormulario = "";
   private int index;
@@ -60,6 +66,9 @@ public class ViewFormularioController {
       }
     };
     listaMap = new ArrayList<Map.Entry>();
+    codEmpleados = new ArrayList<>();
+
+    cargarMapasDAOS();
 
     ActionsHandler manejadorDeActionEvents = new ActionsHandler();
     ListSelectionHandler manejadorDeSelectionEvents = new ListSelectionHandler();
@@ -75,10 +84,89 @@ public class ViewFormularioController {
     vista.getFildDevengoCodigo().setEnabled(false);
     vista.getFildDeduccionCodigo().setEnabled(false);
 
+    vista.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent evt) {
+        cerrarAplicacion();
+      }
+    });
+
     // if(SerializationUtil.isSerializedObjectExists("mapaARL.bin")) {
     //     ingenio.getArlDAO().setMapArl((Map) SerializationUtil.deserializeObject("mapaARL.bin"));
     // }
   }
+
+  /* --------------- EJECUCION: CARGA MAPAS (SERIALIZADOS) ------------------- */
+  public void cargarMapasDAOS() {
+    if(SerializationUtil.isSerializedObjectExists("BackUp/Empleado.bin")) {
+      ingenio.getEmpleadoDAO().setMapEmpleado((Map<Integer, Empleado>) SerializationUtil.deserializeObject("BackUp/Empleado.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/Eps.bin")) {
+      ingenio.getEpsDAO().setMapEps((Map<Integer, Eps>) SerializationUtil.deserializeObject("BackUp/Eps.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/Arl.bin")) {
+      ingenio.getArlDAO().setMapArl((Map<Integer, Arl>) SerializationUtil.deserializeObject("BackUp/Arl.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/FPP.bin")) {
+      ingenio.getFondoDePensionDAO().setMapFondoDePension((Map<Integer, FondoDePension>) SerializationUtil.deserializeObject("BackUp/FPP.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/CEmpresa.bin")) {
+      ingenio.getConfiguracionDeEmpresaDAO().setMapConfiguracionDeEmpresa((Map<String, ConfiguracionDeEmpresa>) SerializationUtil.deserializeObject("BackUp/CEmpresa.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/CCompensacion.bin")) {
+      ingenio.getCajaDeCompensacionDAO().setMapCajaDeCompensacion((Map<Integer, CajaDeCompensacion>) SerializationUtil.deserializeObject("BackUp/CCompensacion.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/CDevengo.bin")) {
+      ingenio.getConceptoDeDevengoDAO().setMapConceptoDeDevengo((Map<Integer, ConceptoDeDevengo>) SerializationUtil.deserializeObject("BackUp/CDevengo.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/CDeduccion.bin")) {
+      ingenio.getConceptoDeDeduccionDAO().setMapConceptoDeDeduccion((Map<Integer, ConceptoDeDeduccion>) SerializationUtil.deserializeObject("BackUp/CDeduccion.bin"));
+    }
+  }
+
+  /* --------------- EJECUCION: GUARDA MAPAS (SERIALIZADOS)  ------------------- */
+  public void guardarMapasDAOS() {
+    if(!ingenio.getEmpleadoDAO().getMapEmpleado().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getEmpleadoDAO().getMapEmpleado(), "BackUp/Empleado.bin");
+    }
+    if(!ingenio.getEpsDAO().getMapEps().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getEpsDAO().getMapEps(), "BackUp/Eps.bin");
+    }
+    if(!ingenio.getArlDAO().getMapArl().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getArlDAO().getMapArl(), "BackUp/Arl.bin");
+    }
+    if(!ingenio.getFondoDePensionDAO().getMapFondoDePension().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getFondoDePensionDAO().getMapFondoDePension(), "BackUp/FPP.bin");
+    }
+    if(!ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa(), "BackUp/CEmpresa.bin");
+    }
+    if(!ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion(), "BackUp/CCompensacion.bin");
+    }
+    if(!ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo(), "BackUp/CDevengo.bin");
+    }
+    if(!ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "BackUp/CDeduccion.bin");
+    }
+  }
+
+  /* --------------- EJECUCION: EJECUTA INSTRUCCIONES DE CIERRE ------------------- */
+  private void cerrarAplicacion(){
+        int respuesta;
+
+        respuesta = JOptionPane.showConfirmDialog(
+                null,"¿Esta seguro que desea salir?", "Advertencia",
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.WARNING_MESSAGE);
+
+        if(respuesta == JOptionPane.YES_OPTION){
+            guardarMapasDAOS();
+            System.exit(0);
+        }
+    }
+
   
   /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA ------------------- */
   public <T> DefaultTableModel actualizarTableModelInt(Map<Integer, T> mapa) {
@@ -447,10 +535,12 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnDevegno()) {
         apartadoFormulario = "Devengo";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+        // codEmpleados = AuxController.popularNombreComboBox(vista.getDropDevEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnDeduccion()) {
         apartadoFormulario = "Deduccion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+        // codEmpleados = AuxController.popularNombreComboBox(vista.getDropDedEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {
@@ -575,7 +665,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
               ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
               ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), null); // agregar valor desde TextField
+              // ingenio.addMapConfigDevengos(new PairClassUtil(conceptoDeDevengo.getCodigo(), codEmpleados.get(vista.getDropDevEmpleado().getSelectedIndex())), null); // agregar valor desde TextField
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
             }
@@ -592,7 +682,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
               ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
               ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), null); // agregar valor desde TextField
+              // ingenio.addMapConfigDeducciones(new PairClassUtil(conceptoDeDeduccion.getCodigo(), codEmpleados.get(vista.getDropDedEmpleado().getSelectedIndex())), null); // agregar valor desde TextField
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
             }
@@ -890,28 +980,36 @@ public class ViewFormularioController {
       }
       else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR
         if(apartadoFormulario.equals("Empleado")) {
-          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());                
+          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);                
         }
         else if(apartadoFormulario.equals("Eps")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEpsDAO().getMapEps());  
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("FPP")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroFondoPension.txt", ingenio.getFondoDePensionDAO().getMapFondoDePension());   
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("ARL")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroARL.txt", ingenio.getArlDAO().getMapArl());    
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroCajaCompensacion.txt", ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());    
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("Empresa")) {
           TextReaderUtil.printInformacionModeloKeyStr("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConfigEmpresa.txt", ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa());    
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("Devengo")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDevengo.txt", ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());    
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
         else if(apartadoFormulario.equals("Deduccion")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());    
+          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);  
         }
       }
       else if (e.getSource() == vista.getBtnLiquidacion()){

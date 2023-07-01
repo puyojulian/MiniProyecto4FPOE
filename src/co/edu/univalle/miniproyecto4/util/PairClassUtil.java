@@ -1,6 +1,6 @@
 package co.edu.univalle.miniproyecto4.util;
 
-class PairClassUtil {
+public class PairClassUtil {
     private int first;
     private int second;
     

@@ -18,22 +18,21 @@ public class ViewLiquidacionController {
   private Ingenio ingenio;
   private List<ArrayList<String>> matrizPendiente;
   private List<ArrayList<String>> matrizFacturado;
-  private List<String> trabajoFacturadoList;
-  private List<Integer> codDevengos;
-  private List<Integer> codDeducciones;
-  private List<String> devengos;
-  private List<String> deducciones;
+  private List<Integer> codEmpleados, codDevengos, codDeducciones, codDevengosSeleccionados, codDeduccionesSeleccionado;
+  private List<String> trabajoFacturadoList, devengosCalculados, deduccionesCalculadas;
   private DefaultTableModel modeloTabla;
-  private String apartadoFormulario = "";
+  // private String apartadoFormulario = "";
 
   public ViewLiquidacionController(ViewLiquidacion vista, Ingenio ingenio) {
     this.vista = vista;
     this.ingenio = ingenio;
     trabajoFacturadoList = new ArrayList<String>();
-    devengos = new ArrayList<String>();
-    codDevengos = new ArrayList<Integer>();
-    deducciones = new ArrayList<String>();
+    devengosCalculados = new ArrayList<String>();
+    codDevengosSeleccionados = new ArrayList<Integer>();
+    codDeduccionesSeleccionado = new ArrayList<Integer>();
+    deduccionesCalculadas = new ArrayList<String>();
     codDeducciones = new ArrayList<Integer>();
+
     modeloTabla = new DefaultTableModel() {
       @Override
       public boolean isCellEditable(int row, int column) {
@@ -41,15 +40,17 @@ public class ViewLiquidacionController {
       }
     };
 
-    AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
-    AuxController.popularNombreComboBox(vista.getDropDevengos(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());
-    AuxController.popularNombreComboBox(vista.getDropDeducciones(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());
-    vista.getBtnPendientes().setSelected(true);
+    codEmpleados = AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+    codDevengos = AuxController.popularNombreComboBox(vista.getDropDevengos(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());
+    codDeducciones = AuxController.popularNombreComboBox(vista.getDropDeducciones(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());
     
     ListSelectionHandler manejadorDeListSelectionEvents = new ListSelectionHandler();
-    vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeListSelectionEvents);
     ActionsHandler manejadorDeActionEvents = new ActionsHandler();
+    vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeListSelectionEvents);
     vista.btnAddActionListener(manejadorDeActionEvents);
+
+    vista.getBtnPendientes().setSelected(true);
+    vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
   }
 
   /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
@@ -148,11 +149,11 @@ public class ViewLiquidacionController {
         vista.getTablaDatos().setModel(actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado())));
       }
       else if(e.getSource() == vista.getBtnPendientes()) {
-        if(vista.getDropEmpleado().getSelectedIndex() == -1) {
-
+        if(vista.getDropEmpleado().getSelectedIndex() == 0) {
+          vista.getTablaDatos().setModel(actualizarTableModelTodos());
         }
         else {
-          vista.getTablaDatos().setModel(actualizarTableModelTodos());
+          vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
         }
       }
       else if(e.getSource() == vista.getBtnRegistrar()) {
