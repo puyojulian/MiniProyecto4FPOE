@@ -32,6 +32,8 @@ public class ViewLiquidacionController {
         return false;
       }
     };
+
+    vista.getBtnPendientes().setSelected(true);
     
     ListSelectionHandler manejadorDeListSelectionEvents = new ListSelectionHandler();
     vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeListSelectionEvents);
@@ -50,11 +52,11 @@ public class ViewLiquidacionController {
     String[] atributosTabla = {"FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
     modeloTabla.setColumnIdentifiers(atributosTabla);
 
-    if(apartadoFormulario.equals("Pendiente")) {
+    if(vista.getBtnPendientes().isSelected()) {
       matrizPendiente = TextReaderUtil.getListaCantidadTrabajada("PagosPendientes.txt", fichaEmpleado);
       matrizTemporal = matrizPendiente;
     }
-    else if(apartadoFormulario.equals("Facturado")) {
+    else if(vista.getBtnPagados().isSelected()) {
       matrizFacturado = TextReaderUtil.getListaCantidadTrabajada("PagosFacturados.txt", fichaEmpleado);
       matrizTemporal = matrizFacturado;
     }
@@ -92,19 +94,16 @@ public class ViewLiquidacionController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if(e.getSource() == vista.getBtnPagados()) {
-        
+        actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado()));
       }
       else if(e.getSource() == vista.getBtnPendientes()) {
-
+        actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado()));
       }
       else if(e.getSource() == vista.getBtnRegistrar()) {
-
       }
       else if(e.getSource() == vista.getBtnImpresora()) {
-
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
-
       }
     }
   }
