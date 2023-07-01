@@ -90,17 +90,20 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     // -------------- PARA EL OBJETO DEVENOG ---------------- //
 
-    private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev, lblAdicional1Dev, lblAdiconal2Dev;
-    private JTextField fildDevengoCodigo, fildDevengonombre, fildDevengoAdcion1, fildDevengoAdcion2;
+    private JLabel lblcodigoDev, lblnombreDeven, lblhacebaseDev, lblEmpleadoDev, lblValorDev;
+    private JTextField fildDevengoCodigo, fildDevengonombre, fildDevengoValor;
     private String[] hacenbase = {"Seleccionar", "Si hace base","No hace base"};
     private JComboBox<String> dropbaseDevengo = new JComboBox<>(hacenbase);
     private Decolib fondoDevengo;
+    private String[] empleadosDevengo = {"Seleccionar"};
+    private JComboBox<String> dropDevengoEmpleado = new JComboBox<>(empleadosDevengo);
 
     // -------------- PARA EL OBJETO DEDUCCION ---------------- //
+    private JLabel lblcodigoDed, lblnombreDed, lbbUserDeduccion, lblDeducValor;
+    private JTextField fildDeduccionCodigo, fildDeduccionNombre, fildDeduccionValor;
+    private String[] empleadosdeduc = {"Seleccionar"};
+    private JComboBox<String> dropDeduccionEmpleado = new JComboBox<>(empleadosdeduc);
 
-    private JLabel lblcodigoDed, lblnombreDed, lblAdd1, lblAdd2;
-    private JTextField fildDeduccionCodigo, fildDeduccionNombre, fildDeduccionAdcion1, fildDeduccionAdcion2;
-    
     // ------------- ELEMENTOS PARA LAS TABLAS ----------------//
     private JPanel jpfondotabla;
     private Decolib fondotabla;
@@ -813,15 +816,15 @@ public class ViewFormulario extends JFrame implements ActionListener{
         lblhacebaseDev.setFont(nuevaTipografia2);
         lblhacebaseDev.setForeground(colorFuente);
 
-        lblAdicional1Dev = new JLabel("Adicional1");
-        lblAdicional1Dev.setBounds(14,124,139,30);
-        lblAdicional1Dev.setFont(nuevaTipografia2);
-        lblAdicional1Dev.setForeground(colorFuente);
+        lblEmpleadoDev = new JLabel("Empleados");
+        lblEmpleadoDev.setBounds(14,124,139,30);
+        lblEmpleadoDev.setFont(nuevaTipografia2);
+        lblEmpleadoDev.setForeground(colorFuente);
         
-        lblAdiconal2Dev = new JLabel("Adicional2");
-        lblAdiconal2Dev.setBounds(14,161,139,30);
-        lblAdiconal2Dev.setFont(nuevaTipografia2);
-        lblAdiconal2Dev.setForeground(colorFuente);
+        lblValorDev = new JLabel("Valor");
+        lblValorDev.setBounds(14,161,139,30);
+        lblValorDev.setFont(nuevaTipografia2);
+        lblValorDev.setForeground(colorFuente);
 
         fildDevengoCodigo = new JTextField();
         fildDevengoCodigo.setBounds(167,15,203,30);
@@ -841,30 +844,28 @@ public class ViewFormulario extends JFrame implements ActionListener{
         dropbaseDevengo.setForeground(colorFuente);
         dropbaseDevengo.setBackground(colorFondoWhite);
 
-        fildDevengoAdcion1 = new JTextField();
-        fildDevengoAdcion1.setBounds(167,124,203,30);
-        fildDevengoAdcion1.setOpaque(true);
-        fildDevengoAdcion1.setFont(nuevaTipografia2);
-        fildDevengoAdcion1.setForeground(colorFuente);
-        fildDevengoAdcion1.setBackground(colorFondoWhite);
+        dropDevengoEmpleado.setBounds(167,124,203,30);
+        dropDevengoEmpleado.setOpaque(true);
+        dropDevengoEmpleado.setFont(nuevaTipografia2);
+        dropDevengoEmpleado.setForeground(colorFuente);
+        dropDevengoEmpleado.setBackground(colorFondoWhite);
 
-        fildDevengoAdcion2 = new JTextField();
-        fildDevengoAdcion2.setBounds(167,161,203,30);
-        fildDevengoAdcion2.setOpaque(true);
-        fildDevengoAdcion2.setFont(nuevaTipografia2);
-        fildDevengoAdcion2.setForeground(colorFuente);
-        fildDevengoAdcion2.setBackground(colorFondoWhite);
+        fildDevengoValor = new JTextField();
+        fildDevengoValor.setBounds(167,161,203,30);
+        fildDevengoValor.setFont(nuevaTipografia2);
+        fildDevengoValor.setForeground(colorFuente);
+        fildDevengoValor.setBackground(colorFondoWhite);
 
         jpDev.add(lblcodigoDev);
         jpDev.add(lblnombreDeven);
         jpDev.add(lblhacebaseDev);
-        jpDev.add(lblAdicional1Dev);
-        jpDev.add(lblAdiconal2Dev);
+        jpDev.add(lblEmpleadoDev);
+        jpDev.add(lblValorDev);
         jpDev.add(fildDevengoCodigo);
         jpDev.add(fildDevengonombre);
         jpDev.add(dropbaseDevengo);
-        jpDev.add(fildDevengoAdcion1);
-        jpDev.add(fildDevengoAdcion2);
+        jpDev.add(dropDevengoEmpleado);
+        jpDev.add(fildDevengoValor);
 
         fondoDevengo = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
         fondoDevengo.setBounds(0,0,758,246);
@@ -887,15 +888,15 @@ public class ViewFormulario extends JFrame implements ActionListener{
         lblnombreDed.setFont(nuevaTipografia2);
         lblnombreDed.setForeground(colorFuente);
 
-        lblAdd1 = new JLabel("Adicional 1");
-        lblAdd1.setBounds(14,87,139,30);
-        lblAdd1.setFont(nuevaTipografia2);
-        lblAdd1.setForeground(colorFuente);
+        lbbUserDeduccion = new JLabel("Empleados");
+        lbbUserDeduccion.setBounds(14,87,139,30);
+        lbbUserDeduccion.setFont(nuevaTipografia2);
+        lbbUserDeduccion.setForeground(colorFuente);
 
-        lblAdd2 = new JLabel("Adicional 2");
-        lblAdd2.setBounds(14,124,139,30);
-        lblAdd2.setFont(nuevaTipografia2);
-        lblAdd2.setForeground(colorFuente);
+        lblDeducValor = new JLabel("Valor");
+        lblDeducValor.setBounds(14,124,139,30);
+        lblDeducValor.setFont(nuevaTipografia2);
+        lblDeducValor.setForeground(colorFuente);
 
         fildDeduccionCodigo = new JTextField();
         fildDeduccionCodigo.setBounds(167,15,203,30);
@@ -909,26 +910,27 @@ public class ViewFormulario extends JFrame implements ActionListener{
         fildDeduccionNombre.setForeground(colorFuente);
         fildDeduccionNombre.setBackground(colorFondoWhite);
 
-        fildDeduccionAdcion1 = new JTextField();
-        fildDeduccionAdcion1.setBounds(167,87,203,30);
-        fildDeduccionAdcion1.setFont(nuevaTipografia2);
-        fildDeduccionAdcion1.setForeground(colorFuente);
-        fildDeduccionAdcion1.setBackground(colorFondoWhite);
 
-        fildDeduccionAdcion2 = new JTextField();
-        fildDeduccionAdcion2.setBounds(167,124,203,30);
-        fildDeduccionAdcion2.setFont(nuevaTipografia2);
-        fildDeduccionAdcion2.setForeground(colorFuente);
-        fildDeduccionAdcion2.setBackground(colorFondoWhite);
+        dropDeduccionEmpleado.setBounds(167,87,203,30);
+        dropDeduccionEmpleado.setFont(nuevaTipografia2);
+        dropDeduccionEmpleado.setOpaque(true);
+        dropDeduccionEmpleado.setForeground(colorFuente);
+        dropDeduccionEmpleado.setBackground(colorFondoWhite);
+
+        fildDeduccionValor = new JTextField();
+        fildDeduccionValor.setBounds(167,124,203,30);
+        fildDeduccionValor.setFont(nuevaTipografia2);
+        fildDeduccionValor.setForeground(colorFuente);
+        fildDeduccionValor.setBackground(colorFondoWhite);
 
         jpDed.add(lblnombreDed);
         jpDed.add(lblcodigoDed);
-        jpDed.add(lblAdd1);
-        jpDed.add(lblAdd2);
+        jpDed.add(lbbUserDeduccion);
+        jpDed.add(lblDeducValor);
         jpDed.add(fildDeduccionCodigo);
         jpDed.add(fildDeduccionNombre);
-        jpDed.add(fildDeduccionAdcion1);
-        jpDed.add(fildDeduccionAdcion2);
+        jpDed.add(dropDeduccionEmpleado);
+        jpDed.add(fildDeduccionValor);
 
         fondoDed = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaFormulario/formulario/fondocomple.png");
         fondoDed.setBounds(0,0,758,246);
@@ -1283,6 +1285,18 @@ public class ViewFormulario extends JFrame implements ActionListener{
         this.dropbaseDevengo = dropbaseDevengo;
     }
 
+    public JComboBox<String> getDropDevengoEmpleado() {
+        return dropDevengoEmpleado;
+    }
+
+    public void setDropDevengoEmpleado(JComboBox<String> dropDevengoEmpleado) {
+        this.dropDevengoEmpleado = dropDevengoEmpleado;
+    }
+
+    public JTextField getFildDevengoValor() {
+        return fildDevengoValor;
+    }
+
     /* --------------- PARA CONCEPTO DE DEDUCCION (Getters and Setters) ------------------- */
 
     public JTextField getFildDeduccionCodigo() {
@@ -1292,6 +1306,19 @@ public class ViewFormulario extends JFrame implements ActionListener{
     public JTextField getFildDeduccionNombre() {
         return fildDeduccionNombre;
     }
+
+    public JComboBox<String> getdropDeduccionEmpleado() {
+        return dropDeduccionEmpleado;
+    }
+
+    public void setdropDeduccionEmpleado(JComboBox<String> dropDeduccionEmpleado) {
+        this.dropDeduccionEmpleado = dropDeduccionEmpleado;
+    }
+
+    public JTextField getFildDeduccionValor() {
+        return fildDeduccionValor;
+    }
+    
 
     /* --------------- PARA LAS TABLAS (Panel) (Getters and Setters) ------------------- */
 
