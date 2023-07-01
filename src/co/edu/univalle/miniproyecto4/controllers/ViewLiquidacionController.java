@@ -48,8 +48,6 @@ public class ViewLiquidacionController {
     vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeListSelectionEvents);
     ActionsHandler manejadorDeActionEvents = new ActionsHandler();
     vista.btnAddActionListener(manejadorDeActionEvents);
-
-    
   }
 
   /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
@@ -72,10 +70,40 @@ public class ViewLiquidacionController {
 
     for(int i = 0; i < matrizTemporal.size(); i++) {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
-      String[] arregloTemporal = {matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
-      modeloTabla.addRow(arregloTemporal);
+      if(i < matrizTemporal.size()) {
+        String[] arregloTemporal = {matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
+        modeloTabla.addRow(arregloTemporal);
+      }
     }
 
+    return modeloTabla;
+  }
+
+  /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
+  public DefaultTableModel actualizarTableModelTodos() {
+    List<ArrayList<String>> matrizTemporal = new ArrayList<>();
+
+    modeloTabla.setRowCount(0);
+
+    String[] atributosTabla = {"FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
+    modeloTabla.setColumnIdentifiers(atributosTabla);
+
+    if(vista.getBtnPendientes().isSelected()) {
+      matrizPendiente = TextReaderUtil.getListaCantidadTrabajadaTodos("InformacionPagos/RegistroCortePendiente.txt");
+      matrizTemporal = matrizPendiente;
+    }
+    else if(vista.getBtnPagados().isSelected()) {
+      matrizFacturado = TextReaderUtil.getListaCantidadTrabajadaTodos("InformacionPagos/RegistroCortePagado.txt");
+      matrizTemporal = matrizFacturado;
+    }
+
+    for(int i = 0; i < matrizTemporal.size(); i++) {
+      // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
+      if(matrizTemporal.get(i).size() > 0) {
+        String[] arregloTemporal = {matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
+        modeloTabla.addRow(arregloTemporal);
+      }
+    }
     return modeloTabla;
   }
 
@@ -116,10 +144,15 @@ public class ViewLiquidacionController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if(e.getSource() == vista.getBtnPagados()) {
-        actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado()));
+        vista.getTablaDatos().setModel(actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado())));
       }
       else if(e.getSource() == vista.getBtnPendientes()) {
-        actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado()));
+        if(vista.getDropEmpleado().getSelectedIndex() == -1) {
+
+        }
+        else {
+          vista.getTablaDatos().setModel(actualizarTableModelTodos());
+        }
       }
       else if(e.getSource() == vista.getBtnRegistrar()) {
       }
