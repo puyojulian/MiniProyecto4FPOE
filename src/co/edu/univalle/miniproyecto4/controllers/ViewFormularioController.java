@@ -40,6 +40,7 @@ import co.edu.univalle.miniproyecto4.models.FondoDePension;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewFormulario;
+import co.edu.univalle.miniproyecto4.views.ViewLiquidacion;
 
 public class ViewFormularioController {
   private ViewFormulario vista;
@@ -912,6 +913,12 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("Deduccion")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroConceptoDeduccion.txt", ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());    
         }
+      }
+      else if (e.getSource() == vista.getBtnLiquidacion()){
+        System.out.println("Liquidar");
+        ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
+        ViewLiquidacionController viewLiquidacionController = new ViewLiquidacionController(viewLiquidacion, ingenio);
+        viewLiquidacion.setVisible(true);
       }
     }
   }

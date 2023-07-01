@@ -88,8 +88,8 @@ public class ViewIncio extends JFrame implements ActionListener {
             Ingenio ingenio = new Ingenio();
             ViewFormulario viewFormulario = new ViewFormulario();
             ViewFormularioController viewFormularioController = new ViewFormularioController(viewFormulario, ingenio);
-            ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
-            ViewLiquidacionController viewLiquidacionController = new ViewLiquidacionController(viewLiquidacion, ingenio);
+            // ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
+            // ViewLiquidacionController viewLiquidacionController = new ViewLiquidacionController(viewLiquidacion, ingenio);
         }
     }
 

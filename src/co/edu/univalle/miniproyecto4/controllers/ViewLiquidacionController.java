@@ -42,6 +42,8 @@ public class ViewLiquidacionController {
     };
 
     AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+    AuxController.popularNombreComboBox(vista.getDropDevengos(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());
+    AuxController.popularNombreComboBox(vista.getDropDeducciones(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());
     vista.getBtnPendientes().setSelected(true);
     
     ListSelectionHandler manejadorDeListSelectionEvents = new ListSelectionHandler();
@@ -127,7 +129,6 @@ public class ViewLiquidacionController {
 
   /* --------------- CÁLCULO: LLENA LISTA DEDUCCIONES CON LAS DEDUCCIONES CALCULADAS ------------------- */
 
-  
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
   class ListSelectionHandler implements ListSelectionListener {
