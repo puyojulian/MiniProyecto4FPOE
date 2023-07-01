@@ -25,6 +25,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import co.edu.univalle.miniproyecto4.controllers.ViewLiquidacionController;
+
 
 public class ViewFormulario extends JFrame implements ActionListener{
     
@@ -1077,11 +1079,6 @@ public class ViewFormulario extends JFrame implements ActionListener{
             System.out.println("Apartado deduccion");
             mostrartitle(jpTittleDeduccion);
             mostrarPanel(jpDed);
-        } else if (event.getSource() == btnLiquidacion){
-            System.out.println("Liquidar");
-            ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
-            viewLiquidacion.setVisible(true);
-            
         }
     }
 
@@ -1099,6 +1096,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnDevegno.addActionListener(listener);
         btnDeduccion.addActionListener(listener);
         btnImprimir.addActionListener(listener);
+        btnLiquidacion.addActionListener(listener);
     } 
 
     private void mostrartitle(JPanel showPanel){
@@ -1387,5 +1385,9 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     public JButton getBtnImprimir() {
         return btnImprimir;
+    }
+
+    public JButton getBtnLiquidacion() {
+        return btnLiquidacion;
     }
 }

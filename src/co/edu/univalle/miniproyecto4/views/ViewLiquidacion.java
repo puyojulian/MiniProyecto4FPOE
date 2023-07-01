@@ -406,6 +406,28 @@ public class ViewLiquidacion extends JFrame {
         
     }
 
+    /* --------------- Botones (Getters) ------------------- */
+
+    public JRadioButton getBtnPagados() {
+        return btnPagados;
+    }
+
+    public JRadioButton getBtnPendientes() {
+        return btnPendientes;
+    }
+
+    public JButton getBtnRegistrar() {
+        return btnRegistrar;
+    }
+
+    public JButton getBtnFacturarEmitir() {
+        return btnFacturarEmitir;
+    }
+
+    public JButton getBtnImpresora() {
+        return btnImpresora;
+    }
+
     /* --------------- Para la liquidacion del ingenio (Getters and Setters) ------------------- */
 
     public JTextField getFildLiqFicha() {
