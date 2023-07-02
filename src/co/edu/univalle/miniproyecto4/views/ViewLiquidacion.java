@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ViewLiquidacion extends JFrame {
+public class ViewLiquidacion extends JFrame implements ActionListener {
 
     private JLabel lblEmpleados,lblFicha, lblHacienda, lblTonelada, lblFechaCorte, lblTipoCaña, lblDiacorte;
     private JTextField fildLiqFicha, fildLiqHacienda, fildLiqTonelada, fildLiqFechaCorte;
@@ -59,8 +59,8 @@ public class ViewLiquidacion extends JFrame {
     private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
     private String[] deducciones = {"Seleccionar"};
     private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
-    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion;
-    private Decolib bt1, bt2, bt3, bt4;
+    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion, btnhome;
+    private Decolib bt1, bt2, bt3, bt4, btn5;
     
     // Tabla devengo
     private JPanel panelTablaDev = new JPanel();
@@ -245,8 +245,7 @@ public class ViewLiquidacion extends JFrame {
         btnPreviz = new JButton();
         btnPreviz.setBounds(961,294,74,30);
         btnPreviz.setOpaque(true);
-        btnPreviz.setBorder(BorderFactory.createLineBorder(colorFuente));
-        btnPreviz.setContentAreaFilled(false);
+        btnPreviz.setBackground(colorFondoWhite);
         btnPreviz.setLayout(null);
         add(btnPreviz);
 
@@ -431,6 +430,18 @@ public class ViewLiquidacion extends JFrame {
         imf2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotablita.png");
         imf2.setBounds(0,0,247,234);
         panelDecFondo.add(imf2);
+
+        btnhome = new JButton();
+        btnhome.setBounds(41,643,74,30);
+        btnhome.setOpaque(true);
+        btnhome.setBackground(colorFondoWhite);
+        btnhome.setLayout(null);
+        add(btnhome);
+
+
+        btn5 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/home.png");
+        btn5.setBounds(0,0,74,30);
+        btnhome.add(btn5);
         
     }
 
@@ -577,5 +588,6 @@ public class ViewLiquidacion extends JFrame {
         btnRegistrar.addActionListener(actionListener);
         btnFacturarEmitir.addActionListener(actionListener);
         btnPreviz.addActionListener(actionListener);
+        btnhome.addActionListener(actionListener);
     }
 }
