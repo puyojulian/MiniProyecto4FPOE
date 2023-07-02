@@ -56,7 +56,7 @@ public class ViewLiquidacionController {
     vista.btnAddActionListener(manejadorDeActionEvents);
 
     vista.getBtnPendientes().setSelected(true);
-    vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
+    vista.getTablaDatos().setModel(actualizarTableModelTodos());
   }
 
   /* --------------- MUESTREO: ACTUALIZAR MODELO TABLA (SEGÚN EMPLEADO Y APARTADOFORMULARIO) ------------------- */
