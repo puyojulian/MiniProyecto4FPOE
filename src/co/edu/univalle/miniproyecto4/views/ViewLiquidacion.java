@@ -33,10 +33,10 @@ public class ViewLiquidacion extends JFrame  {
     private String[] empleados = {"Seleccionar"};
     private JComboBox<String> dropEmpleado = new JComboBox<>(empleados);
 
-    private String[] tipoCana = {"Seleccionar"};
+    private String[] tipoCana = {"Seleccionar", "C. Quem. Ordinaria", "C. Quem. Festiva", "C. Cruda Ordinaria", "C. Cruda Festiva"};
     private JComboBox<String> dropTipoCana = new JComboBox<>(tipoCana);
 
-    private String[] diaCorte = {"Seleccionar"};
+    private String[] diaCorte = {"Seleccionar", "Ordinario", "Festivo"};
     private JComboBox<String> dropDiacorte = new JComboBox<>(diaCorte);
 
     private JPanel panelTabla, panelTxtarea;
@@ -65,14 +65,14 @@ public class ViewLiquidacion extends JFrame  {
     // Tabla devengo
     private JPanel panelTablaDev = new JPanel();
     private JScrollPane jpTablaDev = new JScrollPane();
-    private String[] devengosList = {"Elemento 1"};
-    private JList<String> listDevengos = new JList<>(devengosList);
+    // private String[] devengosList = {"Elemento 1"};
+    private JList<String> listDevengos = new JList<>();
 
     // Tabla deduccion
     private JPanel panelTablaDed = new JPanel();
     private JScrollPane jpTablaDed = new JScrollPane();
-    private String[] deduccionList = {"Elemento 1"};
-    private JList<String> listDeduccion = new JList<>(deduccionList);
+    // private String[] deduccionList = {"Elemento 1"};
+    private JList<String> listDeduccion = new JList<>();
     
 
     
@@ -161,7 +161,7 @@ public class ViewLiquidacion extends JFrame  {
         fildLiqTonelada.setForeground(colorFuente);
         fildLiqTonelada.setBackground(colorFondoWhite);
 
-        fildLiqFechaCorte = new JTextField("00/00/0000");
+        fildLiqFechaCorte = new JTextField();
         fildLiqFechaCorte.setBounds(741,130,257,29);
         fildLiqFechaCorte.setFont(nuevaTipografia);
         fildLiqFechaCorte.setForeground(colorFuente);
@@ -289,7 +289,7 @@ public class ViewLiquidacion extends JFrame  {
         ));
         tablaDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tablaDatos.setBackground(colorFondoWhite);
-        jpTabla.setBounds(0,0,378,248);
+        jpTabla.setBounds(0,0,378,284);
         jpTabla.setViewportView(tablaDatos); 
 
         im2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondotabla.png");

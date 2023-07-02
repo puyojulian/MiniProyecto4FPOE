@@ -39,6 +39,9 @@ public class ViewLiquidacionController {
     deduccionesCalculadas = new ArrayList<String>();
     codDeducciones = new ArrayList<Integer>();
 
+    listModelDevengos = new DefaultListModel<String>();
+    listModelDeducciones = new DefaultListModel<String>();
+
     modeloTabla = new DefaultTableModel() {
       @Override
       public boolean isCellEditable(int row, int column) {
@@ -54,6 +57,7 @@ public class ViewLiquidacionController {
     ActionsHandler manejadorDeActionEvents = new ActionsHandler();
     vista.getTablaDatos().getSelectionModel().addListSelectionListener(manejadorDeListSelectionEvents);
     vista.btnAddActionListener(manejadorDeActionEvents);
+    vista.getDropEmpleado().addActionListener(manejadorDeActionEvents);
 
     vista.getBtnPendientes().setSelected(true);
     vista.getTablaDatos().setModel(actualizarTableModelTodos());
@@ -65,7 +69,7 @@ public class ViewLiquidacionController {
 
     modeloTabla.setRowCount(0);
 
-    String[] atributosTabla = {"FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
+    String[] atributosTabla = {"FICHA", "FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
     modeloTabla.setColumnIdentifiers(atributosTabla);
 
     if(vista.getBtnPendientes().isSelected()) {
@@ -80,7 +84,7 @@ public class ViewLiquidacionController {
     for(int i = 0; i < matrizTemporal.size(); i++) {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
       if(i < matrizTemporal.size()) {
-        String[] arregloTemporal = {matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
+        String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
         modeloTabla.addRow(arregloTemporal);
       }
     }
@@ -279,28 +283,50 @@ public class ViewLiquidacionController {
 
       }
       else if(e.getSource() == vista.getBtnAddDevengo()) { // AGREGAR CONCEPTO
-        if(!conceptoDevengoYaAgregado()) {
-          listModelDevengos.addElement((String) vista.getDropDevengos().getSelectedItem());
-          vista.getListDevengos().setModel(listModelDevengos);
+        if(vista.getDropDevengos().getSelectedIndex() != 0) {
+          if(!conceptoDevengoYaAgregado()) {
+            listModelDevengos.addElement((String) vista.getDropDevengos().getSelectedItem());
+            vista.getListDevengos().setModel(listModelDevengos);
+          }
+          else {
+            AuxController.mensajeTemporal("El concepto de devengo ya ha sido registrado.", "Error", 1150);
+          }
         }
         else {
-          AuxController.mensajeTemporal("El concepto de devengo ya ha sido registrado.", "Error", 1150);
+          AuxController.mensajeTemporal("Escoja un elemento del desplegable para agregarlo.", "Error", 1150);
         }
       }
       else if(e.getSource() == vista.getBtnAddDeduccion()) {
-        if(!conceptoDeduccionYaAgregado()) {
-          listModelDeducciones.addElement((String) vista.getDropDeducciones().getSelectedItem());
-          vista.getListDeduccion().setModel(listModelDeducciones);
+        if(vista.getDropDeducciones().getSelectedIndex() != 0) {
+          if(!conceptoDeduccionYaAgregado()) {
+            listModelDeducciones.addElement((String) vista.getDropDeducciones().getSelectedItem());
+            vista.getListDeduccion().setModel(listModelDeducciones);
+          }
+          else {
+            AuxController.mensajeTemporal("El concepto de deducción ya ha sido registrado.", "Error", 1150);
+          }
         }
         else {
-          AuxController.mensajeTemporal("El concepto de deducción ya ha sido registrado.", "Error", 1150);
+          AuxController.mensajeTemporal("Escoja un elemento del desplegable para agregarlo.", "Error", 1150);
         }
       }
       else if(e.getSource() == vista.getbtnDeleteDevengo()) { // REMOVER CONCEPTO
-
+        if(vista.getListDevengos().getSelectedIndex() != -1) {
+          listModelDevengos.remove(vista.getListDevengos().getSelectedIndex());
+          vista.getListDevengos().setModel(listModelDevengos);
+        }
+        else {
+          AuxController.mensajeTemporal("Escoja un elemento de la lista para borrarlo.", "Error", 1150);
+        }
       }
       else if(e.getSource() == vista.getBtnDeleteDeduccion()) {
-
+        if(vista.getListDeduccion().getSelectedIndex() != -1) {
+          listModelDeducciones.remove(vista.getListDeduccion().getSelectedIndex());
+          vista.getListDeduccion().setModel(listModelDeducciones);
+        }
+        else {
+          AuxController.mensajeTemporal("Escoja un elemento de la lista para borrarlo.", "Error", 1150);
+        }
       }
       else if(e.getSource() == vista.getBtnPreviz()) {
         
@@ -310,6 +336,14 @@ public class ViewLiquidacionController {
       }
       else if(e.getSource() == vista.getBtnHome()) {
         vista.dispose();
+      }
+      else if(e.getSource() == vista.getDropEmpleado()) { // Llenar tabla según item en dropEmpleado
+        if(vista.getDropEmpleado().getSelectedIndex() == 0) {
+          vista.getTablaDatos().setModel(actualizarTableModelTodos());
+        }
+        else {
+          vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
+        }
       }
     }
   }

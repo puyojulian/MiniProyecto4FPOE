@@ -50,7 +50,7 @@ public class TextReaderUtil {
           String haciendaSuerte = line.substring(12, 18).trim();
           String toneladaCorte = line.substring(22, 27).trim();
           String tipoCana = line.substring(27, 28).trim();
-          String diaCorte = line.substring(28).trim();
+          String diaCorte = line.substring(28,29).trim();
 
           lista.add(ficha);
           lista.add(fechaCorte);
