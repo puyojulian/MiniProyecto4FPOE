@@ -353,13 +353,15 @@ public class ViewFormularioController {
       vista.getFildDevengonombre().setText(entry.getValue().getNombre());
       vista.getFildDevengoValor().setText(ingenio.getMapConfigDevengos().get(entry.getKey()).getSecond()+"");
       vista.getDropbaseDevengo().setSelectedIndex(haceBase);
-      AuxController.popularNombreComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado().get(ingenio.getMapConfigDevengos().get(entry.getKey()).getFirst()).getNombre());
+      vista.getDropDevengoEmpleado().setSelectedIndex(0);
       vista.getBtnAñadir().setEnabled(false);
     }
     else if(apartadoFormulario.equals("Deduccion") && (index != -1)) {
       Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
       vista.getFildDeduccionCodigo().setText(entry.getValue().getCodigo() + "");
       vista.getFildDeduccionNombre().setText(entry.getValue().getNombre());
+      vista.getFildDeduccionValor().setText(ingenio.getMapConfigDeducciones().get(entry.getKey()).getSecond()+"");
+      vista.getDropDeduccionEmpleado().setSelectedIndex(0);
       vista.getBtnAñadir().setEnabled(false);
     }
   }
@@ -571,7 +573,7 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnDeduccion()) {
         apartadoFormulario = "Deduccion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-        codEmpleados = AuxController.popularNombreComboBox(vista.getdropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        codEmpleados = AuxController.popularNombreComboBox(vista.getDropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {
@@ -717,7 +719,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
               ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
               ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getdropDeduccionEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDeduccionValor().getText())));
+              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDeduccionValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
             }
