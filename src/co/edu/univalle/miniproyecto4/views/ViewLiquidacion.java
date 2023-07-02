@@ -579,7 +579,7 @@ public class ViewLiquidacion extends JFrame  {
     }
     
 
-      /* --------------- Para las Tablas DEDUCCCIONES (Getters and Setters) ------------------- */
+    /* --------------- Para las Tablas DEDUCCCIONES (Getters and Setters) ------------------- */
     
     public JComboBox<String> getDropDeducciones() {
         return dropDeducciones;
@@ -605,8 +605,12 @@ public class ViewLiquidacion extends JFrame  {
         this.listDeduccion = listDeduccion;
     }
 
-    
+    /* --------------- Retorna Calculos realizados en TextArea ------------------- */
+    public JTextArea getAreaComprobanteNomina() {
+        return areaComprobanteNomina;
+    }
 
+    /* --------------- Para agregar ActionListener a los botones ------------------- */
     public void btnAddActionListener(ActionListener actionListener) {
         btnPagados.addActionListener(actionListener);
         btnPendientes.addActionListener(actionListener);
