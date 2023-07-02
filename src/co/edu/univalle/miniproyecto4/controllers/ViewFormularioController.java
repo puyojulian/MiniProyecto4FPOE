@@ -836,23 +836,24 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnEditar()) { // EDITAR
         if(apartadoFormulario.equals("Empleado")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, Empleado> entry = (Map.Entry<Integer, Empleado>) listaMap.get(index);
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText())) {
             if(verificarCampos()) {
               String fechaRetiro = vista.getFildEmpleadoDateRet().getText();
               if(fechaRetiro.isEmpty()) {
                 fechaRetiro = fechaMaxima;
               }
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setIdentificacion(vista.getFildEmpleadoId().getText());
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setApellidos(vista.getFildEmpleadoApellido().getText());
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNombre(vista.getFildEmpleadoNombre().getText());
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setDireccion(vista.getFildEmpleadoDr().getText());
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoEps(AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), ingenio.getEpsDAO().getMapEps()));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setCodigoFpp(AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeNacimiento(AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeIngreso(AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setFechaDeRetiro(AuxController.crearFecha(fechaRetiro));
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
-              ingenio.getEmpleadoDAO().getMapEmpleado().get(index).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setIdentificacion(vista.getFildEmpleadoId().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setApellidos(vista.getFildEmpleadoApellido().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setNombre(vista.getFildEmpleadoNombre().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setDireccion(vista.getFildEmpleadoDr().getText());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setCodigoEps(AuxController.getCodByNombre((String) vista.getDropEpsEmpleado().getSelectedItem(), ingenio.getEpsDAO().getMapEps()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setCodigoFpp(AuxController.getCodByNombre((String) vista.getDropFppEmpleado().getSelectedItem(), ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setFechaDeNacimiento(AuxController.crearFecha(vista.getFildEmpleadoDateN().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setFechaDeIngreso(AuxController.crearFecha(vista.getFildEmpleadoDateIngr().getText()));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setFechaDeRetiro(AuxController.crearFecha(fechaRetiro));
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setTipoDeTrabajador(vista.getDropTipoEmpleado().getSelectedIndex());
+              ingenio.getEmpleadoDAO().getMapEmpleado().get(entry.getKey()).setNumeroDeCuenta(vista.getFildEmpleadoNCuenta().getText());
               limpiarCampos();
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
               vista.getBtnAñadir().setEnabled(true);
@@ -867,9 +868,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Eps")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildEPSNombre().getText(), getMapIngenio())) {
-              ingenio.getEpsDAO().getMapEps().get(index).setNombre(vista.getFildEPSNombre().getText());;
+              ingenio.getEpsDAO().getMapEps().get(entry.getKey()).setNombre(vista.getFildEPSNombre().getText());;
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);

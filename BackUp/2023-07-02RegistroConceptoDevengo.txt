@@ -1,4 +1,0 @@
-1, C. Quem. Ordinaria, true
-2, C. Quem. Festiva, true
-3, C. Cruda Ordinaria, true
-4, C. Cruda Festiva, true

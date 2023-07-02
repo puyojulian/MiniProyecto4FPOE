@@ -17,6 +17,7 @@
 package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,11 +99,19 @@ public class Ingenio implements Serializable {
   }
 
   public Map<Integer, PairClassUtil> getMapConfigDevengos() {
-    return configDevengos;
+    if (configDevengos == null) {
+        return Collections.emptyMap(); // or return a new instance of Map
+    } else {
+        return configDevengos;
+    }
   }
 
   public Map<Integer, PairClassUtil> getMapConfigDeducciones() {
-    return configDeducciones;
+    if (configDeducciones == null) {
+        return Collections.emptyMap(); // or return a new instance of Map
+    } else {
+        return configDeducciones;
+    }
   }
 
   public void addMapConfigDevengos(Integer key, PairClassUtil valor) {
