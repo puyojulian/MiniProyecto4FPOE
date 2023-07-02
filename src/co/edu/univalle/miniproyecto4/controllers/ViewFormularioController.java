@@ -341,7 +341,7 @@ public class ViewFormularioController {
       vista.getFildEmpresaSalariomin().setText(entry.getValue().getSalarioMínimoLegalVigente());
       vista.getFildEmpresaTelefono().setText(entry.getValue().getTelefono());
       AuxController.popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl().get(entry.getValue().getCodigoArl()).getNombre());
-      vista.getDropCodCajaCom().setSelectedIndex(0);
+      AuxController.popularNombreComboBox(vista.getDropCodCajaCom(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(entry.getValue().getCodigoCajaDeCompensación()).getNombre());
       vista.getBtnAñadir().setEnabled(false);
     }
     else if(apartadoFormulario.equals("Devengo") && (index != -1)) {
