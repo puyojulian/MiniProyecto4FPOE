@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.Arl;
 
 public class ArlDAO implements ArlDAOInterface {
@@ -36,7 +37,15 @@ public class ArlDAO implements ArlDAOInterface {
 
   @Override
   public boolean addArl(Arl arl) {
-    mapaArl.put(arl.getCodigo(), arl);
+    if(AuxController.isCodigoUnico(arl.getCodigo(), mapaArl)) {
+      mapaArl.put(arl.getCodigo(), arl);
+    }
+    else {
+      arl.setCodigo(mapaArl.size() + 1);
+      mapaArl.put(arl.getCodigo(), arl);
+    }
+
+    // mapaArl.put(arl.getCodigo(), arl);
     return true;
   }
 

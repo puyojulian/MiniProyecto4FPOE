@@ -41,6 +41,9 @@ public class Arl implements Serializable, ModelInterface {
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
+  }
 
   public String getNombre() {
     return nombre;

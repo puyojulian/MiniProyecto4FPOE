@@ -73,6 +73,10 @@ public class Empleado implements Serializable, ModelInterface {
     return codigo;
   }
 
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
+  }
+
   public void setApellidos(String apellidos) {
     this.apellidos = apellidos;
   }

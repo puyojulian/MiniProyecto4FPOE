@@ -42,6 +42,10 @@ public class CajaDeCompensacion implements Serializable, ModelInterface {
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
+
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
+  }
   
   @Override
   public String getNombre() {

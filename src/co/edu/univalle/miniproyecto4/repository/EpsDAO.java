@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.Eps;
 
 public class EpsDAO implements EpsDAOInterface{
@@ -36,7 +37,15 @@ public class EpsDAO implements EpsDAOInterface{
 
   @Override
   public boolean addEps(Eps eps) {
-    mapaEps.put(eps.getCodigo(), eps);
+    if(AuxController.isCodigoUnico(eps.getCodigo(), mapaEps)) {
+      mapaEps.put(eps.getCodigo(), eps);
+    }
+    else {
+      eps.setCodigo(mapaEps.size() + 1);
+      mapaEps.put(eps.getCodigo(), eps);
+    }
+
+    // mapaEps.put(eps.getCodigo(), eps);
     return true;
   }
 

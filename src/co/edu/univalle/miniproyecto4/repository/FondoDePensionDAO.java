@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.FondoDePension;
 
 public class FondoDePensionDAO implements FondoDePensionDAOInterface{
@@ -36,7 +37,15 @@ public class FondoDePensionDAO implements FondoDePensionDAOInterface{
 
   @Override
   public boolean addFondoDePension(FondoDePension fondoDePension) {
-    mapaFondoDePension.put(fondoDePension.getCodigo(), fondoDePension);
+    if(AuxController.isCodigoUnico(fondoDePension.getCodigo(), mapaFondoDePension)) {
+      mapaFondoDePension.put(fondoDePension.getCodigo(), fondoDePension);
+    }
+    else {
+      fondoDePension.setCodigo(mapaFondoDePension.size() + 1);
+      mapaFondoDePension.put(fondoDePension.getCodigo(), fondoDePension);
+    }
+
+    // mapaFondoDePension.put(fondoDePension.getCodigo(), fondoDePension);
     return true;
   }
 

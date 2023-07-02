@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.CajaDeCompensacion;
 
 public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{
@@ -36,7 +37,15 @@ public class CajaDeCompensacionDAO implements CajaDeCompensacionDAOInterface{
 
   @Override
   public boolean addCajaDeCompensacion(CajaDeCompensacion cajaDeCompensacion) {
-    mapaCajaDeCompensacion.put(cajaDeCompensacion.getCodigo(), cajaDeCompensacion);
+    if(AuxController.isCodigoUnico(cajaDeCompensacion.getCodigo(), mapaCajaDeCompensacion)) {
+      mapaCajaDeCompensacion.put(cajaDeCompensacion.getCodigo(), cajaDeCompensacion);
+    }
+    else {
+      cajaDeCompensacion.setCodigo(mapaCajaDeCompensacion.size() + 1);
+      mapaCajaDeCompensacion.put(cajaDeCompensacion.getCodigo(), cajaDeCompensacion);
+    }
+
+    // mapaCajaDeCompensacion.put(cajaDeCompensacion.getCodigo(), cajaDeCompensacion);
     return true;
   }
 

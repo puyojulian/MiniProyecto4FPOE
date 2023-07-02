@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.ConceptoDeDeduccion;
 
 public class ConceptoDeDeduccionDAO implements ConceptoDeDeduccionDAOInterface{
@@ -36,7 +37,15 @@ public class ConceptoDeDeduccionDAO implements ConceptoDeDeduccionDAOInterface{
 
   @Override
   public boolean addConceptoDeDeduccion(ConceptoDeDeduccion conceptoDeDeduccion) {
-    mapaConceptoDeDeduccion.put(conceptoDeDeduccion.getCodigo(), conceptoDeDeduccion);
+    if(AuxController.isCodigoUnico(conceptoDeDeduccion.getCodigo(), mapaConceptoDeDeduccion)) {
+      mapaConceptoDeDeduccion.put(conceptoDeDeduccion.getCodigo(), conceptoDeDeduccion);
+    }
+    else {
+      conceptoDeDeduccion.setCodigo(mapaConceptoDeDeduccion.size() + 1);
+      mapaConceptoDeDeduccion.put(conceptoDeDeduccion.getCodigo(), conceptoDeDeduccion);
+    }
+
+    // mapaConceptoDeDeduccion.put(conceptoDeDeduccion.getCodigo(), conceptoDeDeduccion);
     return true;
   }
 
