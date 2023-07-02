@@ -73,7 +73,8 @@ public class ViewLiquidacion extends JFrame  {
     private JScrollPane jpTablaDed = new JScrollPane();
     // private String[] deduccionList = {"Elemento 1"};
     private JList<String> listDeduccion = new JList<>();
-    
+    // Text Area
+    private JScrollPane jpAreaJScrollPane = new JScrollPane();
 
     
 
@@ -307,7 +308,9 @@ public class ViewLiquidacion extends JFrame  {
         areaComprobanteNomina.setFont(nuevaTipografia);
         areaComprobanteNomina.setForeground(colorFuente);
         areaComprobanteNomina.setBackground(colorFondoWhite);
-        panelTxtarea.add(areaComprobanteNomina);
+        panelTxtarea.add(jpAreaJScrollPane);
+        jpAreaJScrollPane.setBounds(17, 10, 526, 284);
+        jpAreaJScrollPane.setViewportView(areaComprobanteNomina);
 
         im3 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/fondoText.png");
         im3.setBounds(0,0,561,305);
