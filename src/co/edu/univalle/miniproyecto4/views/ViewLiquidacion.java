@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ViewLiquidacion extends JFrame implements ActionListener {
+public class ViewLiquidacion extends JFrame  {
 
     private JLabel lblEmpleados,lblFicha, lblHacienda, lblTonelada, lblFechaCorte, lblTipoCaña, lblDiacorte;
     private JTextField fildLiqFicha, fildLiqHacienda, fildLiqTonelada, fildLiqFechaCorte;
