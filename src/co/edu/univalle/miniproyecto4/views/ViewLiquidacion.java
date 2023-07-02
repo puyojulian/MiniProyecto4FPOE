@@ -59,7 +59,7 @@ public class ViewLiquidacion extends JFrame  {
     private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
     private String[] deducciones = {"Seleccionar"};
     private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
-    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome;
+    private JButton btnAddDevengo, btnDeleteDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome;
     private Decolib bt1, bt2, bt3, bt4, btn5;
     
     // Tabla devengo
@@ -334,12 +334,12 @@ public class ViewLiquidacion extends JFrame  {
         btnAddDevengo.setLayout(null);
         add(btnAddDevengo);
 
-        btnDelDevengo = new JButton();
-        btnDelDevengo.setBounds(1261,21,30,29);
-        btnDelDevengo.setOpaque(true);
-        btnDelDevengo.setBackground(colorFondoWhite);
-        btnDelDevengo.setLayout(null);
-        add(btnDelDevengo);
+        btnDeleteDevengo = new JButton();
+        btnDeleteDevengo.setBounds(1261,21,30,29);
+        btnDeleteDevengo.setOpaque(true);
+        btnDeleteDevengo.setBackground(colorFondoWhite);
+        btnDeleteDevengo.setLayout(null);
+        add(btnDeleteDevengo);
 
         bt1 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btnadd.png");
         bt1.setBounds(0,0,30,29);
@@ -347,7 +347,7 @@ public class ViewLiquidacion extends JFrame  {
 
         bt2 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btndelete.png");
         bt2.setBounds(0,0,30,29);
-        btnDelDevengo.add(bt2);
+        btnDeleteDevengo.add(bt2);
 
         add(devTittle);
         add(dropDevengos);
@@ -471,7 +471,25 @@ public class ViewLiquidacion extends JFrame  {
         return btnHome;
     }
 
+    
+
     /* --------------- Para la liquidacion del ingenio (Getters and Setters) ------------------- */
+
+    public JButton getBtnAddDevengo() {
+        return btnAddDevengo;
+    }
+
+    public JButton getbtnDeleteDevengo() {
+        return btnDeleteDevengo;
+    }
+
+    public JButton getBtnAddDeduccion() {
+        return btnAddDeduccion;
+    }
+
+    public JButton getBtnDeleteDeduccion() {
+        return btnDeleteDeduccion;
+    }
 
     public JTextField getFildLiqFicha() {
         return fildLiqFicha;
@@ -593,5 +611,9 @@ public class ViewLiquidacion extends JFrame  {
         btnFacturarEmitir.addActionListener(actionListener);
         btnPreviz.addActionListener(actionListener);
         btnHome.addActionListener(actionListener);
+        btnAddDeduccion.addActionListener(actionListener);
+        btnAddDevengo.addActionListener(actionListener);
+        btnDeleteDevengo.addActionListener(actionListener);
+        btnDeleteDeduccion.addActionListener(actionListener);
     }
 }

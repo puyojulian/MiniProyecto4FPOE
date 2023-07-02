@@ -275,7 +275,32 @@ public class ViewLiquidacionController {
           vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
         }
       }
-      else if(e.getSource() == vista.getBtnRegistrar()) {
+      else if(e.getSource() == vista.getBtnRegistrar()) { // REGISTRAR INFORMACIÓN CORTE
+
+      }
+      else if(e.getSource() == vista.getBtnAddDevengo()) { // AGREGAR CONCEPTO
+        if(!conceptoDevengoYaAgregado()) {
+          listModelDevengos.addElement((String) vista.getDropDevengos().getSelectedItem());
+          vista.getListDevengos().setModel(listModelDevengos);
+        }
+        else {
+          AuxController.mensajeTemporal("El concepto de devengo ya ha sido registrado.", "Error", 1150);
+        }
+      }
+      else if(e.getSource() == vista.getBtnAddDeduccion()) {
+        if(!conceptoDeduccionYaAgregado()) {
+          listModelDeducciones.addElement((String) vista.getDropDeducciones().getSelectedItem());
+          vista.getListDeduccion().setModel(listModelDeducciones);
+        }
+        else {
+          AuxController.mensajeTemporal("El concepto de deducción ya ha sido registrado.", "Error", 1150);
+        }
+      }
+      else if(e.getSource() == vista.getbtnDeleteDevengo()) { // REMOVER CONCEPTO
+
+      }
+      else if(e.getSource() == vista.getBtnDeleteDeduccion()) {
+
       }
       else if(e.getSource() == vista.getBtnPreviz()) {
         

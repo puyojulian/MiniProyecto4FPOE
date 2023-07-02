@@ -212,16 +212,16 @@ public class TextReaderUtil {
         }
         if(listaParametros.size() == 11) {
           empleadoDAO.addEmpleado(new Empleado((String) listaParametros.get(0), 
-            listaParametros.get(1),
-            listaParametros.get(2),
-            listaParametros.get(3),
-            Integer.parseInt(listaParametros.get(4)),
-            Integer.parseInt(listaParametros.get(5)),
-            AuxController.crearFecha(listaParametros.get(6)),
-            AuxController.crearFecha(listaParametros.get(7)),
-            AuxController.crearFecha(listaParametros.get(8)),
-            Integer.parseInt(listaParametros.get(9)),
-            listaParametros.get(10)));
+            listaParametros.get(1).trim(),
+            listaParametros.get(2).trim(),
+            listaParametros.get(3).trim(),
+            Integer.parseInt(listaParametros.get(4).trim()),
+            Integer.parseInt(listaParametros.get(5).trim()),
+            AuxController.crearFecha(listaParametros.get(6).trim()),
+            AuxController.crearFecha(listaParametros.get(7).trim()),
+            AuxController.crearFecha(listaParametros.get(8).trim()),
+            Integer.parseInt(listaParametros.get(9).trim()),
+            listaParametros.get(10).trim()));
         }
         listaParametros.clear();
       }
