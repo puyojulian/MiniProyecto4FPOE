@@ -24,6 +24,7 @@ public class AuxController {
     List<Integer> keyList = new ArrayList<>();
     comboBox.removeAllItems();
     comboBox.addItem("Seleccionar");
+    keyList.add(-1);
     if(mapa.size() > 0) {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
       for (Map.Entry<Integer, T> entry : entrySetMapa) {

@@ -1305,7 +1305,7 @@ public class ViewFormulario extends JFrame implements ActionListener{
         return fildDeduccionNombre;
     }
 
-    public JComboBox<String> getdropDeduccionEmpleado() {
+    public JComboBox<String> getDropDeduccionEmpleado() {
         return dropDeduccionEmpleado;
     }
 
