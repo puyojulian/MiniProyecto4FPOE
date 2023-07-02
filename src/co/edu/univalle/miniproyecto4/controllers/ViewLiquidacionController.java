@@ -282,6 +282,7 @@ public class ViewLiquidacionController {
         
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
+        
       }
       else if(e.getSource() == vista.getBtnHome()) {
         vista.dispose();
