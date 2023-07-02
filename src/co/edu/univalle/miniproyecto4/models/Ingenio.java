@@ -120,4 +120,12 @@ public class Ingenio implements Serializable {
   public void removeMapConfigDeducciones(Integer key) {
     configDeducciones.remove(key);
   }
+
+  public void setMapConfigDevengos(Map<Integer, PairClassUtil> configDevengos) {
+    this.configDevengos = configDevengos;
+  }
+
+  public void setMapConfigDeducciones(Map<Integer, PairClassUtil> configDeducciones) {
+    this.configDeducciones = configDeducciones;
+  }  
 }

@@ -1,6 +1,8 @@
 package co.edu.univalle.miniproyecto4.util;
 
-public class PairClassUtil {
+import java.io.Serializable;
+
+public class PairClassUtil implements Serializable{
     private int first;
     private float second;
     

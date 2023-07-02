@@ -22,11 +22,12 @@ public class ConceptoDeDevengo implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
   private boolean haceBase;
-  private static int consecutivo = 0;
+  private static int consecutivo = 1;
 
-  public ConceptoDeDevengo(String nombre) {
+  public ConceptoDeDevengo(String nombre, boolean haceBase) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
+    this.haceBase = haceBase;
     System.out.println("Devengo instanciado.");
   }
 

@@ -123,6 +123,12 @@ public class ViewFormularioController {
     if(SerializationUtil.isSerializedObjectExists("BackUp/CDeduccion.bin")) {
       ingenio.getConceptoDeDeduccionDAO().setMapConceptoDeDeduccion((Map<Integer, ConceptoDeDeduccion>) SerializationUtil.deserializeObject("BackUp/CDeduccion.bin"));
     }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDev.bin")) {
+      ingenio.setMapConfigDevengos((Map<Integer, PairClassUtil>) SerializationUtil.deserializeObject("BackUp/MapaConfigDev.bin"));
+    }
+    if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDev.bin")) {
+      ingenio.setMapConfigDeducciones((Map<Integer, PairClassUtil>) SerializationUtil.deserializeObject("BackUp/MapaConfigDed.bin"));
+    }
   }
 
   /* --------------- EJECUCION: GUARDA MAPAS (SERIALIZADOS)  ------------------- */
@@ -150,6 +156,12 @@ public class ViewFormularioController {
     }
     if(!ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().isEmpty()) {
       SerializationUtil.serializeObject(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion(), "BackUp/CDeduccion.bin");
+    }
+    if(!ingenio.getMapConfigDevengos().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getMapConfigDevengos(), "BackUp/MapaConfigDev.bin");
+    }
+    if(!ingenio.getMapConfigDeducciones().isEmpty()) {
+      SerializationUtil.serializeObject(ingenio.getMapConfigDeducciones(), "BackUp/MapaConfigDed.bin");
     }
   }
 
@@ -330,8 +342,18 @@ public class ViewFormularioController {
     }
     else if(apartadoFormulario.equals("Devengo") && (index != -1)) {
       Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
+      int haceBase = 0;
+      if(entry.getValue().isHaceBase()) {
+        haceBase = 1;
+      }
+      else {
+        haceBase = 2;
+      }
       vista.getFildDevengoCodigo().setText(entry.getValue().getCodigo() + "");
       vista.getFildDevengonombre().setText(entry.getValue().getNombre());
+      vista.getFildDevengoValor().setText(ingenio.getMapConfigDevengos().get(entry.getKey()).getSecond()+"");
+      vista.getDropbaseDevengo().setSelectedIndex(haceBase);
+      AuxController.popularNombreComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado().get(ingenio.getMapConfigDevengos().get(entry.getKey()).getFirst()).getNombre());
       vista.getBtnAñadir().setEnabled(false);
     }
     else if(apartadoFormulario.equals("Deduccion") && (index != -1)) {
@@ -397,6 +419,7 @@ public class ViewFormularioController {
     else if(apartadoFormulario.equals("Devengo")) {
       if(vista.getFildDevengonombre().getText().isEmpty() ||
           vista.getFildDevengoValor().getText().isEmpty() ||
+          // vista.getDropDevengoEmpleado().getSelectedIndex() == 0 ||
           vista.getDropbaseDevengo().getSelectedIndex() == 0) {
         return false;
       }
@@ -457,11 +480,14 @@ public class ViewFormularioController {
     else if(apartadoFormulario.equals("Devengo")) {
       vista.getFildDevengoCodigo().setText("");
       vista.getFildDevengonombre().setText("");
+      vista.getFildDevengoValor().setText("");
       vista.getDropbaseDevengo().setSelectedIndex(0);
+      vista.getDropDevengoEmpleado().setSelectedIndex(0);
     }
     else if(apartadoFormulario.equals("Deduccion")) {
       vista.getFildDeduccionCodigo().setText("");
       vista.getFildDeduccionNombre().setText("");
+      vista.getFildDeduccionValor().setText("");
     }
     vista.getBtnAñadir().setEnabled(true);
     vista.getTablaDatos().clearSelection();
@@ -672,7 +698,7 @@ public class ViewFormularioController {
         else if(apartadoFormulario.equals("Devengo")) {
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
-              ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText());
+              ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText(), vista.getDropbaseDevengo().getSelectedIndex() == 1);
               ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
               ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDevengoValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));

@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class ConceptoDeDeduccion implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
-  private static int consecutivo = 0;
+  private static int consecutivo = 1;
 
   public ConceptoDeDeduccion(String nombre) {
     this.codigo = consecutivo++;

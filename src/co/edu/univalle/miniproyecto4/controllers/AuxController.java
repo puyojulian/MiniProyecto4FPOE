@@ -43,6 +43,9 @@ public class AuxController {
           comboBox.setSelectedIndex(i);
           break;
       }
+      else {
+        comboBox.setSelectedIndex(0);
+      }
     }
   }
 
