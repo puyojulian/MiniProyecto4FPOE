@@ -102,6 +102,9 @@ public class ViewFormularioController {
     if(SerializationUtil.isSerializedObjectExists("BackUp/Empleado.bin")) {
       ingenio.getEmpleadoDAO().setMapEmpleado((Map<Integer, Empleado>) SerializationUtil.deserializeObject("BackUp/Empleado.bin"));
     }
+    else {
+      TextReaderUtil.instanciarEmpleadosTxt("BackUp/CONTR999Empleados.txt", ingenio.getEmpleadoDAO());
+    }
     if(SerializationUtil.isSerializedObjectExists("BackUp/Eps.bin")) {
       ingenio.getEpsDAO().setMapEps((Map<Integer, Eps>) SerializationUtil.deserializeObject("BackUp/Eps.bin"));
     }

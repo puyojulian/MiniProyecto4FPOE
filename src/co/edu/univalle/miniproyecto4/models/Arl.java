@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class Arl implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
-  private static int consecutivo = 0;
+  private static int consecutivo = 1;
 
   public Arl(String nombre) {
     this.codigo = consecutivo++;

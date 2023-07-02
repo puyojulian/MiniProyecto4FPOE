@@ -19,9 +19,16 @@ package co.edu.univalle.miniproyecto4.util;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
+
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+import co.edu.univalle.miniproyecto4.models.Empleado;
+import co.edu.univalle.miniproyecto4.repository.EmpleadoDAO;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -186,6 +193,37 @@ public class TextReaderUtil {
       } 
       else {
         System.out.println("Intento de borrar la linea fallido.");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /* --------------- INCIALIZACIÓN: INSTANCIA EMPLEADOS A BASE DE ARCHIVO DE TEXTO ------------------- */
+  public static void instanciarEmpleadosTxt(String rutaArchivo, EmpleadoDAO empleadoDAO){
+    List<String> listaParametros = new ArrayList<>();
+    try(BufferedReader brEmpleados = new BufferedReader(new FileReader(rutaArchivo))) {
+      String linea;
+      while((linea = brEmpleados.readLine()) != null) {
+        StringTokenizer tokenizer = new StringTokenizer(linea,",");
+        while(tokenizer.hasMoreTokens()) {
+          String token = tokenizer.nextToken();
+          listaParametros.add(token);
+        }
+        if(listaParametros.size() == 11) {
+          empleadoDAO.addEmpleado(new Empleado((String) listaParametros.get(0), 
+            listaParametros.get(1),
+            listaParametros.get(2),
+            listaParametros.get(3),
+            Integer.parseInt(listaParametros.get(4)),
+            Integer.parseInt(listaParametros.get(5)),
+            AuxController.crearFecha(listaParametros.get(6)),
+            AuxController.crearFecha(listaParametros.get(7)),
+            AuxController.crearFecha(listaParametros.get(8)),
+            Integer.parseInt(listaParametros.get(9)),
+            listaParametros.get(10)));
+        }
+        listaParametros.clear();
       }
     } catch (IOException e) {
       e.printStackTrace();

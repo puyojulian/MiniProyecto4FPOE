@@ -27,7 +27,7 @@ public class Empleado implements Serializable, ModelInterface {
   private String direccion;
   private int codigoEps;
   private int codigoFpp;
-  private static int consecutivo = 0;
+  private static int consecutivo = 1;
   private LocalDate fechaDeNacimiento;
   private LocalDate fechaDeIngreso;
   private LocalDate fechaDeRetiro;

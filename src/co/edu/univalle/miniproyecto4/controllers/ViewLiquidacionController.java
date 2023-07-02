@@ -124,6 +124,7 @@ public class ViewLiquidacionController {
     }
     return listaString;
   }
+
   /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LOS DEVENGOS EN LA LISTA ------------------- */
   public void getCodDevengos() {
     codDevengosSeleccionados.clear();
@@ -192,8 +193,6 @@ public class ViewLiquidacionController {
     sumaDeducciones+= valorCalculado;
     return conceptoDeDeduccion;
   }
-
-
 
   /* --------------- CÁLCULO: LLENA LISTA DEVENGOS CON LOS DEVENGOS CALCULADOS ------------------- */
   public void guardarDevengosCalculados() {
@@ -282,7 +281,7 @@ public class ViewLiquidacionController {
         
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
-        
+
       }
       else if(e.getSource() == vista.getBtnHome()) {
         vista.dispose();
