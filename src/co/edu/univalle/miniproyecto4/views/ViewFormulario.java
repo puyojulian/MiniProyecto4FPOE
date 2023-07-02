@@ -1099,14 +1099,14 @@ public class ViewFormulario extends JFrame implements ActionListener{
         btnLiquidacion.addActionListener(listener);
     } 
 
-    private void mostrartitle(JPanel showPanel){
+    public void mostrartitle(JPanel showPanel){
         jpTittleR.removeAll();
         jpTittleR.add(showPanel);
         jpTittleR.revalidate();
         jpTittleR.repaint();
     }
 
-    private void mostrarPanel (JPanel showP){
+    public void mostrarPanel (JPanel showP){
         jpReplace.removeAll();
         jpReplace.add(showP);
         jpReplace.revalidate();
@@ -1414,5 +1414,15 @@ public class ViewFormulario extends JFrame implements ActionListener{
 
     public JButton getBtnLiquidacion() {
         return btnLiquidacion;
+    }
+
+    /* --------------- PARA MOSTRAR ESTADO INICIAL (Getters) ------------------- */
+
+    public JPanel getJpTittleEmpresa() {
+        return jpTittleEmpresa;
+    }
+
+    public JPanel getJpempresa() {
+        return jpempresa;
     }
 }

@@ -85,16 +85,19 @@ public class ViewFormularioController {
     vista.getFildDevengoCodigo().setEnabled(false);
     vista.getFildDeduccionCodigo().setEnabled(false);
 
+    vista.mostrartitle(vista.getJpTittleEmpresa());
+    vista.mostrarPanel(vista.getJpempresa());
+    apartadoFormulario = "Empresa";
+    vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
+    AuxController.popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl());
+    AuxController.popularNombreComboBox(vista.getDropCodCajaCom(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());
+
     vista.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent evt) {
         cerrarAplicacion();
       }
     });
-
-    // if(SerializationUtil.isSerializedObjectExists("mapaARL.bin")) {
-    //     ingenio.getArlDAO().setMapArl((Map) SerializationUtil.deserializeObject("mapaARL.bin"));
-    // }
   }
 
   /* --------------- EJECUCION: CARGA MAPAS (SERIALIZADOS) ------------------- */
@@ -129,7 +132,7 @@ public class ViewFormularioController {
     if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDev.bin")) {
       ingenio.setMapConfigDevengos((Map<Integer, PairClassUtil>) SerializationUtil.deserializeObject("BackUp/MapaConfigDev.bin"));
     }
-    if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDev.bin")) {
+    if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDed.bin")) {
       ingenio.setMapConfigDeducciones((Map<Integer, PairClassUtil>) SerializationUtil.deserializeObject("BackUp/MapaConfigDed.bin"));
     }
     return true;
@@ -432,7 +435,7 @@ public class ViewFormularioController {
     }
     else if(apartadoFormulario.equals("Deduccion")) {
       if(vista.getFildDeduccionNombre().getText().isEmpty() ||
-          vista.getFildDevengoValor().getText().isEmpty()) {
+          vista.getFildDeduccionValor().getText().isEmpty()) {
         return false;
       }
     }
