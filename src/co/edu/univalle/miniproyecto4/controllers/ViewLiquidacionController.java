@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
@@ -22,8 +24,9 @@ public class ViewLiquidacionController {
   private List<ArrayList<String>> matrizFacturado;
   private List<Integer> codEmpleados, codDevengos, codDeducciones, codDevengosSeleccionados, codDeduccionesSeleccionadas;
   private List<String> trabajoFacturadoList, devengosCalculados, deduccionesCalculadas;
-  private float sumaHaceBase;
+  private float sumaHaceBase, sumaDevengos, sumaDeducciones;
   private DefaultTableModel modeloTabla;
+  private DefaultListModel<String> listModelDevengos, listModelDeducciones;
   // private String apartadoFormulario = "";
 
   public ViewLiquidacionController(ViewLiquidacion vista, Ingenio ingenio) {
@@ -135,7 +138,7 @@ public class ViewLiquidacionController {
   /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LAS DEDUCCIONES EN LA LISTA ------------------- */
   public void getCodDeducciones() {
     codDeduccionesSeleccionadas.clear();
-    ListModel<String> model = vista.getListDevengos().getModel();
+    ListModel<String> model = vista.getListDeduccion().getModel();
     
     for (int i = 0; i < model.getSize(); i++) {
       String element = model.getElementAt(i);
@@ -144,32 +147,39 @@ public class ViewLiquidacionController {
   }
 
   /* --------------- CÁLCULO: CALCULA DEVENGO Y RETORNA STRING ------------------- */
-  public String getDevengo(int llave, float valor, int toneladaCorte) {
+  public String calculaDevengo(int llaveConcepto, float valor, int toneladaCorte) {
     float valorCalculado = 0;
-    String conceptoDeDevengo = llave + "-" +
-      ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(llave).getNombre() + ": ";
+    String conceptoDeDevengo = llaveConcepto + "-" +
+      ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(llaveConcepto).getNombre() + ": ";
     if(toneladaCorte != 0) {
       valorCalculado = toneladaCorte/1000*valor;
+      conceptoDeDevengo+= "$ " + valorCalculado + "\n\tTonelaje: " + toneladaCorte/1000;
+
     }
     else{
       if(valor > 0 && valor <= 1) {
         valorCalculado = sumaHaceBase * valor;
+        conceptoDeDevengo+= "$ " + valorCalculado;
       }
       else if(valor > 1) {
         valorCalculado = valor;
+        conceptoDeDevengo+= "$ " + valorCalculado;
       }
     }
 
-    conceptoDeDevengo+= "$ " + valorCalculado;
-    
+    if(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(llaveConcepto).isHaceBase()) {
+      sumaHaceBase+= valorCalculado;
+    }
+
+    sumaDevengos+= valorCalculado;
     return conceptoDeDevengo;
   }
 
   /* --------------- CÁLCULO: CALCULA DEDUCCIÓN Y RETORNA STRING ------------------- */
-  public String getDeduccion(int llave, float valor) {
+  public String calculaDeduccion(int llaveConcepto, float valor) {
     float valorCalculado = 0;
-    String conceptoDeDeduccion = llave + "-" +
-      ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(llave).getNombre() + ": ";
+    String conceptoDeDeduccion = llaveConcepto + "-" +
+      ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(llaveConcepto).getNombre() + ": ";
     if(valor > 0 && valor <= 1) {
       valorCalculado = sumaHaceBase * valor;
       conceptoDeDeduccion+= "$ " + valorCalculado;
@@ -178,38 +188,66 @@ public class ViewLiquidacionController {
       valorCalculado = valor;
       conceptoDeDeduccion+= "$ " + valorCalculado;
     }
+
+    sumaDeducciones+= valorCalculado;
     return conceptoDeDeduccion;
   }
 
 
 
   /* --------------- CÁLCULO: LLENA LISTA DEVENGOS CON LOS DEVENGOS CALCULADOS ------------------- */
-  public void setDevengosCalculados() {
+  public void guardarDevengosCalculados() {
     sumaHaceBase = 0;
+    sumaDevengos = 0;
     devengosCalculados.clear();
     for(int i = 0; i < codDevengosSeleccionados.size(); i++) {
       if(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
         for(int j = 0; j < matrizPendiente.size(); j++) {
           if(Integer.parseInt(matrizPendiente.get(j).get(4)) == codDevengosSeleccionados.get(i)) {
-            devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Integer.parseInt(matrizPendiente.get(j).get(3))));
+            devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Integer.parseInt(matrizPendiente.get(j).get(3))));
           }
         }
-        devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
+        devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
       }
     }
     for(int i = 0; i < codDevengosSeleccionados.size(); i++) {
       if(!ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
-        devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
+        devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
       }
     }
   }
 
   /* --------------- CÁLCULO: LLENA LISTA DEDUCCIONES CON LAS DEDUCCIONES CALCULADAS ------------------- */
-  public void setDeduccionesCalculados() {
+  public void calcularDeduccionesCalculadas() {
+    sumaDeducciones = 0;
     deduccionesCalculadas.clear();
     for(int i = 0; i < codDeduccionesSeleccionadas.size(); i++) {
-      deduccionesCalculadas.add(getDeduccion(codDeduccionesSeleccionadas.get(i), (float) ingenio.getMapConfigDeducciones().get(codDeducciones.get(i)).getSecond()));
+      deduccionesCalculadas.add(calculaDeduccion(codDeduccionesSeleccionadas.get(i), (float) ingenio.getMapConfigDeducciones().get(codDeducciones.get(i)).getSecond()));
     }
+  }
+
+  /* --------------- VERIFICACIÓN: VERIFICA SI EL COCEPTO YA ESTÁ AGREGADO ------------------- */
+  private boolean conceptoDevengoYaAgregado() {
+    if(!listModelDevengos.isEmpty()) {
+      for (int i = 0; i < listModelDevengos.getSize(); i++) {
+        if(listModelDevengos.getElementAt(i).equals(vista.getDropDevengos().getSelectedItem())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /* --------------- VERIFICACIÓN: VERIFICA SI EL COCEPTO YA ESTÁ AGREGADO ------------------- */
+  private boolean conceptoDeduccionYaAgregado() {
+    if(!listModelDeducciones.isEmpty()) {
+      for (int i = 0; i < listModelDeducciones.getSize(); i++) {
+        if(listModelDeducciones.getElementAt(i).equals(vista.getDropDeducciones().getSelectedItem())) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 
@@ -241,6 +279,7 @@ public class ViewLiquidacionController {
       else if(e.getSource() == vista.getBtnRegistrar()) {
       }
       else if(e.getSource() == vista.getbtnPreviz()) {
+        
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
       }
