@@ -886,9 +886,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("FPP")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildFPPnombre().getText(), getMapIngenio())) {
-              ingenio.getFondoDePensionDAO().getMapFondoDePension().get(index).setNombre(vista.getFildFPPnombre().getText());
+              ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getKey()).setNombre(vista.getFildFPPnombre().getText());
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
@@ -903,9 +904,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("ARL")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildARLnombre().getText(), getMapIngenio())) {
-              ingenio.getArlDAO().getMapArl().get(index).setNombre(vista.getFildARLnombre().getText());
+              ingenio.getArlDAO().getMapArl().get(entry.getKey()).setNombre(vista.getFildARLnombre().getText());
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
@@ -920,9 +922,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildCajaComNombre().getText(), getMapIngenio())) {
-              ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(index).setNombre(vista.getFildCajaComNombre().getText());
+              ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(entry.getKey()).setNombre(vista.getFildCajaComNombre().getText());
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
@@ -937,18 +940,19 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Empresa")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, ConfiguracionDeEmpresa> entry = (Map.Entry<Integer, ConfiguracionDeEmpresa>) listaMap.get(index);
           if(AuxController.esNumerico(vista.getFildEmpresaNit().getText()) && AuxController.esNumerico(vista.getFildEmpresaTelefono().getText()) && AuxController.esNumerico(vista.getFildEmpresaSalariomin().getText()) && AuxController.esNumerico(vista.getFildEmpresaAuxTrans().getText())) {
             if(verificarCampos()) {
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNit(vista.getFildEmpresaNit().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setNombre(vista.getFildEmpresaNombre().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setTelefono(vista.getFildEmpresaTelefono().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setDireccion(vista.getFildEmpresaDireccion().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setRepresentanteLegal(vista.getFildEmpresaRepre().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCorreoDeContacto(vista.getFildEmpresaCorreo().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoArl(AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()));
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setCodigoCajaDeCompensación(AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setSalarioMínimoLegalVigente(vista.getFildEmpresaSalariomin().getText());
-              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(index).setAuxilioDeTransporte(vista.getFildEmpresaAuxTrans().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setNit(vista.getFildEmpresaNit().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setNombre(vista.getFildEmpresaNombre().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setTelefono(vista.getFildEmpresaTelefono().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setDireccion(vista.getFildEmpresaDireccion().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setRepresentanteLegal(vista.getFildEmpresaRepre().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setCorreoDeContacto(vista.getFildEmpresaCorreo().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setCodigoArl(AuxController.getCodByNombre((String) vista.getDropCodARLEMPRESA().getSelectedItem(), ingenio.getArlDAO().getMapArl()));
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setCodigoCajaDeCompensación(AuxController.getCodByNombre((String) vista.getDropCodCajaCom().getSelectedItem(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setSalarioMínimoLegalVigente(vista.getFildEmpresaSalariomin().getText());
+              ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get(entry.getKey()).setAuxilioDeTransporte(vista.getFildEmpresaAuxTrans().getText());
 
               vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
               limpiarCampos();
@@ -964,9 +968,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Devengo")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), getMapIngenio())) {
-              ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(index).setNombre(vista.getFildDevengonombre().getText());
+              ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
@@ -981,9 +986,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Deduccion")) {
           index = vista.getTablaDatos().getSelectedRow();
+          Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), getMapIngenio())) {
-              ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(index).setNombre(vista.getFildDeduccionNombre().getText());
+              ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
