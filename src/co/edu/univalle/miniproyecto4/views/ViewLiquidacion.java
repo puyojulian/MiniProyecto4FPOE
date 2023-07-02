@@ -59,7 +59,7 @@ public class ViewLiquidacion extends JFrame  {
     private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
     private String[] deducciones = {"Seleccionar"};
     private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
-    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion, btnhome;
+    private JButton btnAddDevengo, btnDelDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome;
     private Decolib bt1, bt2, bt3, bt4, btn5;
     
     // Tabla devengo
@@ -86,7 +86,7 @@ public class ViewLiquidacion extends JFrame  {
 
     private void inciarComponentes() {
         setTitle("Ingenio de caña (Ventana Liquidacion)");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1344, 735);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -431,17 +431,17 @@ public class ViewLiquidacion extends JFrame  {
         imf2.setBounds(0,0,247,234);
         panelDecFondo.add(imf2);
 
-        btnhome = new JButton();
-        btnhome.setBounds(41,643,74,30);
-        btnhome.setOpaque(true);
-        btnhome.setBackground(colorFondoWhite);
-        btnhome.setLayout(null);
-        add(btnhome);
+        btnHome = new JButton();
+        btnHome.setBounds(41,643,74,30);
+        btnHome.setOpaque(true);
+        btnHome.setBackground(colorFondoWhite);
+        btnHome.setLayout(null);
+        add(btnHome);
 
 
         btn5 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/home.png");
         btn5.setBounds(0,0,74,30);
-        btnhome.add(btn5);
+        btnHome.add(btn5);
         
     }
 
@@ -463,8 +463,12 @@ public class ViewLiquidacion extends JFrame  {
         return btnFacturarEmitir;
     }
 
-    public JButton getbtnPreviz() {
+    public JButton getBtnPreviz() {
         return btnPreviz;
+    }
+
+    public JButton getBtnHome() {
+        return btnHome;
     }
 
     /* --------------- Para la liquidacion del ingenio (Getters and Setters) ------------------- */
@@ -588,6 +592,6 @@ public class ViewLiquidacion extends JFrame  {
         btnRegistrar.addActionListener(actionListener);
         btnFacturarEmitir.addActionListener(actionListener);
         btnPreviz.addActionListener(actionListener);
-        btnhome.addActionListener(actionListener);
+        btnHome.addActionListener(actionListener);
     }
 }
