@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -18,8 +20,9 @@ public class ViewLiquidacionController {
   private Ingenio ingenio;
   private List<ArrayList<String>> matrizPendiente;
   private List<ArrayList<String>> matrizFacturado;
-  private List<Integer> codEmpleados, codDevengos, codDeducciones, codDevengosSeleccionados, codDeduccionesSeleccionado;
+  private List<Integer> codEmpleados, codDevengos, codDeducciones, codDevengosSeleccionados, codDeduccionesSeleccionadas;
   private List<String> trabajoFacturadoList, devengosCalculados, deduccionesCalculadas;
+  private float sumaHaceBase;
   private DefaultTableModel modeloTabla;
   // private String apartadoFormulario = "";
 
@@ -29,7 +32,7 @@ public class ViewLiquidacionController {
     trabajoFacturadoList = new ArrayList<String>();
     devengosCalculados = new ArrayList<String>();
     codDevengosSeleccionados = new ArrayList<Integer>();
-    codDeduccionesSeleccionado = new ArrayList<Integer>();
+    codDeduccionesSeleccionadas = new ArrayList<Integer>();
     deduccionesCalculadas = new ArrayList<String>();
     codDeducciones = new ArrayList<Integer>();
 
@@ -119,16 +122,95 @@ public class ViewLiquidacionController {
     return listaString;
   }
   /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LOS DEVENGOS EN LA LISTA ------------------- */
+  public void getCodDevengos() {
+    codDevengosSeleccionados.clear();
+    ListModel<String> model = vista.getListDevengos().getModel();
+
+    for (int i = 0; i < model.getSize(); i++) {
+      String element = model.getElementAt(i);
+      codDevengosSeleccionados.add(AuxController.getCodByNombre(element, ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+    }
+  }
 
   /* --------------- CÁLCULO: REGISTRA LOS CÓDIGOS DE LAS DEDUCCIONES EN LA LISTA ------------------- */
+  public void getCodDeducciones() {
+    codDeduccionesSeleccionadas.clear();
+    ListModel<String> model = vista.getListDevengos().getModel();
+    
+    for (int i = 0; i < model.getSize(); i++) {
+      String element = model.getElementAt(i);
+      codDeduccionesSeleccionadas.add(AuxController.getCodByNombre(element, ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+    }
+  }
 
   /* --------------- CÁLCULO: CALCULA DEVENGO Y RETORNA STRING ------------------- */
+  public String getDevengo(int llave, float valor, int toneladaCorte) {
+    float valorCalculado = 0;
+    String conceptoDeDevengo = llave + "-" +
+      ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(llave).getNombre() + ": ";
+    if(toneladaCorte != 0) {
+      valorCalculado = toneladaCorte/1000*valor;
+    }
+    else{
+      if(valor > 0 && valor <= 1) {
+        valorCalculado = sumaHaceBase * valor;
+      }
+      else if(valor > 1) {
+        valorCalculado = valor;
+      }
+    }
+
+    conceptoDeDevengo+= "$ " + valorCalculado;
+    
+    return conceptoDeDevengo;
+  }
 
   /* --------------- CÁLCULO: CALCULA DEDUCCIÓN Y RETORNA STRING ------------------- */
+  public String getDeduccion(int llave, float valor) {
+    float valorCalculado = 0;
+    String conceptoDeDeduccion = llave + "-" +
+      ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(llave).getNombre() + ": ";
+    if(valor > 0 && valor <= 1) {
+      valorCalculado = sumaHaceBase * valor;
+      conceptoDeDeduccion+= "$ " + valorCalculado;
+    }
+    else if(valor > 1) {
+      valorCalculado = valor;
+      conceptoDeDeduccion+= "$ " + valorCalculado;
+    }
+    return conceptoDeDeduccion;
+  }
+
+
 
   /* --------------- CÁLCULO: LLENA LISTA DEVENGOS CON LOS DEVENGOS CALCULADOS ------------------- */
+  public void setDevengosCalculados() {
+    sumaHaceBase = 0;
+    devengosCalculados.clear();
+    for(int i = 0; i < codDevengosSeleccionados.size(); i++) {
+      if(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
+        for(int j = 0; j < matrizPendiente.size(); j++) {
+          if(Integer.parseInt(matrizPendiente.get(j).get(4)) == codDevengosSeleccionados.get(i)) {
+            devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Integer.parseInt(matrizPendiente.get(j).get(3))));
+          }
+        }
+        devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
+      }
+    }
+    for(int i = 0; i < codDevengosSeleccionados.size(); i++) {
+      if(!ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
+        devengosCalculados.add(getDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengos.get(i)).getSecond(), 0));
+      }
+    }
+  }
 
   /* --------------- CÁLCULO: LLENA LISTA DEDUCCIONES CON LAS DEDUCCIONES CALCULADAS ------------------- */
+  public void setDeduccionesCalculados() {
+    deduccionesCalculadas.clear();
+    for(int i = 0; i < codDeduccionesSeleccionadas.size(); i++) {
+      deduccionesCalculadas.add(getDeduccion(codDeduccionesSeleccionadas.get(i), (float) ingenio.getMapConfigDeducciones().get(codDeducciones.get(i)).getSecond()));
+    }
+  }
 
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
