@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.ConceptoDeDevengo;
 
 public class ConceptoDeDevengoDAO implements ConceptoDeDevengoDAOInterface{
@@ -36,7 +37,15 @@ public class ConceptoDeDevengoDAO implements ConceptoDeDevengoDAOInterface{
 
   @Override
   public boolean addConceptoDeDevengo(ConceptoDeDevengo conceptoDeDevengo) {
-    mapaConceptoDeDevengo.put(conceptoDeDevengo.getCodigo(), conceptoDeDevengo);
+    if(AuxController.isCodigoUnico(conceptoDeDevengo.getCodigo(), mapaConceptoDeDevengo)) {
+      mapaConceptoDeDevengo.put(conceptoDeDevengo.getCodigo(), conceptoDeDevengo);
+    }
+    else {
+      conceptoDeDevengo.setCodigo(mapaConceptoDeDevengo.size() + 1);
+      mapaConceptoDeDevengo.put(conceptoDeDevengo.getCodigo(), conceptoDeDevengo);
+    }
+
+    // mapaConceptoDeDevengo.put(conceptoDeDevengo.getCodigo(), conceptoDeDevengo);
     return true;
   }
 

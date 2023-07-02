@@ -19,6 +19,7 @@ package co.edu.univalle.miniproyecto4.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
 import co.edu.univalle.miniproyecto4.models.Empleado;
 
 public class EmpleadoDAO implements EmpleadoDAOInterface{
@@ -36,7 +37,13 @@ public class EmpleadoDAO implements EmpleadoDAOInterface{
 
   @Override
   public boolean addEmpleado(Empleado empleado) {
-    mapaEmpleado.put(empleado.getCodigo(), empleado);
+    if(AuxController.isCodigoUnico(empleado.getCodigo(), mapaEmpleado)) {
+      mapaEmpleado.put(empleado.getCodigo(), empleado);
+    }
+    else {
+      empleado.setCodigo(mapaEmpleado.size() + 1);
+      mapaEmpleado.put(empleado.getCodigo(), empleado);
+    }
     return true;
   }
 

@@ -98,7 +98,7 @@ public class ViewFormularioController {
   }
 
   /* --------------- EJECUCION: CARGA MAPAS (SERIALIZADOS) ------------------- */
-  public void cargarMapasDAOS() {
+  public boolean cargarMapasDAOS() {
     if(SerializationUtil.isSerializedObjectExists("BackUp/Empleado.bin")) {
       ingenio.getEmpleadoDAO().setMapEmpleado((Map<Integer, Empleado>) SerializationUtil.deserializeObject("BackUp/Empleado.bin"));
     }
@@ -132,6 +132,7 @@ public class ViewFormularioController {
     if(SerializationUtil.isSerializedObjectExists("BackUp/MapaConfigDev.bin")) {
       ingenio.setMapConfigDeducciones((Map<Integer, PairClassUtil>) SerializationUtil.deserializeObject("BackUp/MapaConfigDed.bin"));
     }
+    return true;
   }
 
   /* --------------- EJECUCION: GUARDA MAPAS (SERIALIZADOS)  ------------------- */
