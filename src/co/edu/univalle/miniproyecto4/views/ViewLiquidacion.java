@@ -59,8 +59,8 @@ public class ViewLiquidacion extends JFrame  {
     private JComboBox<String> dropDevengos = new JComboBox<>(devengos);
     private String[] deducciones = {"Seleccionar"};
     private JComboBox<String> dropDeducciones = new JComboBox<>(devengos);
-    private JButton btnAddDevengo, btnDeleteDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome;
-    private Decolib bt1, bt2, bt3, bt4, btn5;
+    private JButton btnAddDevengo, btnDeleteDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome, btnInfo;
+    private Decolib bt1, bt2, bt3, bt4, btn5, bt6;
     
     // combobox devengo
     private JPanel panelTablaDev = new JPanel();
@@ -75,6 +75,7 @@ public class ViewLiquidacion extends JFrame  {
     private JList<String> listDeduccion = new JList<>();
     // Text Area
     private JScrollPane jpAreaJScrollPane = new JScrollPane();
+    
 
     
 
@@ -445,6 +446,20 @@ public class ViewLiquidacion extends JFrame  {
         btn5 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/home.png");
         btn5.setBounds(0,0,74,30);
         btnHome.add(btn5);
+
+        
+        btnInfo = new JButton();
+        btnInfo.setBounds(117,643,74,30);
+        btnInfo.setOpaque(true);
+        btnInfo.setBackground(colorFondoWhite);
+        btnInfo.setLayout(null);
+        add(btnInfo);
+
+        bt6 = new Decolib("/co/edu/univalle/miniproyecto4/img/vistaLiquidacion/btninfo.png");
+        bt6.setBounds(0,0,74,30);
+        btnInfo.add(bt6);
+
+        
         
     }
 
