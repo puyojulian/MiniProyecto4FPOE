@@ -574,12 +574,12 @@ public class ViewFormularioController {
       else if(e.getSource() == vista.getBtnDevegno()) {
         apartadoFormulario = "Devengo";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-        codEmpleados = AuxController.popularNombreComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        codEmpleados = AuxController.popularNombreYApellidoComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnDeduccion()) {
         apartadoFormulario = "Deduccion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-        codEmpleados = AuxController.popularNombreComboBox(vista.getDropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        codEmpleados = AuxController.popularNombreYApellidoComboBox(vista.getDropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
       }
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {

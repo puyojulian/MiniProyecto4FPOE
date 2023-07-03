@@ -56,7 +56,7 @@ public class ViewLiquidacionController {
       }
     };
 
-    codEmpleados = AuxController.popularNombreComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+    codEmpleados = AuxController.popularNombreYApellidoComboBox(vista.getDropEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
     codDevengos = AuxController.popularNombreComboBox(vista.getDropDevengos(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo());
     codDeducciones = AuxController.popularNombreComboBox(vista.getDropDeducciones(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion());
     
@@ -567,7 +567,7 @@ public class ViewLiquidacionController {
         }
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
-        if(!vista.getAreaComprobanteNomina().getText().isEmpty()) {
+        if(!vista.getAreaComprobanteNomina().getText().isEmpty() && vista.getDropEmpleado().getSelectedIndex() != 0) {
           String nombreYApellido = ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido();
           TextReaderUtil.escribirTextoArea("PagosEmitidos/" + AuxController.fechaToString(LocalDate.now()) +"PagoNomina" + nombreYApellido + ".txt", vista.getAreaComprobanteNomina().getText());
           AuxController.mensajeTemporal("Pago para " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + " " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido() + " emitido exitosamente.", "Aviso", 1150);
@@ -580,6 +580,9 @@ public class ViewLiquidacionController {
           else {
             vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
           }
+        }
+        else {
+          AuxController.mensajeTemporal("Seleccione un empleado, configure los devengos y deducciones que aplican al pago, previsualice antes de emitir el comprobante.", "Error", 1150);
         }
       }
       else if(e.getSource() == vista.getBtnHome()) {

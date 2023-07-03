@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
+import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.ModelInterface;
 
 public class AuxController {
@@ -28,6 +29,22 @@ public class AuxController {
       Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
       for (Map.Entry<Integer, T> entry : entrySetMapa) {
           comboBox.addItem(entry.getValue().getNombre());
+          keyList.add((Integer) entry.getKey());
+      }
+    }
+    return keyList;
+  }
+
+  /* --------------- MUESTREO: POPULAR COMBOBOX CON BASE EN MAPA (MULTIPLES ITEMS) ------------------- */
+  public static <T extends Empleado> List<Integer> popularNombreYApellidoComboBox(JComboBox<String> comboBox, Map<Integer, T> mapa) {
+    List<Integer> keyList = new ArrayList<>();
+    comboBox.removeAllItems();
+    comboBox.addItem("Seleccionar");
+    keyList.add(-1);
+    if(mapa.size() > 0) {
+      Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
+      for (Map.Entry<Integer, T> entry : entrySetMapa) {
+          comboBox.addItem(entry.getValue().getNombre() + " " + entry.getValue().getApellido());
           keyList.add((Integer) entry.getKey());
       }
     }
