@@ -162,7 +162,7 @@ public class ViewLiquidacion extends JFrame  {
         fildLiqTonelada.setForeground(colorFuente);
         fildLiqTonelada.setBackground(colorFondoWhite);
 
-        fildLiqFechaCorte = new JTextField();
+        fildLiqFechaCorte = new JTextField("AAAA-MM-DD");
         fildLiqFechaCorte.setBounds(741,130,257,29);
         fildLiqFechaCorte.setFont(nuevaTipografia);
         fildLiqFechaCorte.setForeground(colorFuente);

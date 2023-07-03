@@ -446,9 +446,9 @@ public class ViewFormularioController {
     if(apartadoFormulario.equals("Empleado")) {
       vista.getFildEmpleadoApellido().setText("");
       vista.getFildEmpleadoCod().setText("");
-      vista.getFildEmpleadoDateIngr().setText("");
-      vista.getFildEmpleadoDateN().setText("");
-      vista.getFildEmpleadoDateRet().setText("");
+      vista.getFildEmpleadoDateIngr().setText("AAAA-MM-DD");
+      vista.getFildEmpleadoDateN().setText("AAAA-MM-DD");
+      vista.getFildEmpleadoDateRet().setText("AAAA-MM-DD");
       vista.getFildEmpleadoDr().setText("");
       vista.getFildEmpleadoId().setText("");
       vista.getFildEmpleadoNCuenta().setText("");

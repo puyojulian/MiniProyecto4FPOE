@@ -177,14 +177,16 @@ public class AuxController {
       }
     }
     else if(fecha.contains("-")) {
-      StringTokenizer tokenizer = new StringTokenizer(fecha, "-");
-      List<Integer> arreglo = new ArrayList<>();
-      while(tokenizer.hasMoreTokens()) {
-        arreglo.add(Integer.parseInt(tokenizer.nextToken()));
-      }
-      if(arreglo.size() == 3) {
-        localDate = LocalDate.of(arreglo.get(0), arreglo.get(1), arreglo.get(2));
-      }        
+      if(!fecha.equals("AAAA-MM-DD")) {
+        StringTokenizer tokenizer = new StringTokenizer(fecha, "-");
+        List<Integer> arreglo = new ArrayList<>();
+        while(tokenizer.hasMoreTokens()) {
+          arreglo.add(Integer.parseInt(tokenizer.nextToken()));
+        }
+        if(arreglo.size() == 3) {
+          localDate = LocalDate.of(arreglo.get(0), arreglo.get(1), arreglo.get(2));
+        }   
+      }           
     }
     else if(fecha.contains(",")) {
       StringTokenizer tokenizer = new StringTokenizer(fecha, ",");

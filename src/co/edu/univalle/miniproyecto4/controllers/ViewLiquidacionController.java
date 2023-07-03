@@ -353,13 +353,11 @@ public class ViewLiquidacionController {
       stringCompleta+= String.format("%" + 4 + "s", Integer.parseInt(vista.getFildLiqFicha().getText().trim())).replace(' ', '0');
     }
 
-    String fechaCorte = AuxController.fechaToString(LocalDate.now());
+    String fechaCorte = AuxController.fechaToString(LocalDate.now()).replaceAll("-", "");
     if(vista.getFildLiqFechaCorte().getText().contains("-")) {
-      if(!vista.getFildLiqFechaCorte().getText().equals("AAAA-MM-DD")) {
-        String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
-        if(fecha.length() == 8 && AuxController.esNumerico(fecha)) {
-          fechaCorte = fecha;
-        }
+      String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
+      if(fecha.length() == 8 && AuxController.esNumerico(fecha)) {
+        fechaCorte = fecha;
       }
     }
     else if(vista.getFildLiqFechaCorte().getText().contains("/")) {
@@ -421,7 +419,7 @@ public class ViewLiquidacionController {
     vista.getFildLiqFicha().setText("");
     vista.getFildLiqHacienda().setText("");
     vista.getFildLiqTonelada().setText("");
-    vista.getFildLiqFechaCorte().setText("");
+    vista.getFildLiqFechaCorte().setText("AAAA-MM-DD");
     vista.getDropTipoCana().setSelectedIndex(0);
     vista.getdropDiacorte().setSelectedIndex(0);
     vista.getTablaDatos().clearSelection();
@@ -432,6 +430,10 @@ public class ViewLiquidacionController {
   /* --------------- VERIFICAR: VERIFICA EL FORMATO DE LA FECHA SEA EL CORRECTO ------------------- */
   public boolean verificarFecha() {
     StringTokenizer tokenizer = new StringTokenizer(vista.getFildLiqFechaCorte().getText(), "-");
+
+    if(vista.getFildLiqFechaCorte().getText().equals("AAAA-MM-DD")) {
+      return true;
+    }
 
     if (tokenizer.countTokens() != 3) {
       return false;

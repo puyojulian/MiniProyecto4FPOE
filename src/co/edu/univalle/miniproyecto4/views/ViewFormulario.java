@@ -437,19 +437,19 @@ public class ViewFormulario extends JFrame implements ActionListener{
         dropFppEmpleado.setForeground(colorFuente);
         dropFppEmpleado.setBackground(colorFondoWhite);
 
-        fildEmpleadoDateN = new JTextField();
+        fildEmpleadoDateN = new JTextField("AAAA-MM-DD");
         fildEmpleadoDateN.setBounds(541,52,203,30);
         fildEmpleadoDateN.setFont(nuevaTipografia2);
         fildEmpleadoDateN.setForeground(colorFuente);
         fildEmpleadoDateN.setBackground(colorFondoWhite);
 
-        fildEmpleadoDateIngr = new JTextField();
+        fildEmpleadoDateIngr = new JTextField("AAAA-MM-DD");
         fildEmpleadoDateIngr.setBounds(541,87,203,30);
         fildEmpleadoDateIngr.setFont(nuevaTipografia2);
         fildEmpleadoDateIngr.setForeground(colorFuente);
         fildEmpleadoDateIngr.setBackground(colorFondoWhite);
 
-        fildEmpleadoDateRet = new JTextField();
+        fildEmpleadoDateRet = new JTextField("AAAA-MM-DD");
         fildEmpleadoDateRet.setBounds(541, 124,203,30);
         fildEmpleadoDateRet.setFont(nuevaTipografia2);
         fildEmpleadoDateRet.setForeground(colorFuente);
