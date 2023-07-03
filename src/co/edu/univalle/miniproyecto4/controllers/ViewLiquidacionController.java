@@ -39,6 +39,7 @@ public class ViewLiquidacionController {
     this.vista = vista;
     this.ingenio = ingenio;
     trabajoFacturadoList = new ArrayList<String>();
+    trabajoNoFacturadoList = new ArrayList<String>();
     devengosCalculados = new ArrayList<String>();
     codDevengosSeleccionados = new ArrayList<Integer>();
     codDeduccionesSeleccionadas = new ArrayList<Integer>();
@@ -92,8 +93,8 @@ public class ViewLiquidacionController {
       if(i < matrizTemporal.size()) {
         String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
         modeloTabla.addRow(arregloTemporal);
+        trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
       }
-      trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+"0000"+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
     }
 
     return modeloTabla;
@@ -104,6 +105,7 @@ public class ViewLiquidacionController {
     List<ArrayList<String>> matrizTemporal = new ArrayList<>();
 
     modeloTabla.setRowCount(0);
+    trabajoNoFacturadoList.clear();
 
     String[] atributosTabla = {"FICHA", "FECHA", "TONELADAS", "TIPO CAÑA", "DÍA"};
     modeloTabla.setColumnIdentifiers(atributosTabla);
@@ -121,7 +123,7 @@ public class ViewLiquidacionController {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
       if(matrizTemporal.get(i).size() > 0) {
         String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
-        trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+"0000"+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
+        trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
         modeloTabla.addRow(arregloTemporal);
       }
     }
@@ -217,6 +219,7 @@ public class ViewLiquidacionController {
     sumaHaceBase = 0;
     sumaDevengos = 0;
     devengosCalculados.clear();
+    trabajoFacturadoList.clear();
     for(int i = 0; i < codDevengosSeleccionados.size(); i++) {
       if(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
         for(int j = 0; j < matrizPendiente.size(); j++) {
@@ -224,7 +227,7 @@ public class ViewLiquidacionController {
             System.out.println(Integer.parseInt(matrizPendiente.get(j).get(4)) + " =?" +  codDevengosSeleccionados.get(i));
             if(ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)) != null) {
               devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Float.parseFloat(matrizPendiente.get(j).get(3))));
-              trabajoFacturadoList.add(matrizPendiente.get(i).get(0)+matrizPendiente.get(i).get(1)+matrizPendiente.get(i).get(2)+"0000"+matrizPendiente.get(i).get(3)+matrizPendiente.get(i).get(4)+matrizPendiente.get(i).get(5));
+              trabajoFacturadoList.add(matrizPendiente.get(i).get(0)+matrizPendiente.get(i).get(1)+matrizPendiente.get(i).get(2)+matrizPendiente.get(i).get(3)+matrizPendiente.get(i).get(4)+matrizPendiente.get(i).get(5));
             }
           }
           // System.out.println(codDevengosSeleccionados.get(i) + "==?"+Integer.parseInt(matrizPendiente.get(j).get(4)));
@@ -325,10 +328,13 @@ public class ViewLiquidacionController {
     for(int i = 0; i < trabajoNoFacturadoList.size(); i++) {
       for(int j = 0; j < trabajoFacturadoList.size(); j++) {
         if(trabajoNoFacturadoList.get(i).equals(trabajoFacturadoList.get(j))) {
-          TextReaderUtil.appendLineaArchivo("InformacionPagos/RegistroCortePagado.txt", trabajoFacturadoList.get(j));
-          TextReaderUtil.borrarLinea("InformacionPagos/RegistroCortePendiente.txt", trabajoNoFacturadoList.get(i));
+          if(!TextReaderUtil.isLineaArchivo("InformacionPagos/RegistroCortePagado.txt", trabajoFacturadoList.get(j))) {
+            TextReaderUtil.appendLineaArchivo("InformacionPagos/RegistroCortePagado.txt", trabajoFacturadoList.get(j));
+            TextReaderUtil.borrarLinea("InformacionPagos/RegistroCortePendiente.txt", trabajoNoFacturadoList.get(i));
+            break;
+          }
         }
-      } 
+      }
     }
   }
 
@@ -554,6 +560,12 @@ public class ViewLiquidacionController {
           TextReaderUtil.escribirTextoArea("PagosEmitidos/" + AuxController.fechaToString(LocalDate.now()) +"PagoNomina" + nombreYApellido + ".txt", vista.getAreaComprobanteNomina().getText());
           AuxController.mensajeTemporal("Pago para " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + " " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido() + " emitido exitosamente.", "Aviso", 1150);
           moverInfoLineaCorte();
+          if(vista.getDropEmpleado().getSelectedIndex() == 0) {
+            vista.getTablaDatos().setModel(actualizarTableModelTodos());
+          }
+          else {
+            vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
+          }
         }
       }
       else if(e.getSource() == vista.getBtnHome()) {

@@ -172,6 +172,15 @@ public class AuxController {
     return lista;
   }
 
+  /* --------------- FORMATO: RETORNA STRING DEL TAMAÑO DESEADO ------------------- */
+  public static String padString(String input, int length, char paddingChar) {
+    StringBuilder paddedString = new StringBuilder(input);
+    while (paddedString.length() < length) {
+        paddedString.append(paddingChar);
+    }
+    return paddedString.toString();
+}
+
   /* --------------- FORMATO: RETORNA LISTA CON CÓDIGOS DESDE ELEMENTOS DE JLISTA ------------------- */
   public static <T extends ModelInterface> List<Integer> getCodigosJLista(JList<String> jlist, Map<Integer, T> mapa) {
     ListModel<String> listModel = jlist.getModel();

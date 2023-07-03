@@ -47,7 +47,7 @@ public class TextReaderUtil {
         String ficha = line.substring(0, 4).trim();
         if(Integer.parseInt(ficha) == fichaEmpleado) {
           String fechaCorte = line.substring(4, 12).trim();
-          String haciendaSuerte = line.substring(12, 18).trim();
+          String haciendaSuerte = line.substring(12, 22).trim();
           String toneladaCorte = line.substring(22, 27).trim();
           String tipoCana = line.substring(27, 28).trim();
           String diaCorte = line.substring(28,29).trim();
@@ -86,7 +86,7 @@ public class TextReaderUtil {
         List<String> lista = new ArrayList<>();
         String ficha = line.substring(0, 4).trim();
         String fechaCorte = line.substring(4, 12).trim();
-        String haciendaSuerte = line.substring(12, 18).trim();
+        String haciendaSuerte = line.substring(12, 22).trim();
         String toneladaCorte = line.substring(22, 27).trim();
         String tipoCana = line.substring(27, 28).trim();
         String diaCorte = line.substring(28,29).trim();
@@ -119,7 +119,7 @@ public class TextReaderUtil {
   }
 
   /* --------------- VERIFICA SI LA LÍNEA ESTÁ EN EL ARCHIVO ------------------- */
-  public static boolean isLineaCantidadTrabajada(String rutaArchivo, String lineaPagada) {
+  public static boolean isLineaArchivo(String rutaArchivo, String lineaPagada) {
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
       String line;
       while ((line = reader.readLine()) != null) {
@@ -188,7 +188,7 @@ public class TextReaderUtil {
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String line;
       while ((line = reader.readLine()) != null) {
-        if(!line.replaceAll("\\s", "").equals(lineaABorrar)) {
+        if(!line.substring(0, 29).equals(lineaABorrar.substring(0, 29))) {
           writer.write(line);
           writer.newLine();
         }
