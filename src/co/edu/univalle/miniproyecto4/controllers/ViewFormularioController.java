@@ -1013,8 +1013,15 @@ public class ViewFormularioController {
       }
       else if(e.getSource() == vista.getBtnImprimir()) { // IMPRIMIR
         if(apartadoFormulario.equals("Empleado")) {
-          TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());
-          AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);                
+          if (!vista.getTablaDatos().isRowSelected(index)) {
+            TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEmpleado.txt", ingenio.getEmpleadoDAO().getMapEmpleado());
+            AuxController.mensajeTemporal("Backup para " + apartadoFormulario + " exportado exitosamente.", "Aviso", 1150);
+          } 
+          else if (vista.getTablaDatos().isRowSelected(index)) {
+            TextReaderUtil.printInformacionEmpleadoKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+ingenio.getEmpleadoDAO().getMapEmpleado().get(Integer.parseInt((String) vista.getFildEmpleadoCod().getText())).getNombre()+ingenio.getEmpleadoDAO().getMapEmpleado().get(Integer.parseInt(vista.getFildEmpleadoCod().getText())).getApellido(), ingenio.getEmpleadoDAO().getMapEmpleado().get(Integer.parseInt(vista.getFildEmpleadoCod().getText())));
+            AuxController.mensajeTemporal("Backup para " + ingenio.getEmpleadoDAO().getMapEmpleado().get(Integer.parseInt((String) vista.getFildEmpleadoCod().getText())).getNombre() + " " + ingenio.getEmpleadoDAO().getMapEmpleado().get(Integer.parseInt((String) vista.getFildEmpleadoCod().getText())).getApellido() + " exportado exitosamente.", "Aviso", 1150);
+            limpiarCampos();
+          }                
         }
         else if(apartadoFormulario.equals("Eps")) {
           TextReaderUtil.printInformacionModeloKeyInt("BackUp/"+AuxController.fechaToString(LocalDate.now())+"RegistroEPS.txt", ingenio.getEpsDAO().getMapEps());  

@@ -148,6 +148,16 @@ public class TextReaderUtil {
     }
   }
 
+  /* --------------- EXPORTA ARCHIVO DE TEXTO CON INFORMACIÓN DE OBJETOS DEL PAQUETE MODELO (SEPARADO POR COMAS) CON CLAVE INTEGER------------------- */
+  public static <T> void printInformacionEmpleadoKeyInt(String rutaArchivo, Empleado empleado) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+        writer.write(empleado.toString());
+        writer.newLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   /* --------------- EXPORTA ARCHIVO DE TEXTO CON INFORMACIÓN DE OBJETOS DEL PAQUETE MODELO (SEPARADO POR COMAS) CON CLAVE STRING------------------- */
   public static <T> void printInformacionModeloKeyStr(String rutaArchivo, Map<String, T> mapa) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
