@@ -90,10 +90,13 @@ public class ViewLiquidacionController {
 
     for(int i = 0; i < matrizTemporal.size(); i++) {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
-      if(i < matrizTemporal.size()) {
+      if(!matrizTemporal.isEmpty()) {
         String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
         modeloTabla.addRow(arregloTemporal);
-        trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
+
+        if(!matrizPendiente.isEmpty()) {
+          trabajoNoFacturadoList.add(matrizPendiente.get(i).get(0) + matrizPendiente.get(i).get(1) + matrizPendiente.get(i).get(2) + matrizPendiente.get(i).get(3) + matrizPendiente.get(i).get(4) + matrizPendiente.get(i).get(5));
+        }
       }
     }
 
@@ -123,7 +126,11 @@ public class ViewLiquidacionController {
       // Debe corresponder con: "FECHA" (1), "TONELADAS" (3), "TIPO CAÑA" (4), "DÍA" (5).
       if(matrizTemporal.get(i).size() > 0) {
         String[] arregloTemporal = {matrizTemporal.get(i).get(0), matrizTemporal.get(i).get(1), matrizTemporal.get(i).get(3), matrizTemporal.get(i).get(4), matrizTemporal.get(i).get(5)};
-        trabajoNoFacturadoList.add(matrizTemporal.get(i).get(0)+matrizTemporal.get(i).get(1)+matrizTemporal.get(i).get(2)+matrizTemporal.get(i).get(3)+matrizTemporal.get(i).get(4)+matrizTemporal.get(i).get(5));
+
+        if(!matrizPendiente.isEmpty()) {
+          trabajoNoFacturadoList.add(matrizPendiente.get(i).get(0) + matrizPendiente.get(i).get(1) + matrizPendiente.get(i).get(2 )+ matrizPendiente.get(i).get(3) + matrizPendiente.get(i).get(4) + matrizPendiente.get(i).get(5));
+        }
+
         modeloTabla.addRow(arregloTemporal);
       }
     }
@@ -227,7 +234,7 @@ public class ViewLiquidacionController {
             System.out.println(Integer.parseInt(matrizPendiente.get(j).get(4)) + " =?" +  codDevengosSeleccionados.get(i));
             if(ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)) != null) {
               devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Float.parseFloat(matrizPendiente.get(j).get(3))));
-              trabajoFacturadoList.add(matrizPendiente.get(i).get(0)+matrizPendiente.get(i).get(1)+matrizPendiente.get(i).get(2)+matrizPendiente.get(i).get(3)+matrizPendiente.get(i).get(4)+matrizPendiente.get(i).get(5));
+              trabajoFacturadoList.add(matrizPendiente.get(j).get(0)+matrizPendiente.get(j).get(1)+matrizPendiente.get(j).get(2)+matrizPendiente.get(j).get(3)+matrizPendiente.get(j).get(4)+matrizPendiente.get(j).get(5));
             }
           }
           // System.out.println(codDevengosSeleccionados.get(i) + "==?"+Integer.parseInt(matrizPendiente.get(j).get(4)));
@@ -471,7 +478,12 @@ public class ViewLiquidacionController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if(e.getSource() == vista.getBtnPagados()) {
-        vista.getTablaDatos().setModel(actualizarTableModel(AuxController.getCodByNombre((String) vista.getDropEmpleado().getSelectedItem(), ingenio.getEmpleadoDAO().getMapEmpleado())));
+        if(vista.getDropEmpleado().getSelectedIndex() == 0) {
+          vista.getTablaDatos().setModel(actualizarTableModelTodos());
+        }
+        else {
+          vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
+        }
       }
       else if(e.getSource() == vista.getBtnPendientes()) {
         if(vista.getDropEmpleado().getSelectedIndex() == 0) {
@@ -560,6 +572,8 @@ public class ViewLiquidacionController {
           TextReaderUtil.escribirTextoArea("PagosEmitidos/" + AuxController.fechaToString(LocalDate.now()) +"PagoNomina" + nombreYApellido + ".txt", vista.getAreaComprobanteNomina().getText());
           AuxController.mensajeTemporal("Pago para " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + " " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido() + " emitido exitosamente.", "Aviso", 1150);
           moverInfoLineaCorte();
+          vista.getTablaDatos().clearSelection();
+          vista.getDropEmpleado().setSelectedIndex(0);
           if(vista.getDropEmpleado().getSelectedIndex() == 0) {
             vista.getTablaDatos().setModel(actualizarTableModelTodos());
           }

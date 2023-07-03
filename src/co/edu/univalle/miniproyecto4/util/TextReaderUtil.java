@@ -123,7 +123,7 @@ public class TextReaderUtil {
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
       String line;
       while ((line = reader.readLine()) != null) {
-        if(line.equals(lineaPagada)) {
+        if(line.substring(0, 29).equals(lineaPagada.substring(0, 29))) {
           return true;
         }
       }
