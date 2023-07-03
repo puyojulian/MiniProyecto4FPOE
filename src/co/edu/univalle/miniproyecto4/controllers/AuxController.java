@@ -99,14 +99,16 @@ public class AuxController {
 
    /* --------------- VERIFICACIÓN: VERIFICAR SI EL NOMBRE ESTÁ REGISTRADO ------------------- */
   public static <T extends ModelInterface> void hayNombresRepetidos(Map<Integer, T> mapa) {
-    Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
+    Set<Map.Entry<Integer, T>> entrySetMapa1 = mapa.entrySet();
+    Set<Map.Entry<Integer, T>> entrySetMapa2 = mapa.entrySet();
     List<String> listaNombresRepetidos = new ArrayList<>();
 
     String nombresRepetidos = "";
 
-    for (Map.Entry<Integer, T> entry1 : entrySetMapa) {
-      for (Map.Entry<Integer, T> entry2 : entrySetMapa){
-        if(entry1.getValue().getNombre().replaceAll("\\s", "").equalsIgnoreCase(entry2.getValue().getNombre().replaceAll("\\s", ""))) {
+
+    for (Map.Entry<Integer, T> entry1 : entrySetMapa1) {
+      for (Map.Entry<Integer, T> entry2 : entrySetMapa2){
+        if(entry1.getValue().getNombre().replaceAll("\\s", "").equalsIgnoreCase(entry2.getValue().getNombre().replaceAll("\\s", "")) && entry1.getKey() != entry2.getKey()) {
           listaNombresRepetidos.add(entry1.getValue().getNombre());
           break;
         }
@@ -122,7 +124,7 @@ public class AuxController {
           nombresRepetidos+= listaNombresRepetidos.get(i) + "";
         }
       }
-      mensajeTemporal("Ésta categoría no acepta nombres repetidos. Por favor corrija el(los) elemento(s) que contiene(n) el(los) nombres: " + nombresRepetidos + ".", "ADVERTENCIA", 2000);
+      mensajeTemporal("Ésta categoría NO acepta nombres repetidos. Por favor, seleccione y edite el(los) elemento(s) con el(los) nombres: " + nombresRepetidos + ".", "ADVERTENCIA", 2000);
     }
   }
 

@@ -556,38 +556,52 @@ public class ViewFormularioController {
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEmpleadoDAO().getMapEmpleado()));
         AuxController.popularNombreComboBox(vista.getDropEpsEmpleado(), ingenio.getEpsDAO().getMapEps());
         AuxController.popularNombreComboBox(vista.getDropFppEmpleado(), ingenio.getFondoDePensionDAO().getMapFondoDePension());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnEps()) {
         apartadoFormulario = "Eps";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnFondoP()) {
         apartadoFormulario = "FPP";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnARL()) {
         apartadoFormulario = "ARL";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnCajaCompen()) {
         apartadoFormulario = "CCompensacion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnEmpresa()) {
         apartadoFormulario = "Empresa";
         vista.getTablaDatos().setModel(actualizarTableModelString(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa()));
         AuxController.popularNombreComboBox(vista.getDropCodARLEMPRESA(), ingenio.getArlDAO().getMapArl());
         AuxController.popularNombreComboBox(vista.getDropCodCajaCom(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnDevegno()) {
         apartadoFormulario = "Devengo";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
         codEmpleados = AuxController.popularNombreYApellidoComboBox(vista.getDropDevengoEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnDeduccion()) {
         apartadoFormulario = "Deduccion";
         vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
         codEmpleados = AuxController.popularNombreYApellidoComboBox(vista.getDropDeduccionEmpleado(), ingenio.getEmpleadoDAO().getMapEmpleado());
+        AuxController.hayNombresRepetidos(getMapIngenio());
+        limpiarCampos();
       }
       else if(e.getSource() == vista.getBtnAñadir()) { // AÑADIR
         if(apartadoFormulario.equals("Empleado")) {
@@ -623,14 +637,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Eps")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildEPSNombre().getText(), ingenio.getEpsDAO().getMapEps())) {
-              ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("La EPS ya está registrada.", "Error de entrada", 1150);
-            }
+            ingenio.getEpsDAO().addEps(new Eps(vista.getFildEPSNombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           }
           else {
             AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
@@ -638,14 +648,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("FPP")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildFPPnombre().getText(), ingenio.getFondoDePensionDAO().getMapFondoDePension())) {
-              ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("El fondo de pensión ya está registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getFondoDePensionDAO().addFondoDePension(new FondoDePension(vista.getFildFPPnombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           }
           else {
             AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
@@ -653,14 +659,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("ARL")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildARLnombre().getText(), ingenio.getArlDAO().getMapArl())) {
-              ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("La ARL ya está registrada.", "Error de entrada", 1150);
-            }
+            ingenio.getArlDAO().addArl(new Arl(vista.getFildARLnombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           }
           else {
             AuxController.mensajeTemporal("Hay campos vacíos.", "Error de entrada", 1150);
@@ -668,14 +670,10 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("CCompensacion")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildCajaComNombre().getText(), ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion())) {
-              ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("La Caja de Compensación ya está registrada.", "Error de entrada", 1150);
-            }
+            ingenio.getCajaDeCompensacionDAO().addCajaDeCompensacion(new CajaDeCompensacion(vista.getFildCajaComNombre().getText()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           }
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -713,16 +711,12 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Devengo")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
-              ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText(), vista.getDropbaseDevengo().getSelectedIndex() == 1);
-              ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDevengoValor().getText())));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("El concepto de devengo ya está registrado.", "Error de entrada", 1150);
-            }
+            ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText(), vista.getDropbaseDevengo().getSelectedIndex() == 1);
+            ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
+            ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDevengoValor().getText())));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -730,16 +724,12 @@ public class ViewFormularioController {
         }
         else if(apartadoFormulario.equals("Deduccion")) {
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
-              ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
-              ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDeduccionValor().getText())));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-              limpiarCampos();
-            }
-            else {
-              AuxController.mensajeTemporal("El concepto de deducción ya está registrado.", "Error de entrada", 1150);
-            }
+            ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
+            ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
+            ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDeduccionValor().getText())));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+            limpiarCampos();
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -881,15 +871,11 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, Eps> entry = (Map.Entry<Integer, Eps>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildEPSNombre().getText(), getMapIngenio())) {
-              ingenio.getEpsDAO().getMapEps().get(entry.getKey()).setNombre(vista.getFildEPSNombre().getText());;
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            } 
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getEpsDAO().getMapEps().get(entry.getKey()).setNombre(vista.getFildEPSNombre().getText());;
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getEpsDAO().getMapEps()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -899,15 +885,11 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, FondoDePension> entry = (Map.Entry<Integer, FondoDePension>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildFPPnombre().getText(), getMapIngenio())) {
-              ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getKey()).setNombre(vista.getFildFPPnombre().getText());
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            } 
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getFondoDePensionDAO().getMapFondoDePension().get(entry.getKey()).setNombre(vista.getFildFPPnombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getFondoDePensionDAO().getMapFondoDePension()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -917,15 +899,11 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, Arl> entry = (Map.Entry<Integer, Arl>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildARLnombre().getText(), getMapIngenio())) {
-              ingenio.getArlDAO().getMapArl().get(entry.getKey()).setNombre(vista.getFildARLnombre().getText());
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            } 
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getArlDAO().getMapArl().get(entry.getKey()).setNombre(vista.getFildARLnombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getArlDAO().getMapArl()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -935,15 +913,11 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, CajaDeCompensacion> entry = (Map.Entry<Integer, CajaDeCompensacion>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildCajaComNombre().getText(), getMapIngenio())) {
-              ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(entry.getKey()).setNombre(vista.getFildCajaComNombre().getText());
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            } 
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion().get(entry.getKey()).setNombre(vista.getFildCajaComNombre().getText());
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getCajaDeCompensacionDAO().getMapCajaDeCompensacion()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -981,17 +955,13 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), getMapIngenio())) {
-              ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
-              ingenio.getMapConfigDevengos().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDevengoValor().getText()));
-              ingenio.getMapConfigDevengos().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            }
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
+            ingenio.getMapConfigDevengos().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDevengoValor().getText()));
+            ingenio.getMapConfigDevengos().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
@@ -1001,17 +971,13 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
           if(verificarCampos()) {
-            if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), getMapIngenio())) {
-              ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
-              ingenio.getMapConfigDeducciones().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDeduccionValor().getText()));
-              ingenio.getMapConfigDeducciones().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()));
-              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-              limpiarCampos();
-              vista.getBtnAñadir().setEnabled(true);
-            }
-            else {
-              AuxController.mensajeTemporal("Nombre ya registrado.", "Error de entrada", 1150);
-            }
+            ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
+            ingenio.getMapConfigDeducciones().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDeduccionValor().getText()));
+            ingenio.getMapConfigDeducciones().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()));
+            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+            limpiarCampos();
+            vista.getBtnAñadir().setEnabled(true);
+            AuxController.hayNombresRepetidos(getMapIngenio());
           } 
           else {
             AuxController.mensajeTemporal("Hay campos vacíos o desplegables sin selección.", "Error de entrada", 1150);
