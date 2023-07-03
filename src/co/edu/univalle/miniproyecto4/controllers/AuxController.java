@@ -97,6 +97,35 @@ public class AuxController {
     return true;
   }
 
+   /* --------------- VERIFICACIÓN: VERIFICAR SI EL NOMBRE ESTÁ REGISTRADO ------------------- */
+  public static <T extends ModelInterface> void hayNombresRepetidos(Map<Integer, T> mapa) {
+    Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
+    List<String> listaNombresRepetidos = new ArrayList<>();
+
+    String nombresRepetidos = "";
+
+    for (Map.Entry<Integer, T> entry1 : entrySetMapa) {
+      for (Map.Entry<Integer, T> entry2 : entrySetMapa){
+        if(entry1.getValue().getNombre().replaceAll("\\s", "").equalsIgnoreCase(entry2.getValue().getNombre().replaceAll("\\s", ""))) {
+          listaNombresRepetidos.add(entry1.getValue().getNombre());
+          break;
+        }
+      }
+    }
+
+    if(!listaNombresRepetidos.isEmpty()) {
+      for(int i = 0; i < listaNombresRepetidos.size(); i++) {
+        if(i < listaNombresRepetidos.size() - 1) {
+          nombresRepetidos+= listaNombresRepetidos.get(i) + ", ";
+        }
+        else if(i == listaNombresRepetidos.size() - 1){
+          nombresRepetidos+= listaNombresRepetidos.get(i) + "";
+        }
+      }
+      mensajeTemporal("Ésta categoría no acepta nombres repetidos. Por favor corrija el(los) elemento(s) que contiene(n) el(los) nombres: " + nombresRepetidos + ".", "ADVERTENCIA", 2000);
+    }
+  }
+
   /* --------------- VERIFICACIÓN: VERIFICA SI EL CÓDIGO ESTÁ REGISTRADO ------------------- */
   public static <T extends ModelInterface> boolean isCodigoUnico(int codigo, Map<Integer, T> mapa) {
     Set<Map.Entry<Integer, T>> entrySetMapa = mapa.entrySet();
