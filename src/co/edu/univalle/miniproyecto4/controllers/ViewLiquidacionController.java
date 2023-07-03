@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -372,6 +373,57 @@ public class ViewLiquidacionController {
     } 
   }
 
+  /* --------------- MUESTREO: LIMPIAR LOS CAMPOS A SU ESTADO INICIAL ------------------- */
+  public void limpiarCampos() {
+    vista.getFildLiqFicha().setText("");
+    vista.getFildLiqHacienda().setText("");
+    vista.getFildLiqTonelada().setText("");
+    vista.getFildLiqFechaCorte().setText("");
+    vista.getDropTipoCana().setSelectedIndex(0);
+    vista.getdropDiacorte().setSelectedIndex(0);
+    vista.getTablaDatos().clearSelection();
+
+    vista.getBtnRegistrar().setText("Registrar");
+  }
+
+  /* --------------- VERIFICAR: VERIFICA EL FORMATO DE LA FECHA SEA EL CORRECTO ------------------- */
+  public boolean verificarFecha() {
+    StringTokenizer tokenizer = new StringTokenizer(vista.getFildLiqFechaCorte().getText(), "-");
+
+    if (tokenizer.countTokens() != 3) {
+      return false;
+    }
+
+    String yearToken = tokenizer.nextToken();
+    String monthToken = tokenizer.nextToken();
+    String dayToken = tokenizer.nextToken();
+
+    if (yearToken.length() != 4 || monthToken.length() != 2 || dayToken.length() != 2 || !AuxController.esNumerico(yearToken) || !AuxController.esNumerico(monthToken) || !AuxController.esNumerico(dayToken)) {
+      return false;
+    }
+    return true;
+  }
+
+  /* --------------- VERIFICAR: VERIFICA CAMPOS VACIOS, TAMAÑO DE LOS STRINGS Y FORMATOS INGRESADOS ------------------- */
+  public boolean verificarCampos() {
+    if (vista.getFildLiqFicha().getText().length() > 4 || !AuxController.esNumerico(vista.getFildLiqFicha().getText())) {
+      return false;
+    }
+    if (vista.getFildLiqTonelada().getText().length() > 5 || !AuxController.esNumerico(vista.getFildLiqTonelada().getText())) {
+      return false; 
+    }
+    if (!verificarFecha()) {
+      return false;
+    }
+    if (vista.getDropTipoCana().getSelectedIndex() == 0) {
+      return false;
+    }
+    if (vista.getdropDiacorte().getSelectedIndex() == 0) {
+      return false;
+    }
+    return true;
+  }
+
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
   class ListSelectionHandler implements ListSelectionListener {
 
@@ -399,17 +451,17 @@ public class ViewLiquidacionController {
       }
       else if(e.getSource() == vista.getBtnRegistrar()) { // REGISTRAR INFORMACIÓN CORTE
         if("Limpiar".equals(vista.getBtnRegistrar().getText())) {
-          vista.getFildLiqFicha().setText("");
-          vista.getFildLiqHacienda().setText("");
-          vista.getFildLiqTonelada().setText("");
-          vista.getFildLiqFechaCorte().setText("");
-          vista.getDropTipoCana().setSelectedIndex(0);
-          vista.getdropDiacorte().setSelectedIndex(0);
-          vista.getTablaDatos().clearSelection();
-          vista.getBtnRegistrar().setText("Registrar");
+          limpiarCampos();
         }
-        if("Registrar".equals(vista.getBtnRegistrar().getText())) {
-
+        else if("Registrar".equals(vista.getBtnRegistrar().getText())) {
+          if (verificarCampos()) {
+            getInputString();
+            AuxController.mensajeTemporal("Datos registrados satisfactoriamente", "Registro realizado", 1150);
+            limpiarCampos();
+          } 
+          else {
+            AuxController.mensajeTemporal("Verifique los datos ingresados en los campos", "Error", 1150);
+          }
         }
       }
       else if(e.getSource() == vista.getBtnAddDevengo()) { // AGREGAR CONCEPTO
