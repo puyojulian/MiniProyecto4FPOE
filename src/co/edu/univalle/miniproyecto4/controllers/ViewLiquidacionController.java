@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -15,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import co.edu.univalle.miniproyecto4.controllers.ViewFormularioController.ActionsHandler;
+import co.edu.univalle.miniproyecto4.models.Empleado;
 import co.edu.univalle.miniproyecto4.models.Ingenio;
 import co.edu.univalle.miniproyecto4.util.TextReaderUtil;
 import co.edu.univalle.miniproyecto4.views.ViewLiquidacion;
@@ -315,13 +317,30 @@ public class ViewLiquidacionController {
     return nomina;
   }
 
+  public void llenarCamposLiquidacion () {
+    int index = vista.getTablaDatos().getSelectedRow();
+    if(index != -1) {
+      vista.getFildLiqFicha().setText((String) modeloTabla.getValueAt(index, 0));
+      vista.getFildLiqHacienda().setText(ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get("1000777999").getNombre());
+      vista.getFildLiqTonelada().setText((String) modeloTabla.getValueAt(index, 2));
+      vista.getFildLiqFechaCorte().setText((String) modeloTabla.getValueAt(index, 1));
+      vista.getDropTipoCana().setSelectedIndex(Integer.parseInt((String) modeloTabla.getValueAt(index, 3)));
+      if("O".equals(modeloTabla.getValueAt(index, 4).toString()) ){
+        vista.getdropDiacorte().setSelectedIndex(1);
+      } 
+      else if ("F".equals(modeloTabla.getValueAt(index, 4).toString())) {
+        vista.getdropDiacorte().setSelectedIndex(2);
+      }
+      vista.getBtnRegistrar().setText("Limpiar");
+    } 
+  }
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
   class ListSelectionHandler implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-
+      llenarCamposLiquidacion();
     }
   }
 
@@ -342,7 +361,19 @@ public class ViewLiquidacionController {
         }
       }
       else if(e.getSource() == vista.getBtnRegistrar()) { // REGISTRAR INFORMACIÓN CORTE
+        if("Limpiar".equals(vista.getBtnRegistrar().getText())) {
+          vista.getFildLiqFicha().setText("");
+          vista.getFildLiqHacienda().setText("");
+          vista.getFildLiqTonelada().setText("");
+          vista.getFildLiqFechaCorte().setText("");
+          vista.getDropTipoCana().setSelectedIndex(0);
+          vista.getdropDiacorte().setSelectedIndex(0);
+          vista.getTablaDatos().clearSelection();
+          vista.getBtnRegistrar().setText("Registrar");
+        }
+        if("Registrar".equals(vista.getBtnRegistrar().getText())) {
 
+        }
       }
       else if(e.getSource() == vista.getBtnAddDevengo()) { // AGREGAR CONCEPTO
         if(vista.getDropDevengos().getSelectedIndex() != 0) {
