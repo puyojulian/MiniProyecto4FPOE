@@ -52,7 +52,7 @@ public class ViewLiquidacion extends JFrame  {
 
     private Decolib im1, im2, im3, ic1, imf1, imf2;
 
-    /* Para tablas de devengo y deducciones */
+    /* Para combobox de devengo y deducciones */
     private JPanel panelDevFondo, panelDecFondo;
     private JLabel devTittle, decTittle;
     private String[] devengos = {"Seleccionar"};
@@ -62,13 +62,13 @@ public class ViewLiquidacion extends JFrame  {
     private JButton btnAddDevengo, btnDeleteDevengo, btnAddDeduccion, btnDeleteDeduccion, btnHome;
     private Decolib bt1, bt2, bt3, bt4, btn5;
     
-    // Tabla devengo
+    // combobox devengo
     private JPanel panelTablaDev = new JPanel();
     private JScrollPane jpTablaDev = new JScrollPane();
     // private String[] devengosList = {"Elemento 1"};
     private JList<String> listDevengos = new JList<>();
 
-    // Tabla deduccion
+    // combobox deduccion
     private JPanel panelTablaDed = new JPanel();
     private JScrollPane jpTablaDed = new JScrollPane();
     // private String[] deduccionList = {"Elemento 1"};
