@@ -353,24 +353,28 @@ public class ViewLiquidacionController {
       stringCompleta+= String.format("%" + 4 + "s", Integer.parseInt(vista.getFildLiqFicha().getText().trim())).replace(' ', '0');
     }
 
+    String fechaCorte = AuxController.fechaToString(LocalDate.now());
     if(vista.getFildLiqFechaCorte().getText().contains("-")) {
-      String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
-      if(fecha.length() == 8) {
-        stringCompleta+= fecha;
+      if(!vista.getFildLiqFechaCorte().getText().equals("AAAA-MM-DD")) {
+        String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
+        if(fecha.length() == 8 && AuxController.esNumerico(fecha)) {
+          fechaCorte = fecha;
+        }
       }
     }
     else if(vista.getFildLiqFechaCorte().getText().contains("/")) {
       String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("/", "");
-      if(fecha.length() == 8) {
-        stringCompleta+= fecha;
+      if(fecha.length() == 8 && AuxController.esNumerico(fecha)) {
+        fechaCorte = fecha;
       }
     }
     else {
       String fecha = vista.getFildLiqFechaCorte().getText();
-      if(fecha.length() == 8) {
-        stringCompleta+= fecha;
+      if(fecha.length() == 8 && AuxController.esNumerico(fecha)) {
+        fechaCorte = fecha;
       }
     }
+    stringCompleta+= fechaCorte;
 
     stringCompleta+= "00000A0000";
     if(AuxController.esNumerico(vista.getFildLiqTonelada().getText().trim()) && !vista.getFildLiqTonelada().getText().trim().isEmpty()) {

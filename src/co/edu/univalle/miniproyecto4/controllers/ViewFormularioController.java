@@ -608,7 +608,7 @@ public class ViewFormularioController {
           if(AuxController.esNumerico(vista.getFildEmpleadoId().getText()) && AuxController.esNumerico(vista.getFildEmpleadoNCuenta().getText())) {
             if(verificarCampos()) {
               String fechaRetiro = vista.getFildEmpleadoDateRet().getText();
-              if(fechaRetiro.isEmpty()) {
+              if(fechaRetiro.isEmpty() || fechaRetiro.equals("AAAA-MM-DD")) {
                 fechaRetiro = fechaMaxima;
               }
               ingenio.getEmpleadoDAO().addEmpleado(new Empleado(vista.getFildEmpleadoId().getText(), 
