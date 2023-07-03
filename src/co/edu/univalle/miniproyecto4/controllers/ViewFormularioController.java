@@ -249,7 +249,6 @@ public class ViewFormularioController {
       return modeloTabla;
     }
     else {
-      System.out.println(modeloTabla);
       return modeloTabla;
     }
   }  
@@ -277,7 +276,7 @@ public class ViewFormularioController {
       modelo.setColumnIdentifiers(atributosTabla);
     }
     else if(apartadoFormulario.equals("Empresa")) {
-      String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
+      String[] atributosTabla = {"NIT", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
       modelo.setColumnIdentifiers(atributosTabla);
     }
     else if(apartadoFormulario.equals("Devengo")) {

@@ -317,7 +317,6 @@ public class ViewLiquidacionController {
     return nomina;
   }
 
-
   /* --------------- CÁLCULO: CONSTRUYE STRING A BASE DE LAS ENTRADAS ------------------- */
   public String getInputString() {
     String stringCompleta = "";
@@ -371,7 +370,6 @@ public class ViewLiquidacionController {
       }
       vista.getBtnRegistrar().setText("Limpiar");
     } 
-
   }
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
