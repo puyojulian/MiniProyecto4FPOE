@@ -321,7 +321,10 @@ public class ViewLiquidacionController {
   public String getInputString() {
     String stringCompleta = "";
 
-    stringCompleta+= String.format("%" + 4 + "s", Integer.parseInt(vista.getFildLiqFicha().getText())).replace(' ', '0');
+    if(AuxController.esNumerico(vista.getFildLiqFicha().getText().trim()) && !vista.getFildLiqFicha().getText().trim().isEmpty()) {
+      stringCompleta+= String.format("%" + 4 + "s", Integer.parseInt(vista.getFildLiqFicha().getText().trim())).replace(' ', '0');
+    }
+
     if(vista.getFildLiqFechaCorte().getText().contains("-")) {
       String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
       if(fecha.length() == 8) {
@@ -340,17 +343,26 @@ public class ViewLiquidacionController {
         stringCompleta+= fecha;
       }
     }
-    stringCompleta+= "A00000";
-    stringCompleta+= String.format("%" + 5 + "s", Integer.parseInt(vista.getFildLiqTonelada().getText())).replace(' ', '0');
+
+    stringCompleta+= "00000A0000";
+    if(AuxController.esNumerico(vista.getFildLiqTonelada().getText().trim()) && !vista.getFildLiqTonelada().getText().trim().isEmpty()) {
+      stringCompleta+= String.format("%" + 5 + "s", Integer.parseInt(vista.getFildLiqTonelada().getText().trim())).replace(' ', '0');
+    }
+    
     stringCompleta+= vista.getDropTipoCana().getSelectedIndex();
+
     if(vista.getdropDiacorte().getSelectedIndex() == 1) {
       stringCompleta+= "O";
     }
     else if(vista.getdropDiacorte().getSelectedIndex() == 2) {
       stringCompleta+= "F";
     }
+
     System.out.println(stringCompleta);
-    return stringCompleta;
+    if(stringCompleta.length() == 29) {
+      return stringCompleta;
+    }
+    return "";
   }
 
   /* --------------- MUESTREO: ACTUALIZA LOS TEXTFIELD DEPENDIENDO DE LA SELECCIÓN DE LA TABLA ------------------- */
@@ -408,8 +420,16 @@ public class ViewLiquidacionController {
           vista.getTablaDatos().clearSelection();
           vista.getBtnRegistrar().setText("Registrar");
         }
-        if("Registrar".equals(vista.getBtnRegistrar().getText())) {
-
+        else if("Registrar".equals(vista.getBtnRegistrar().getText())) {
+          if(!getInputString().trim().isEmpty()) {
+            TextReaderUtil.appendLineaArchivo("InformacionPagos/RegistroCortePendiente.txt", getInputString());
+            if(vista.getDropEmpleado().getSelectedIndex() == 0) {
+              vista.getTablaDatos().setModel(actualizarTableModelTodos());
+            }
+            else {
+              vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
+            }
+          }
         }
       }
       else if(e.getSource() == vista.getBtnAddDevengo()) { // AGREGAR CONCEPTO
