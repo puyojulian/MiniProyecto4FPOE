@@ -317,6 +317,7 @@ public class ViewLiquidacionController {
     return nomina;
   }
 
+  /* --------------- MUESTREO: ACTUALIZA LOS TEXTFIELD DEPENDIENDO DE LA SELECCIÓN DE LA TABLA ------------------- */
   public void llenarCamposLiquidacion () {
     int index = vista.getTablaDatos().getSelectedRow();
     if(index != -1) {

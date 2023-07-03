@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 public class ConfiguracionDeEmpresa implements Serializable {
   private String nit;
-  private String razonSocial;
   private String nombre;
   private String telefono;
   private String direccion;
@@ -47,7 +46,6 @@ public class ConfiguracionDeEmpresa implements Serializable {
 
   public ConfiguracionDeEmpresa() {
     this.nit = "";
-    this.razonSocial = "";
     this.nombre = "";
     this.telefono = "";
     this.direccion = "";
@@ -65,14 +63,6 @@ public class ConfiguracionDeEmpresa implements Serializable {
 
   public String getNit() {
     return nit;
-  }
-
-  public void setRazonSocial(String razonSocial) {
-    this.razonSocial = razonSocial;
-  }
-
-  public String getRazonSocial() {
-    return razonSocial;
   }
 
   public void setNombre(String nombre) {
@@ -149,6 +139,6 @@ public class ConfiguracionDeEmpresa implements Serializable {
 
   @Override
   public String toString() {
-    return nit + ", " + razonSocial + ", " + nombre + ", " + telefono + ", " + direccion + ", " + representanteLegal + ", " + correoDeContacto + ", " + codigoArl + ", " + codigoCajaDeCompensación + ", " + salarioMínimoLegalVigente + ", " + auxilioDeTransporte;
+    return nit + ", " + nombre + ", " + telefono + ", " + direccion + ", " + representanteLegal + ", " + correoDeContacto + ", " + codigoArl + ", " + codigoCajaDeCompensación + ", " + salarioMínimoLegalVigente + ", " + auxilioDeTransporte;
   }
 }
