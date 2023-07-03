@@ -501,6 +501,14 @@ public class ViewFormularioController {
     vista.getTablaDatos().clearSelection();
   }
 
+  /* --------------- UTILIDAD: CONVIERTE PORCENTAJE% A DECIMAL PARA SE ALMACENADO ------------------- */
+  public float parsePorcentaje(String porcentaje) {
+    if(porcentaje.contains("%")) {
+      return Float.parseFloat(porcentaje.replaceAll("%", ""))/100;
+    }
+    return Float.parseFloat(porcentaje);
+  }
+
   /* --------------- UTILIDAD: RETORNA MAPA DE LLAVE INTEGER SEGÚN APARTADOFORMULARIO ------------------- */
   private Map getMapIngenio() {
     if(apartadoFormulario.equals("Empleado")) {
@@ -708,7 +716,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo())) {
               ConceptoDeDevengo conceptoDeDevengo = new ConceptoDeDevengo(vista.getFildDevengonombre().getText(), vista.getDropbaseDevengo().getSelectedIndex() == 1);
               ingenio.getConceptoDeDevengoDAO().addConceptoDeDevengo(conceptoDeDevengo);
-              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDevengoValor().getText())));
+              ingenio.addMapConfigDevengos(conceptoDeDevengo.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDevengoValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
             }
@@ -725,7 +733,7 @@ public class ViewFormularioController {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion())) {
               ConceptoDeDeduccion conceptoDeDeduccion = new ConceptoDeDeduccion(vista.getFildDeduccionNombre().getText());
               ingenio.getConceptoDeDeduccionDAO().addConceptoDeDeduccion(conceptoDeDeduccion);
-              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()), Float.parseFloat(vista.getFildDeduccionValor().getText())));
+              ingenio.addMapConfigDeducciones(conceptoDeDeduccion.getCodigo(), new PairClassUtil(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()), parsePorcentaje(vista.getFildDeduccionValor().getText())));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
             }
@@ -975,6 +983,8 @@ public class ViewFormularioController {
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildDevengonombre().getText(), getMapIngenio())) {
               ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
+              ingenio.getMapConfigDevengos().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDevengoValor().getText()));
+              ingenio.getMapConfigDevengos().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);
@@ -993,6 +1003,8 @@ public class ViewFormularioController {
           if(verificarCampos()) {
             if(AuxController.isNombreUnico(vista.getFildDeduccionNombre().getText(), getMapIngenio())) {
               ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
+              ingenio.getMapConfigDeducciones().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDeduccionValor().getText()));
+              ingenio.getMapConfigDeducciones().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()));
               vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
               limpiarCampos();
               vista.getBtnAñadir().setEnabled(true);

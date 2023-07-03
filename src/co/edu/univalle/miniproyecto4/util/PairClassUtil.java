@@ -18,6 +18,14 @@ public class PairClassUtil implements Serializable{
     public Object getSecond() {
         return second;
     }
+
+    public void setFirst(int first) {
+        this.first = first;
+    }
+    
+    public void setSecond(float second) {
+        this.second = second;
+    }
     
     @Override
     public boolean equals(Object obj) {
