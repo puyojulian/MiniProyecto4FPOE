@@ -814,9 +814,14 @@ public class ViewFormularioController {
 
           if(index != -1) {
             Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
-            ingenio.getConceptoDeDevengoDAO().deleteConceptoDeDevengo((entry.getKey()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-            limpiarCampos();
+            if (entry.getKey() != 1 && entry.getKey() != 2 && entry.getKey() != 3 && entry.getKey() != 4) {
+              ingenio.getConceptoDeDevengoDAO().deleteConceptoDeDevengo((entry.getKey()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
+              limpiarCampos();
+            } 
+            else {
+              AuxController.mensajeTemporal("Este Devengo no se puede eliminar", "Error", 1150);
+            }
           } else {
             AuxController.mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
           }
@@ -826,9 +831,14 @@ public class ViewFormularioController {
 
           if(index != -1) {
             Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
-            ingenio.getConceptoDeDeduccionDAO().deleteConceptoDeDeduccion((entry.getKey()));
-            vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-            limpiarCampos();
+            if (entry.getKey() != 1 && entry.getKey() != 2) {
+              ingenio.getConceptoDeDeduccionDAO().deleteConceptoDeDeduccion((entry.getKey()));
+              vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
+              limpiarCampos();
+            }
+            else {
+              AuxController.mensajeTemporal("Esta Deducción no se puede eliminar", "Error", 1150);
+            }
           } else {
             AuxController.mensajeTemporal("Elija la arl que desea eliminar", "Error", 1150);
           }
@@ -955,7 +965,18 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, ConceptoDeDevengo> entry = (Map.Entry<Integer, ConceptoDeDevengo>) listaMap.get(index);
           if(verificarCampos()) {
-            ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
+            if (entry.getValue().getCodigo() != 1 && entry.getValue().getCodigo() != 2 && entry.getValue().getCodigo() != 3 && entry.getValue().getCodigo() != 4) {
+              ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setNombre(vista.getFildDevengonombre().getText());
+              if (vista.getDropbaseDevengo().getSelectedIndex() == 1) {
+                ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setHaceBase(true);;
+              } 
+              else {
+                ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(entry.getKey()).setHaceBase(false);
+              }
+            }
+            else{
+              AuxController.mensajeTemporal("El nombre de este devengo no es editable", "Advertencia", 1150);
+            }
             ingenio.getMapConfigDevengos().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDevengoValor().getText()));
             ingenio.getMapConfigDevengos().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDevengoEmpleado().getSelectedIndex()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
@@ -971,7 +992,12 @@ public class ViewFormularioController {
           index = vista.getTablaDatos().getSelectedRow();
           Map.Entry<Integer, ConceptoDeDeduccion> entry = (Map.Entry<Integer, ConceptoDeDeduccion>) listaMap.get(index);
           if(verificarCampos()) {
-            ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
+            if (entry.getValue().getCodigo() != 1 && entry.getValue().getCodigo() != 2 ) {
+              ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion().get(entry.getKey()).setNombre(vista.getFildDeduccionNombre().getText());
+            }
+            else{
+              AuxController.mensajeTemporal("El nombre de esta deducción no es editable", "Advertencia", 1150);
+            }
             ingenio.getMapConfigDeducciones().get(entry.getKey()).setSecond(parsePorcentaje(vista.getFildDeduccionValor().getText()));
             ingenio.getMapConfigDeducciones().get(entry.getKey()).setFirst(codEmpleados.get(vista.getDropDeduccionEmpleado().getSelectedIndex()));
             vista.getTablaDatos().setModel(actualizarTableModelInt(ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
