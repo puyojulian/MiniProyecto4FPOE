@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class Eps implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
@@ -26,9 +28,7 @@ public class Eps implements Serializable, ModelInterface {
   public Eps(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
-    System.out.println(consecutivo);
-    System.out.println(codigo);
-    System.out.println("Eps instanciada.");
+    AuxController.mensajeTemporal("EPS creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public Eps() {

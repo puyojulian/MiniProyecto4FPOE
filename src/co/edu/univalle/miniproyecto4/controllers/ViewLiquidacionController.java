@@ -154,7 +154,6 @@ public class ViewLiquidacionController {
     for (int i = 0; i < model.getSize(); i++) {
       String element = model.getElementAt(i);
       codDevengosSeleccionados.add(AuxController.getCodByNombre(element, ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo()));
-      System.out.println(codDevengosSeleccionados.get(i));
     }
   }
 
@@ -166,7 +165,6 @@ public class ViewLiquidacionController {
     for (int i = 0; i < model.getSize(); i++) {
       String element = model.getElementAt(i);
       codDeduccionesSeleccionadas.add(AuxController.getCodByNombre(element, ingenio.getConceptoDeDeduccionDAO().getMapConceptoDeDeduccion()));
-      System.out.println(codDeduccionesSeleccionadas.get(i));
     }
   }
 
@@ -231,13 +229,11 @@ public class ViewLiquidacionController {
       if(ingenio.getConceptoDeDevengoDAO().getMapConceptoDeDevengo().get(codDevengosSeleccionados.get(i)).isHaceBase()) {
         for(int j = 0; j < matrizPendiente.size(); j++) {
           if(Integer.parseInt(matrizPendiente.get(j).get(4)) == codDevengosSeleccionados.get(i)) {
-            System.out.println(Integer.parseInt(matrizPendiente.get(j).get(4)) + " =?" +  codDevengosSeleccionados.get(i));
             if(ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)) != null) {
               devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), Float.parseFloat(matrizPendiente.get(j).get(3))));
               trabajoFacturadoList.add(matrizPendiente.get(j).get(0)+matrizPendiente.get(j).get(1)+matrizPendiente.get(j).get(2)+matrizPendiente.get(j).get(3)+matrizPendiente.get(j).get(4)+matrizPendiente.get(j).get(5));
             }
           }
-          // System.out.println(codDevengosSeleccionados.get(i) + "==?"+Integer.parseInt(matrizPendiente.get(j).get(4)));
         }
         if(ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)) != null) {
           devengosCalculados.add(calculaDevengo(codDevengosSeleccionados.get(i), (float) ingenio.getMapConfigDevengos().get(codDevengosSeleccionados.get(i)).getSecond(), 0));
@@ -388,7 +384,6 @@ public class ViewLiquidacionController {
       stringCompleta+= "F";
     }
 
-    System.out.println(stringCompleta);
     if(stringCompleta.length() == 29) {
       return stringCompleta;
     }
@@ -422,6 +417,9 @@ public class ViewLiquidacionController {
     vista.getFildLiqFechaCorte().setText("AAAA-MM-DD");
     vista.getDropTipoCana().setSelectedIndex(0);
     vista.getdropDiacorte().setSelectedIndex(0);
+    vista.getDropDeducciones().setSelectedIndex(0);
+    vista.getDropDevengos().setSelectedIndex(0);
+    vista.getAreaComprobanteNomina().setText("");
     vista.getTablaDatos().clearSelection();
 
     vista.getBtnRegistrar().setText("Registrar");
@@ -570,6 +568,9 @@ public class ViewLiquidacionController {
       else if(e.getSource() == vista.getBtnPreviz()) {
         if(vista.getDropEmpleado().getSelectedIndex() != 0 && !listModelDevengos.isEmpty()) {
           vista.getAreaComprobanteNomina().setText(previsualizacionNomina());
+        } 
+        else {
+          AuxController.mensajeTemporal("Antes de previsualizar/emitir una factura seleccione un empleado y agrege las deducciones y devengos a pagar.", "Error", 4000);
         }
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
@@ -580,6 +581,7 @@ public class ViewLiquidacionController {
           moverInfoLineaCorte();
           vista.getTablaDatos().clearSelection();
           vista.getDropEmpleado().setSelectedIndex(0);
+          limpiarCampos();
           if(vista.getDropEmpleado().getSelectedIndex() == 0) {
             vista.getTablaDatos().setModel(actualizarTableModelTodos());
           }

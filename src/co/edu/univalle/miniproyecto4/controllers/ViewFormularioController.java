@@ -1046,7 +1046,6 @@ public class ViewFormularioController {
         }
       }
       else if (e.getSource() == vista.getBtnLiquidacion()){
-        System.out.println("Liquidar");
         ViewLiquidacion viewLiquidacion = new ViewLiquidacion();
         ViewLiquidacionController viewLiquidacionController = new ViewLiquidacionController(viewLiquidacion, ingenio);
         viewLiquidacion.setVisible(true);

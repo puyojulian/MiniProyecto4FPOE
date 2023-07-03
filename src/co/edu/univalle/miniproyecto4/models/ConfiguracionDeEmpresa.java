@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class ConfiguracionDeEmpresa implements Serializable {
   private String nit;
   private String nombre;
@@ -41,7 +43,7 @@ public class ConfiguracionDeEmpresa implements Serializable {
     this.codigoCajaDeCompensación = codigoCajaDeCompensación;
     this.salarioMínimoLegalVigente = salarioMínimoLegalVigente;
     this.auxilioDeTransporte = auxilioDeTransporte;
-    System.out.println("Empresa instanciado.");
+    AuxController.mensajeTemporal("Empresa creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public ConfiguracionDeEmpresa() {

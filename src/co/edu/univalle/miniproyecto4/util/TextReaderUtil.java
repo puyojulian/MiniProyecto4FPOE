@@ -60,14 +60,6 @@ public class TextReaderUtil {
           lista.add(diaCorte);
 
           matrizRespuesta.add((ArrayList<String>)lista);
-
-          // System.out.println("Ficha: " + ficha);
-          // System.out.println("Fecha Corte: " + fechaCorte);
-          // System.out.println("Hacienda Suerte: " + haciendaSuerte);
-          // System.out.println("Tonelada Corte: " + toneladaCorte);
-          // System.out.println("Tipo Caña: " + tipoCana);
-          // System.out.println("Día de Corte: " + diaCorte);
-          // System.out.println("-----------");
         }
       }
     } catch (IOException e) {
@@ -101,20 +93,10 @@ public class TextReaderUtil {
         if(lista.size() == 6) {
           matrizRespuesta.add((ArrayList<String>)lista);
         }
-        
-        // System.out.println(line.length()+"");
-        // System.out.println("Ficha: " + ficha);
-        // System.out.println("Fecha Corte: " + fechaCorte);
-        // System.out.println("Hacienda Suerte: " + haciendaSuerte);
-        // System.out.println("Tonelada Corte: " + toneladaCorte);
-        // System.out.println("Tipo Caña: " + tipoCana);
-        // System.out.println("Día de Corte: " + diaCorte);
-        // System.out.println("-----------");
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    // System.out.println(matrizRespuesta);
     return matrizRespuesta;
   }
 
@@ -199,7 +181,6 @@ public class TextReaderUtil {
 
       if (inputFile.delete()) {
         tempFile.renameTo(inputFile);
-        System.out.println("Linea borrada exitosamente");
       } 
       else {
         System.out.println("Intento de borrar la linea fallido.");

@@ -19,6 +19,8 @@ package co.edu.univalle.miniproyecto4.models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class Empleado implements Serializable, ModelInterface {
   private String identificación;
   private int codigo;
@@ -48,7 +50,7 @@ public class Empleado implements Serializable, ModelInterface {
     this.fechaDeRetiro = fechaDeRetiro;
     this.tipoDeTrabajador = tipoDeTrabajador;
     this.numeroDeCuenta = numeroDeCuenta;
-    System.out.println("Empleado instanciado.");
+    AuxController.mensajeTemporal("Empleado creado satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public Empleado() {

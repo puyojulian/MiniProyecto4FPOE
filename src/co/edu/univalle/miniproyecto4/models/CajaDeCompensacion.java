@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class CajaDeCompensacion implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
@@ -26,7 +28,7 @@ public class CajaDeCompensacion implements Serializable, ModelInterface {
   public CajaDeCompensacion(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
-    System.out.println("Caja de Compensacion instanciada.");
+    AuxController.mensajeTemporal("Caja de compensación creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public CajaDeCompensacion() {

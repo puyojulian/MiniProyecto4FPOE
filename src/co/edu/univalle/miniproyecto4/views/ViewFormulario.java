@@ -1037,46 +1037,33 @@ public class ViewFormulario extends JFrame implements ActionListener{
         panelTabla.setBounds(0,0,703,249);
         panelTabla.setViewportView(tablaDatos);
 
-        // String[] atributosTabla = {"NIT", "RAZÓN SOCIAL", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "REP. LEGAL", "CORREO CONT.", "CÓD. ARL", "CÓD. CAJA", "SMLV", "AUX. TRANSP."};
-        // DefaultTableModel  tableModel = new DefaultTableModel();
-        // tableModel.setColumnIdentifiers(atributosTabla);
-        // tablaDatos.setModel(tableModel);
-
-        // setPanelTabla(panelTabla);
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == btnEmpleado){
-            System.out.println("Apartado Empleado");
+        if(event.getSource() == btnEmpleado){ 
             mostrartitle(jpTittleEmpleado);
             mostrarPanel(jpEmpleado);
-        } else if(event.getSource() == btnEps){
-            System.out.println("Apartado eps");
+        } else if(event.getSource() == btnEps){ 
             mostrartitle(jpTittleEPS);
             mostrarPanel(jpEps);
-        } else if(event.getSource() == btnFondoP){
-            System.out.println("Apartado fondo de presion");
+        } else if(event.getSource() == btnFondoP){ 
             mostrartitle(jpTittleFondoP);
             mostrarPanel(jpFondoP);
-        } else if(event.getSource() == btnARL){
-            System.out.println("Apartado ARL");
+        } else if(event.getSource() == btnARL){ 
             mostrartitle(jpTittleARL);
             mostrarPanel(jpARL);
-        } else if(event.getSource() == btnCajaCompen){
-            System.out.println("Apartado caja de compresacion");
+        } else if(event.getSource() == btnCajaCompen){ 
             mostrartitle(jpTittleCaja);
             mostrarPanel(jpCajaComp);
-        } else if(event.getSource() == btnEmpresa){
-            System.out.println("Apartado empresa");
+        } else if(event.getSource() == btnEmpresa){ 
             mostrartitle(jpTittleEmpresa);
             mostrarPanel(jpempresa);
-        } else if(event.getSource() == btnDevegno){
-            System.out.println("Apartado devengo");
+        } else if(event.getSource() == btnDevegno){ 
             mostrartitle(jpTittleDevengo);
             mostrarPanel(jpDev);
-        } else if(event.getSource() == btnDeduccion){
-            System.out.println("Apartado deduccion");
+        } else if(event.getSource() == btnDeduccion){ 
             mostrartitle(jpTittleDeduccion);
             mostrarPanel(jpDed);
         }

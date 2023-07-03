@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class ConceptoDeDeduccion implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
@@ -26,7 +28,7 @@ public class ConceptoDeDeduccion implements Serializable, ModelInterface {
   public ConceptoDeDeduccion(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
-    System.out.println("Deduccion instanciada.");
+    AuxController.mensajeTemporal("Deducción creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public ConceptoDeDeduccion() {

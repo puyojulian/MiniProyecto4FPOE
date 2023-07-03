@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class ConceptoDeDevengo implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
@@ -28,7 +30,7 @@ public class ConceptoDeDevengo implements Serializable, ModelInterface {
     this.codigo = consecutivo++;
     this.nombre = nombre;
     this.haceBase = haceBase;
-    System.out.println("Devengo instanciado.");
+    AuxController.mensajeTemporal("Devengo creado satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public ConceptoDeDevengo() {

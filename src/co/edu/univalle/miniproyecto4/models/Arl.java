@@ -18,6 +18,8 @@ package co.edu.univalle.miniproyecto4.models;
 
 import java.io.Serializable;
 
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
 public class Arl implements Serializable, ModelInterface {
   private int codigo;
   private String nombre;
@@ -26,7 +28,7 @@ public class Arl implements Serializable, ModelInterface {
   public Arl(String nombre) {
     this.codigo = consecutivo++;
     this.nombre = nombre;
-    System.out.println("Arl instanciada.");
+    AuxController.mensajeTemporal("ARL creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public Arl() {
