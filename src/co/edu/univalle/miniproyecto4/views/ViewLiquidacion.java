@@ -489,7 +489,9 @@ public class ViewLiquidacion extends JFrame  {
         return btnHome;
     }
 
-    
+    public JButton getBtnInfo() {
+        return btnInfo;
+    }    
 
     /* --------------- Para la liquidacion del ingenio (Getters and Setters) ------------------- */
 
@@ -637,5 +639,6 @@ public class ViewLiquidacion extends JFrame  {
         btnAddDevengo.addActionListener(actionListener);
         btnDeleteDevengo.addActionListener(actionListener);
         btnDeleteDeduccion.addActionListener(actionListener);
+        btnInfo.addActionListener(actionListener);
     }
 }

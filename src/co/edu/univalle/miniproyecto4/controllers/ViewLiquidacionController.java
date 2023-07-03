@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -604,6 +605,18 @@ public class ViewLiquidacionController {
         else {
           vista.getTablaDatos().setModel(actualizarTableModel(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())));
         }
+      }
+      else if(e.getSource() == vista.getBtnInfo()) { // Activa OptionPane para instrucciones
+        JOptionPane.showMessageDialog(null,
+          "PARA EMITIR COMPROBANTE DE PAGO:\n" + 
+          "\n  1. SELECCIONE UN EMPLEADO\nDEL DESPLEGABLE PARA VERIFICAR SI \nTIENE PAGOS PENDIENTES NO EMITIDOS.\nO PUEDE VERIFICAR DIRECTAMENTE EN LA TABLA PRINCIPAL."+ 
+          "\n\n  2. SELECCIONE EL CONJUNTO DE\nDEVENGOS Y DEDUCCIONES QUE APLIQUEN.\nDISPONE DE DOS BOTONES PARA AGREGAR\n Y ELIMINAR CONCEPTOS EN CADA LISTA." + 
+          "\n\n  3. PRESIONE EL BOTÓN DE PREVISUALIZACIÓN\nPARA VER LOS RESULTADOS." +
+          "\n\n  4. CONFIRME LA EMISIÓN DEL COMPROBANTE\n CON EL BOTÓN FACTURAR." + 
+          "\n\n\nTAMBIÉN PUEDE SELECCIONAR ELEMENTOS \nDE LA TABLA PARA VER DETALLES DE CORTE." +
+          "\n\n\nPARA AÑADIR INFORMACIÓN DE CORTE\n\n  1. LLENE LOS CAMPOS Y REGISTRE.",
+          "INSTRUCCIONES",
+          JOptionPane.INFORMATION_MESSAGE);
       }
     }
   }
