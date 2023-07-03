@@ -292,15 +292,16 @@ public class ViewLiquidacionController {
     guardarDeduccionesCalculadas();
 
     String nomina = "";
-    nomina+= "========================================\n";
+    nomina+= "==============================================\n";
     nomina+= "\t" + ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get("1000777999").getNombre() + "\n";
     nomina+= "\tNIT: " + ingenio.getConfiguracionDeEmpresaDAO().getMapConfiguracionDeEmpresa().get("1000777999").getNit() + "\n";
-    nomina+= "----------------------------------------\n";
+    nomina+= "--------------------------------------------------------\n";
+    nomina+= "FECHA FACTURACIÓN: " + AuxController.fechaToString(LocalDate.now()) + "\n";
     nomina+= "NUMERO DE PAGO: " + numeroPago + "\n";
     nomina+= "\tFICHA: " + codEmpleados.get(vista.getDropEmpleado().getSelectedIndex()) + "\n";
     nomina+= "\tNOMBRE: " + vista.getDropEmpleado().getSelectedItem() + "\n";
     nomina+= "\tCÉDULA: " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getIdentificacion() + "\n";
-    nomina+= "========================================\n";
+    nomina+= "==============================================\n";
     if(!devengosCalculados.isEmpty()) {
       nomina+= "DEVENGOS: " + "\n" + "\n";
       for(int i = 0; i < devengosCalculados.size(); i++) {
@@ -309,7 +310,7 @@ public class ViewLiquidacionController {
         }
       }
       nomina+= "\nTOTAL DEVENGOS: $ " + sumaDevengos + "\n";
-      nomina+= "========================================\n";
+      nomina+= "==============================================\n";
     }
     if(!deduccionesCalculadas.isEmpty()) {
       nomina+= "DEDUCCIONES: " + "\n" + "\n";
@@ -319,10 +320,10 @@ public class ViewLiquidacionController {
         }
       }
       nomina+= "\nTOTAL DEDUCCIONES: $ " + sumaDeducciones + "\n";
-      nomina+= "========================================\n";
+      nomina+= "==============================================\n";
     }
     nomina+= "\nNETO PAGADO: $ " + (sumaDevengos - sumaDeducciones) + "\n";
-    nomina+= "========================================\n";
+    nomina+= "==============================================\n";
     return nomina;
   }
 
