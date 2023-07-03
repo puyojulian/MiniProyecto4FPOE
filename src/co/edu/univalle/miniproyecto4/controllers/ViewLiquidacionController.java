@@ -315,6 +315,41 @@ public class ViewLiquidacionController {
     return nomina;
   }
 
+  /* --------------- CÁLCULO: CONSTRUYE STRING A BASE DE LAS ENTRADAS ------------------- */
+  public String getInputString() {
+    String stringCompleta = "";
+
+    stringCompleta+= String.format("%" + 4 + "s", Integer.parseInt(vista.getFildLiqFicha().getText())).replace(' ', '0');
+    if(vista.getFildLiqFechaCorte().getText().contains("-")) {
+      String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("-", "");
+      if(fecha.length() == 8) {
+        stringCompleta+= fecha;
+      }
+    }
+    else if(vista.getFildLiqFechaCorte().getText().contains("/")) {
+      String fecha = vista.getFildLiqFechaCorte().getText().replaceAll("/", "");
+      if(fecha.length() == 8) {
+        stringCompleta+= fecha;
+      }
+    }
+    else {
+      String fecha = vista.getFildLiqFechaCorte().getText();
+      if(fecha.length() == 8) {
+        stringCompleta+= fecha;
+      }
+    }
+    stringCompleta+= "A00000";
+    stringCompleta+= String.format("%" + 5 + "s", Integer.parseInt(vista.getFildLiqTonelada().getText())).replace(' ', '0');
+    stringCompleta+= vista.getDropTipoCana().getSelectedIndex();
+    if(vista.getdropDiacorte().getSelectedIndex() == 1) {
+      stringCompleta+= "O";
+    }
+    else if(vista.getdropDiacorte().getSelectedIndex() == 2) {
+      stringCompleta+= "F";
+    }
+    System.out.println(stringCompleta);
+    return stringCompleta;
+  }
 
   /* --------------- CLASE LISTENER: MANEJADOR DE EVENTOS DE SELECCIÓN ------------------- */
   class ListSelectionHandler implements ListSelectionListener {
