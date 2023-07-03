@@ -143,6 +143,16 @@ public class TextReaderUtil {
     }
   }
 
+  /* --------------- ESCRIBE ARCHIVO ------------------- */
+  public static void escribirTextoArea(String rutaArchivo, String linea) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+      writer.write(linea);
+      // writer.newLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   /* --------------- EXPORTA ARCHIVO DE TEXTO CON INFORMACIÓN DE OBJETOS DEL PAQUETE MODELO (SEPARADO POR COMAS) CON CLAVE INTEGER------------------- */
   public static <T> void printInformacionModeloKeyInt(String rutaArchivo, Map<Integer, T> mapa) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {

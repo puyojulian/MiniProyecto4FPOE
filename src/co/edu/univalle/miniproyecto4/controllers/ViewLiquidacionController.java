@@ -2,6 +2,7 @@ package co.edu.univalle.miniproyecto4.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -395,7 +396,11 @@ public class ViewLiquidacionController {
         }
       }
       else if(e.getSource() == vista.getBtnFacturarEmitir()) {
-
+        if(!vista.getAreaComprobanteNomina().getText().isEmpty()) {
+          String nombreYApellido = ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido();
+          TextReaderUtil.escribirTextoArea("PagosEmitidos/" + AuxController.fechaToString(LocalDate.now()) +"PagoNomina" + nombreYApellido + ".txt", vista.getAreaComprobanteNomina().getText());
+          AuxController.mensajeTemporal("Pago para" + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getNombre() + " " + ingenio.getEmpleadoDAO().getMapEmpleado().get(codEmpleados.get(vista.getDropEmpleado().getSelectedIndex())).getApellido() + " emitido exitosamente.", "Aviso", 1150);
+        }
       }
       else if(e.getSource() == vista.getBtnHome()) {
         vista.dispose();
