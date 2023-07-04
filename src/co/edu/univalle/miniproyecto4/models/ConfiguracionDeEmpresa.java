@@ -1,21 +1,39 @@
+/**
+ Archivo: ConfiguracionDeEmpresa.java
+ Proyecto IV - Sistema de liquididacion de un Ingenio
+ 24 de junio de 2023
+
+ Autores:
+  @author Julian Puyo
+  @author Sebastian Orrego
+  @author Juan David Rodriguez
+  @author Manuel Cardoso
+  @author Luis Carlos Lucero
+ 
+ Intencion:
+ Modelo de Configuracion De Empresa.
+*/
+
 package co.edu.univalle.miniproyecto4.models;
 
-public class ConfiguracionDeEmpresa {
-  private int nit;
-  private String razonSocial;
+import java.io.Serializable;
+
+import co.edu.univalle.miniproyecto4.controllers.AuxController;
+
+public class ConfiguracionDeEmpresa implements Serializable {
+  private String nit;
   private String nombre;
-  private int telefono;
+  private String telefono;
   private String direccion;
   private String representanteLegal;
   private String correoDeContacto;
   private int codigoArl;
   private int codigoCajaDeCompensación;
-  private int salarioMínimoLegalVigente;
-  private int auxilioDeTransporte;
+  private String salarioMínimoLegalVigente;
+  private String auxilioDeTransporte;
 
-  public ConfiguracionDeEmpresa(int nit, String razonSocial, String nombre, int telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, int salarioMínimoLegalVigente, int auxilioDeTransporte) {
+  public ConfiguracionDeEmpresa(String nit, String nombre, String telefono, String direccion, String representanteLegal, String correoDeContacto, int codigoArl, int codigoCajaDeCompensación, String salarioMínimoLegalVigente, String auxilioDeTransporte) {
     this.nit = nit;
-    this.razonSocial = razonSocial;
     this.nombre = nombre;
     this.telefono = telefono;
     this.direccion = direccion;
@@ -25,36 +43,28 @@ public class ConfiguracionDeEmpresa {
     this.codigoCajaDeCompensación = codigoCajaDeCompensación;
     this.salarioMínimoLegalVigente = salarioMínimoLegalVigente;
     this.auxilioDeTransporte = auxilioDeTransporte;
+    AuxController.mensajeTemporal("Empresa creada satisfactoriamente", "Creación exitosa", 1150);
   }
 
   public ConfiguracionDeEmpresa() {
-    this.nit = 0;
-    this.razonSocial = "";
+    this.nit = "";
     this.nombre = "";
-    this.telefono = 0;
+    this.telefono = "";
     this.direccion = "";
     this.representanteLegal = "";
     this.correoDeContacto = "";
     this.codigoArl = 0;
     this.codigoCajaDeCompensación = 0;
-    this.salarioMínimoLegalVigente = 0;
-    this.auxilioDeTransporte = 0;
+    this.salarioMínimoLegalVigente = "";
+    this.auxilioDeTransporte = "";
   }
 
-  public void setNit(int nit) {
+  public void setNit(String nit) {
     this.nit = nit;
   }
 
-  public int getNit() {
+  public String getNit() {
     return nit;
-  }
-
-  public void setRazonSocial(String razonSocial) {
-    this.razonSocial = razonSocial;
-  }
-
-  public String getRazonSocial() {
-    return razonSocial;
   }
 
   public void setNombre(String nombre) {
@@ -65,11 +75,11 @@ public class ConfiguracionDeEmpresa {
     return nombre;
   }
 
-  public void setTelefono(int telefono) {
+  public void setTelefono(String telefono) {
     this.telefono = telefono;
   }
 
-  public int getTelefono() {
+  public String getTelefono() {
     return telefono;
   }
 
@@ -113,24 +123,24 @@ public class ConfiguracionDeEmpresa {
     return codigoCajaDeCompensación;
   }
 
-  public void setSalarioMínimoLegalVigente(int salarioMínimoLegalVigente) {
+  public void setSalarioMínimoLegalVigente(String salarioMínimoLegalVigente) {
     this.salarioMínimoLegalVigente = salarioMínimoLegalVigente;
   }
 
-  public int getSalarioMínimoLegalVigente() {
+  public String getSalarioMínimoLegalVigente() {
     return salarioMínimoLegalVigente;
   }
 
-  public void setAuxilioDeTransporte(int auxilioDeTransporte) {
+  public void setAuxilioDeTransporte(String auxilioDeTransporte) {
     this.auxilioDeTransporte = auxilioDeTransporte;
   }
 
-  public int getAuxilioDeTransporte() {
+  public String getAuxilioDeTransporte() {
     return auxilioDeTransporte;
   }
 
   @Override
   public String toString() {
-    return nit + ", " + razonSocial + ", " + nombre + ", " + telefono + ", " + direccion + ", " + representanteLegal + ", " + correoDeContacto + ", " + codigoArl + ", " + codigoCajaDeCompensación + ", " + salarioMínimoLegalVigente + ", " + auxilioDeTransporte;
+    return nit + ", " + nombre + ", " + telefono + ", " + direccion + ", " + representanteLegal + ", " + correoDeContacto + ", " + codigoArl + ", " + codigoCajaDeCompensación + ", " + salarioMínimoLegalVigente + ", " + auxilioDeTransporte;
   }
 }
